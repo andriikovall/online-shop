@@ -10,7 +10,7 @@ import { IndexComponent } from './index/index.component';
 import { AboutComponent } from './about/about.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { UsersComponent } from './users/users.component';
+import { UsersComponent } from './users/users.component'
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { UsersComponent } from './users/users.component';
   imports: [
     BrowserModule,
     AppRoutingModule, 
-    HttpClientModule
+    HttpClientModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

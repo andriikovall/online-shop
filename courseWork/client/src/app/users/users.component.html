@@ -9,12 +9,13 @@
                 <th scope="col">Дата регистрации</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="users">
             <tr *ngFor="let user of users">
                 <td scope="col"><a routerLink="['/users', {{user._id}}]">{{user.login}}</a></td>
                 <td scope="col">{{user.fullname}}</td>
                 <td scope="col">{{user.registeredAt}}</td>
             </tr>
         </tbody>
+        <div class="spinner-border" *ngIf="!users"></div>
     </table>
 </div>

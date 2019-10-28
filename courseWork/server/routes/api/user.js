@@ -4,36 +4,31 @@ const User = require('../../models/user');
 const cors = require('cors');
 
 
-router.use(cors());
-
-router.get('/users', function (req, res) {
-    User.getAll().then(users => {
-        users.forEach(user => {
-            [user.first_name, user.last_name] = user.fullname.split(' ');
-        });
-        res.send(users);
-    }).catch(err => {
-        res.sendStatus(500);
-    });
+router.get('/', function (req, res) {
+    res.status(500).send('Not implemented yet');
 });
 
-router.get('/users/:id([\\da-z]{24})', function (req, res) {
-    const user_id = req.params.id;
+router.get('/all', async (req, res) => {
+    try {
+        const users = await User.getAll();
+        res.json(users);
+    } catch (err) {
+        res.sendStatus(500);
+    }
+});
 
-    User.getById(user_id).then(user => {
-        if (!user) {
+router.get('/:id([\\da-z]{24})', async (req, res) => {
+    const user_id = req.params.id
+    try {
+        const user = await User.getById(user_id);
+        if (!user)
             res.sendStatus(404);
-            return;
-        }
-        [user.first_name, user.last_name] = user.fullname.split(' ');
-        res.send(user);
-    }).catch(err => {
-        res.sendStatus(500);
-    });
-});
+        else 
+            res.json(user);
 
-router.use((req, res) => {
-    res.sendStatus(404);
+    } catch (err) {
+        res.sendStatus(500);
+    }
 });
 
 module.exports = router;

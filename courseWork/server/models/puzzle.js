@@ -55,16 +55,15 @@ class Puzzle {
     skipped_items := (page_number - 1) * page_size;
      */
 
-
-    static getByNameLike(searchedName, pageNum, pageSize) {
+    static getByNameLike(searchedName, pageNum, pageSize) { //@todo refactor with filters
         const findPredicate = { name: { $regex: `.*${searchedName}.*`, $options: "i" } };
 
         return puzzleModel.countDocuments(findPredicate).then(count => {
             pageNum = paginator.trimPageNum(pageNum, count, pageSize);
             const scippedItems = paginator.getScippedItemsCount(pageNum, pageSize);
-            return puzzleModel.find(findPredicate).skip(scippedItems).limit(pageSize).
-                then(val => ([val, count]));
-        });
+            return puzzleModel.find(findPredicate).skip(scippedItems).limit(pageSize);
+        }).
+            then(val => ([val, count]));
     }
 
 
@@ -91,8 +90,10 @@ class Puzzle {
     }
 
     static getFilters() {
-        const promises = [this.getAllTypes(),
-        this.getAllManufacturers()];
+        const promises = [
+            this.getAllTypes(),
+            this.getAllManufacturers()
+        ];
 
         return Promise.all(promises).
             then(([types, manufs]) => {
@@ -122,13 +123,13 @@ class Puzzle {
         else {
             const datauri = new Datauri();
             datauri.format(`.${getFileExt(req.file)}`, req.file.buffer);
-            
+
             return imageUploader(datauri.content).
                 then((res) => { puzzle.photoUrl = res.secure_url }).
                 catch(err => {
                     console.error(err);
                     puzzle.photoUrl = defaultPhotoUrl;
-                }). 
+                }).
                 then(() => puzzle);
         }
     }

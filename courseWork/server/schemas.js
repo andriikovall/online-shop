@@ -7,7 +7,8 @@ const DEFAULT_USER_BIO = 'Этот пользователь пока не нап
 
 const userSchema = new mongoose.Schema({
     login: { type: String, required: true },
-    fullname: { type: String, required: true },
+    first_name: { type: String, required: true },
+    last_name: { type: String, required: true },
     role: { type: Number, default: 2 },
     registeredAt: { type: Date, default: Date.now },
     avaUrl: { type: String, default: DEFAULT_USER_AVATAR_URL },

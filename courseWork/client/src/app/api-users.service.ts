@@ -10,14 +10,13 @@ import { apiUrl } from '../assets/api-url';
 
 
 export class ApiUsersService { 
-
   
   constructor (
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient
   ) { }
 
   public getAll() {
     const url = `${apiUrl}/users`;
     return this.httpClient.get(url);
   }
-}
+} 
