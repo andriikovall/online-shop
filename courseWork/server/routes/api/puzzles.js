@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Puzzle = require('../../models/puzzle');
-const cors = require('cors');
-
 
 
 router.get('/', function (req, res) {
