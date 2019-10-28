@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru"> 
+<head>
+  {{>head}}
+    <style>
+        @import "/stylesheets/common.css";  
+    </style>
+</head>
+<body>
+    {{>header}}
+    {{>navbar_begin}} 
+    {{>navbarLeft_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="/">Домой</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/puzzles">Головоломки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/users">Пользователи</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/about">О нас</a>
+    </li>
+    {{>navbarLeft_end}}
+    {{>navbarRight_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="/about">О нас</a>
+    </li>
+    {{>navbarRight_end}}
+    {{>navbar_end}}
+    <div class="data">
+        <div class="content">
+           <p>Не найдено((</p>
+           <p>Попробуйте другую ссылку</p>
+        </div>
+        {{>footer}}
+    </div>
+    {{>bootstrap_scripts}}
+</body>
+</html>  

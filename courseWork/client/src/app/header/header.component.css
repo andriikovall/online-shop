@@ -1,0 +1,30 @@
+.site_name {
+    display: inline-block;
+    position: relative;
+    top: 70px;
+}
+
+i{
+    position: relative;
+    right: 43%;
+    bottom: 45px;
+    font-size: 26px;
+}
+
+
+img {
+    display: inline-block;
+    width: 230px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+
+h1 {
+    left: 40px;
+    position: relative;
+    display: inline-block;
+    margin: 0%;
+    font-size:  60px;
+    vertical-align: 90px;
+}

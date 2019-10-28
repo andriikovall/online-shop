@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru"> 
+<head>
+  {{>head}}
+  <style>
+          @import "/stylesheets/users.css";
+  </style>
+</head>
+<body>
+    {{>header}}
+    {{>navbar_begin}} 
+    {{>navbarLeft_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="/">Домой</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/puzzles">Головоломки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/users">Пользователи</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/about">О нас</a>
+    </li>
+    {{>navbarLeft_end}}
+    {{>navbarRight_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="#">какое то поле тут</a>
+    </li>
+    {{>navbarRight_end}}
+    {{>navbar_end}}
+    <div class="data">
+        <div class="content">
+            <table class="table">
+                        {{! <th scope="row">1</th> для жирного шрифта номерации}}
+            <caption>Пользователи</caption>
+                <thead>
+                    <tr>
+                    <th scope="col">Логин</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Дата регистрации</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#users}}
+                <tr>
+                    <td><a href="users/{{id}}">{{login}}</a></td>
+                    <td>{{first_name}}</td>
+                    <td>{{last_name}}</td>
+                    <td>{{registeredAt}}</td>
+                </tr>
+                {{/users}}
+                </tbody>
+            </table>
+        </div>
+        {{>footer}}
+    </div>
+    {{>bootstrap_scripts}}
+</body>
+</html>  

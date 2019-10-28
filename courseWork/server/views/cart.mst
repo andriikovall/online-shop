@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru"> 
+<head>
+  {{>head}}
+  <style>
+        @import "/stylesheets/common.css";  
+    </style>
+</head>
+<body>
+    {{>header}}
+    {{>navbar_begin}} 
+    {{>navbarLeft_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="/">Домой</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/puzzles">Головоломки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/users">Пользователи</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/about">О нас</a>
+    </li>
+    {{>navbarLeft_end}}
+    {{>navbarRight_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="#">какое то поле тут</a>
+    </li>
+    {{>navbarRight_end}}
+    {{>navbar_end}}
+    <div class="data">
+        <div class="content">
+           {{! <p>Еще не готово. Посмотрите пока другие страницы)</p> }}
+           <table class="table">
+                        {{! <th scope="row">1</th> для жирного шрифта номерации}}
+            <caption>Корзина</caption>
+                <thead>
+                    <tr>
+                    <th scope="col">Кубик</th>
+                    {{! @todo добавить кнопку изменения состояния }}
+                    <th scope="col">Кол-во</th>
+                    <th scope="col-2">Цена (за еденицу товара)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#cart.puzzles}}
+                <tr>
+                    <td scope="col">
+                        <a href="/puzzles/{{puzzle._id}}"><img src="{{puzzle.photoUrl}}" width="150px"></a>    
+                        <a href="/puzzles/{{puzzle._id}}">{{puzzle.name}}</a>    
+                    </td>
+                    <td scope="col">
+                        <span class="btn-group mt-5">
+                            <form class="mx-2" action="/cart/{{cart._id}}/remove/{{puzzle._id}}" method="post">
+                                <button type="submit" class="btn btn-outline-primary">-</button>
+                            </form>
+                                {{count}}
+                            <form class="mx-2" action="/cart/{{cart._id}}/add/{{puzzle._id}}" method="post">
+                                <button type="submit" class="btn btn-outline-primary">+</button>
+                            </form>
+                        </span>    
+                    </td>
+                    <td scope="col">{{puzzle.price}}</td>
+                </tr>
+                {{/cart.puzzles}}
+                <tr class="table-info">
+                    <td scope="col">Итого</td>
+                    <td scope="col">{{count}}</td>
+                    <td scope="col">{{price}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <form action="/cart/{{cart._id}}" method="post">
+                {{#cart.puzzles.length}}
+                    <button type="submit" class="btn btn-outline-primary btn-lg" onclick="return confirm('Вы уверены?')">Сделать заказ</button>
+                {{/cart.puzzles.length}}
+                {{^cart.puzzles.length}}
+                    <button type="submit" class="btn btn-outline-primary btn-lg" onclick="return confirm('Вы уверены?')" disabled>Сделать заказ</button>
+                {{/cart.puzzles.length}}
+            </form>
+        </div>
+        {{>footer}}
+    </div>
+    {{>bootstrap_scripts}}
+</body>
+</html>  

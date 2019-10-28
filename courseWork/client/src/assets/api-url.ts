@@ -1,0 +1,1 @@
+export const apiUrl = 'https://ziovio-webprogbase-lab6.herokuapp.com/api';

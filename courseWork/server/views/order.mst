@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru"> 
+<head>
+  {{>head}}
+  <style>
+        @import "/stylesheets/common.css";  
+    </style>
+</head>
+<body>
+    {{>header}}
+    {{>navbar_begin}} 
+    {{>navbarLeft_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="/">Домой</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/puzzles">Головоломки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/users">Пользователи</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/about">О нас</a>
+    </li>
+    {{>navbarLeft_end}}
+    {{>navbarRight_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="#">какое то поле тут</a>
+    </li>
+    {{>navbarRight_end}}
+    {{>navbar_end}}
+    <div class="data">
+        <div class="content">
+           <table class="table">
+           <div class="row">
+                <div class="col">
+                    <caption>Заказ № {{order._id}}</caption>
+                </div>
+                <div class="col-3">
+                    <h2>Пользователь <a href="/users/{{order.user._id}}">{{order.user.login}}</a></h2>   
+                </div>
+           </div>
+            {{! <caption>Заказ № {{order._id</caption> }}
+                <thead>
+                    <tr>
+                    <th scope="col">Кубик</th>
+                    <th scope="col">Кол-во</th>
+                    <th scope="col-2">Цена (за еденицу товара)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#cart.puzzles}}
+                <tr>
+                    <td scope="col">
+                        <a href="/puzzles/{{_id}}"><img src="{{puzzle.photoUrl}}" width="150px"></a>    
+                        <a href="/puzzles/{{_id}}">{{puzzle.name}}</a>    
+                    </td>
+                    <td scope="col">{{count}}</td>
+                    <td scope="col">{{puzzle.price}}</td>
+                </tr>
+                {{/cart.puzzles}}
+                <tr class="table-info">
+                    <td scope="col">Итого</td>
+                    <td scope="col">{{count}}</td>
+                    <td scope="col">{{order.price}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {{>footer}}
+    </div>
+    {{>bootstrap_scripts}}
+</body>
+</html>  

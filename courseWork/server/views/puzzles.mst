@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru"> 
+<head>
+  {{>head}}
+    <style>
+        @import "/stylesheets/puzzles.css";  
+    </style>
+    <script src="/scripts/index.js"></script>
+</head>
+<body>
+    {{>header}}
+    {{>navbar_begin}} 
+    {{>navbarLeft_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="/">Домой</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/puzzles">Головоломки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/users">Пользователи</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/orders">Заказы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/about">О нас</a>
+    </li>
+    {{>navbarLeft_end}}
+    {{>navbarRight_begin}}
+    <li class="nav-item">
+        <a class="nav-link" href="#">Какое то поле тут</a>
+    </li>
+    {{>navbarRight_end}}
+    {{>navbar_end}}
+    <div class="data">
+        <div class="menu"> 
+        {{! @todo menu template }}
+            <div class="card">
+                <form action="/puzzles" method="GET">
+                <header class="card-header">
+                        <h3>Фильтры</h3>
+                </header>
+                <article class="card-group-item">
+                    <header class="card-header">
+                        <h5 class="title">Выбор цены </h5>
+                    </header>
+                    <div class="filter-content">
+                        <div class="card-body">
+                        <div class="form-row">
+                        <div class="form-group col-md-6">
+                        <label>От</label>
+                        <input type="number" class="form-control" name="from" placeholder="0₴" min="0"  max="10000">
+                        </div>
+                        <div class="form-group col-md-6 text-right">
+                        <label>До</label>
+                        <input type="number" class="form-control" name="to" placeholder="10,000₴" min="0" max="10000">
+                        </div>
+                        </div>
+                        </div> 
+                    </div>
+                </article>
+                <article class="card-group-item">
+                    <header class="card-header">
+                        <h5 class="title">Название</h5>
+                    </header>
+                    <div class="filter-content">
+                        <div class="card-body">
+                            <input type="text" class="form-control" placeholder="Gan, MoYu..." name="name" value="{{searchName}}">
+                        </div>
+                    </div>
+                </article>
+                <article class="card-group-item">
+                    <header class="card-header">
+                        <h5 class="title">Производитель </h5>
+                    </header>
+                    <div class="filter-content">
+                        <div class="card-body">
+                            {{#filters.manufacturers}}
+                            <div class="custom-control custom-checkbox">
+                                {{! <span class="float-right badge badge-light round">52</span> }}
+                                <input type="checkbox" class="custom-control-input" id="manufacturer_{{index}}" name="manufacturer_{{id}}">
+                                <label class="custom-control-label" for="manufacturer_{{index}}">{{value}}</label>
+                            </div> 
+                            {{/filters.manufacturers}}
+                        </div>
+                    </div>
+                </article>
+                <article class="card-group-item">
+                    <header class="card-header">
+                        <h5 class="title">Тип</h5>
+                    </header>
+                    <div class="filter-content">
+                        <div class="card-body">
+                        {{#filters.types}}
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="type_{{index}}" name="type_{{id}}">
+                                <label class="custom-control-label" for="type_{{index}}">{{value}}</label>
+                            </div> 
+                        {{/filters.types}}
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card-group-item">
+                    <header class="card-header">
+                        <h5 class="title">Радио кнопки</h5>
+                    </header>
+                    <div class="filter-content">
+                        <div class="card-body">
+                            <div class="custom-control custom-radio">
+                                {{! <span class="float-right badge badge-light round">52</span> }}
+                                <input type="radio" class="custom-control-input" id="rad1" name="someRadio" value="1">
+                                <label class="custom-control-label" for="rad1">радио1</label>
+                            </div> 
+
+                            <div class="custom-control custom-radio">
+                                {{! <span class="float-right badge badge-light round">52</span> }}
+                                <input type="radio" class="custom-control-input" id="rad2" name="someRadio" value="2">
+                                <label class="custom-control-label" for="rad2">радио2</label>
+                            </div> 
+                        </div>
+                    </div>
+                </article>
+                <button type="submit" class="btn">Поиск</button>
+            </div>
+            </form>
+        </div>
+        <div class="content" style="width: 75%">
+        {{^items.length}}
+            <div class="card">
+                <div class="card-body">Головоломок по названию: <b>{{searchName}}</b> не найдено</div>
+            </div>
+        {{/items.length}}
+        {{#items.length}}
+        {{#searchName}}
+            <div class="card">
+                <div class="card-body">Результаты поиска по запросу: <b>{{searchName}}</b></div>
+            </div>
+        {{/searchName}}
+        {{/items.length}}
+            <a href="/puzzles/new" style="text-decoration: none">
+                <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
+            </a>
+            <div class="content_puzzles">
+            {{#items}}
+                <div class="puzzle_block">
+                    <a href="/puzzles/{{id}}"><img src="{{photoUrl}}" alt="Puzzle image"></a>
+                    <a href="/puzzles/{{id}}"> <caption><b>{{name}}</b></caption></a>
+                    <p>{{price}}₴</p>
+                    <div class="puzzle_block_price">
+                        <table>
+                            <tr>
+                                <td>Рейтинг</td>
+                                <td>{{rating}}/5</td>
+                            </tr>
+                        </table>
+                        <form action="/puzzles" method="post">
+                            <button id="btn_block_buy" name="puzzle_id" value="{{_id}}">В корзину</button>
+                        </form>
+                    </div>
+                </div>
+            {{/items}}
+            </div>
+            <ul class="pagination justify-content-center" style="margin:20px 0">
+                {{! <li class="page-item"><a class="page-link" href="#">Previous</a></li> }}
+                {{#pages}}
+                <li class="page-item"><a class="page-link" href="#" onclick="addParam('page', parseInt(this.innerHTML))">{{index}}</a></li>
+                {{/pages}}
+                {{! <li class="page-item"><a class="page-link" href="#">Next</a></li> }}
+            </ul>
+        </div>
+        {{>footer}}
+    </div>
+    {{>bootstrap_scripts}}
+</body>
+</html>  
