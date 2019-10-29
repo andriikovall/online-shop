@@ -97,8 +97,8 @@ class Puzzle {
 
         return Promise.all(promises).
             then(([types, manufs]) => {
-                types = types.map((type, index) => ({ index, value: type.name, id: type._id }));
-                manufs = manufs.map((man, index) => ({ index, value: man.name, id: man._id }));
+                types = types.map((type, index) => ({ index, value: type.name, _id: type._id }));
+                manufs = manufs.map((man, index) => ({ index, value: man.name, _id: man._id }));
                 return {
                     types: types,
                     manufacturers: manufs

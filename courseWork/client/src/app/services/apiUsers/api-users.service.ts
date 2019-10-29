@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { apiUrl } from '../assets/api-url';
+import { apiUrl } from '../../../assets/api-url';
 
 
 @Injectable({
@@ -16,7 +16,7 @@ export class ApiUsersService {
   ) { }
 
   public getAll() {
-    const url = `${apiUrl}/users`;
+    const url = `${apiUrl}/users/all`;
     return this.httpClient.get(url);
   }
 } 

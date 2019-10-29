@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ApiUsersService } from '../api-users.service';
+import { ApiUsersService } from '../services/apiUsers/api-users.service';
 
 
 @Component({
@@ -12,7 +12,6 @@ import { ApiUsersService } from '../api-users.service';
 export class UsersComponent implements OnInit {
   
   users;
-  loadingBarPersenrage: number;
 
   constructor(private usersService: ApiUsersService) { }
 

@@ -1,1 +1,1 @@
-export const apiUrl = 'https://ziovio-webprogbase-lab6.herokuapp.com/api';
+export const apiUrl = 'http://localhost:12010/api';
