@@ -66,6 +66,38 @@ class Puzzle {
             then(val => ([val, count]));
     }
 
+    static getFilteredSearch(filters) {
+        const manufs = filters.manufacturers || [];
+        const types = filters.types || [];
+        const priceFrom = filters.priceFrom || 0 - 1;
+        const priceTo = filters.priceTo || 1000000000;
+        const limit = filters.limit;
+        const offset = filters.offset;
+        const searchedName = filters.name;
+
+        const findPredicate = {
+            name: { $regex: `.*${searchedName}.*`, $options: "i" },
+            manufacturerId: { $in: manufs },
+            typeId: { $in: types },
+            price: { $gt: priceFrom, $lt: priceTo },
+        }
+
+
+        const promises = [
+            puzzleModel.countDocuments(findPredicate),
+            puzzleModel.find(findPredicate).limit(limit).skip(offset)
+        ];
+
+        return Promise.all(promises).
+            then(([count, puzzles]) => {
+                return {
+                    count,
+                    puzzles
+                };
+            })
+
+    }
+
 
 
     static update(puzzle) {

@@ -1,6 +1,6 @@
 <div class="menu">
     <div class="card">
-        <form [formGroup]="filtersForm" (ngSubmit)="onFiltersSubmit(filtersForm.value)" >
+        <form [formGroup]="filtersForm" (ngSubmit)="onFiltersSubmit(filtersForm.value)">
             <header class="card-header">
                 <h3>Фильтры</h3>
             </header>
@@ -13,13 +13,13 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>От</label>
-                                <input type="number" class="form-control" formControlName="from" placeholder="0₴" min="0"
-                                    max="10000">
+                                <input type="number" class="form-control" formControlName="priceFrom" placeholder="0₴"
+                                    min="0" max="10000" value="0₴">
                             </div>
                             <div class="form-group col-md-6 text-right">
                                 <label>До</label>
-                                <input type="number" class="form-control" formControlName="to" placeholder="10,000₴" min="0"
-                                    max="10000">
+                                <input type="number" class="form-control" formControlName="priceTo"
+                                    placeholder="10,000₴" min="0" max="10000" value="10,000₴">
                             </div>
                         </div>
                     </div>
@@ -41,13 +41,14 @@
                 </header>
                 <div class="filter-content">
                     <div class="card-body">
+                        <div class="spinner-border" *ngIf="!allFilters.manufacturers"></div>
                         <div [formGroup]="filtersForm.controls.manufacturers">
                             <div class="custom-control custom-checkbox"
-                                *ngFor="let m of filters.manufacturers; let i = index" >
+                                *ngFor="let m of allFilters.manufacturers; let i = index">
                                 <!-- {{! <span class="float-right badge badge-light round">52</span> }} 
                                 @todo потом сделать посчет всех пазлов производителя-->
                                 <input type="checkbox" class="custom-control-input" id="manufacturer_{{i}}"
-                                [formControlName]="m.value">
+                                    [formControlName]="m._id">
                                 <label class="custom-control-label" for="manufacturer_{{i}}">{{m.value}}</label>
                             </div>
                         </div>
@@ -60,10 +61,12 @@
                 </header>
                 <div class="filter-content">
                     <div class="card-body">
+                        <div class="spinner-border" *ngIf="!allFilters.types"></div>
                         <div [formGroup]="filtersForm.controls.types">
-                            <div class="custom-control custom-checkbox" *ngFor="let type of filters.types; let i=index">
+                            <div class="custom-control custom-checkbox"
+                                *ngFor="let type of allFilters.types; let i=index">
                                 <input type="checkbox" class="custom-control-input" id="type_{{i}}"
-                                    [formControlName]="type.value">
+                                    [formControlName]="type._id">
                                 <label class="custom-control-label" for="type_{{i}}">{{type.value}}</label>
                             </div>
                         </div>
@@ -74,3 +77,52 @@
         </form>
     </div>
 </div>
+<div class="content" style="width: 75%">
+    <!-- {{^items.length}} -->
+    <!-- {{/items.length}} //@todo -->
+    <div class="card" *ngIf="this.currentFilters.name">
+        <div class="card-body">Результаты поиска по запросу: <b>{{this.currentFilters.name}}</b></div>
+    </div>
+    <!-- <a routerLink="/puzzles/new" style="text-decoration: none">
+        <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
+    </a> -->
+    <div class="content_puzzles">
+        <div class="spinner-border" *ngIf="!puzzles"></div>
+        <div *ngFor="let puzzle of puzzles  | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalItems }"
+            class="puzzle_block">
+            <!-- <a routerLink="/puzzles/{{puzzle._id}}"><img src="{{puzzle.photoUrl}}" alt="Puzzle image"></a> -->
+            <!-- <a routerLink="/puzzles/{{puzzle._id}}"> -->
+                <!-- <caption><b>{{puzzle.name}}</b></caption> -->
+            <!-- </a> -->
+            <!-- <p>{{puzzle.price}}₴</p> -->
+            <!-- <div class="puzzle_block_price"> -->
+                <!-- <table> -->
+                    <!-- <tr> -->
+                        <!-- <td>Рейтинг</td> -->
+                        <!-- <td>{{puzzle.rating}}/5</td> -->
+                    <!-- </tr> -->
+                <!-- </table> -->
+                <!-- <form action="/puzzles" method="post"> -->
+                <!-- <button id="btn_block_buy" name="puzzle_id" value="{{puzzle._id}}">В корзину</button> -->
+                <!-- </form> -->
+            <!-- </div> -->
+            <div class="card">
+                <!-- <div class="card-sale">🔥Hot Sale🔥</div> -->
+                <div class="card-img-wrapper">
+                    <img src="{{puzzle.photoUrl}}" alt="">
+                    <!-- <span class="card-img-top" style="background-image: url({{puzzle.photoUrl}})"></span> -->
+                </div>
+                <div class="card-body justify-content-between">
+                    <div class="card-price">{{puzzle.price}}</div>
+                    <h5 class="card-title">{{puzzle.name}}</h5>
+                    <button class="btn btn-primary">В корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mx-10">
+        <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
+        </pagination-controls>
+    </div>
+</div>
+<!-- <li *ngFor="let item of collection | paginate: { itemsPerPage: 10, currentPage: p, totalItems: res.count }">...</li> -->

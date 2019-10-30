@@ -3,8 +3,24 @@ const router = express.Router();
 const Puzzle = require('../../models/puzzle');
 
 
-router.get('/', function (req, res) {
-    res.status(500).send('Not implemented yet'); //@todo
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json({ extended: false });
+
+function responseWithError(err, status, res) {
+    res.status(status).json({
+        err: err.toString(), 
+        status
+    });
+}
+
+
+router.post('',  jsonParser, async (req, res) => {
+    try {
+        const response = await Puzzle.getFilteredSearch(req.body);
+        res.json(response);
+    } catch (err) {
+        responseWithError(err, 500, res);
+    }
 });
 
 router.get('/all', async (req, res) => {

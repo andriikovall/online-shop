@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/user');
-const cors = require('cors');
 
 
 router.get('/', function (req, res) {
