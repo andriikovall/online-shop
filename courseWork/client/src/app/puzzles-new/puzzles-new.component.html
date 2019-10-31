@@ -1,0 +1,89 @@
+<div class="content">
+    <form [formGroup]="puzzleForm" (ngSubmit)="onPuzzleSubmit(puzzleForm.value)">
+        <fieldset>
+            <legend>Добавление головоломки</legend>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label for="inputName">Название</label>
+                            <input type="text" class="form-control form-control-lg" id="inputName"
+                                formControlName="name" placeholder="Gan, Moyu..." required>
+                        </div>
+                        <div class="form-group col-5">
+                            <label for="inputPrice">Цена</label>
+                            <input id="inputPrice" class="form-control form-control-lg" type="number"
+                                formControlName="price" min="0" max="10000" placeholder="250">
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        <div class="form-group col-5">
+                            <label for="inputType">Выбор типа</label>
+                            <select class="form-control form-control-lg" formControlName="typeId">
+                                <option (click)="changeType(type._id)" [ngValue]="type._id"
+                                    *ngFor="let type of typesAndManufacturers.types">{{type.value}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-1">
+                            <button type="submit" class="btn btn-outline-primary mt-5" onclick="return false">+</button>
+                        </div>
+
+                        <div class="form-group col-5">
+
+                            <label for="inputManufacturer">Выбор производителя</label>
+                            <select class="form-control form-control-lg" id="inputManufacturer" formControlName="manufacturerId">
+                                <option *ngFor="let m of typesAndManufacturers.manufacturers" [ngValue]="m._id">{{m.value}}</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group col-1">
+                            <button type="submit" class="btn btn-outline-primary mt-5" onclick="return false">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-2">
+                            <label for="inputWCA">WCA</label>
+                            <select class="form-control form-control-lg" name="isWCA" formControlName="isWCA">
+                                <option [ngValue]="true" selected> Да</option>
+                                <option [ngValue]="false">Нет</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="inputAvailable">В наличии</label>
+                            <select class="form-control form-control-lg" id="inputAvailable" name="isAvailable" formControlName="isAvailable">
+                                <option [ngValue]="true"> Да</option>
+                                <option [ngValue]="false">Нет</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row ml-1">
+                        <div class="form-group">
+                            <label for="inputDescrition">Описание</label>
+                            <textarea class="form-control" id="inputDescrition" rows="10" cols="70"
+                                formControlName="description_md"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group col-6">
+                        <label>Картинка</label>
+                        <div class="custom-file">
+                            <label for="customFile">Выберите файл</label>
+                            <input type="file" accept=".jpg, .jpeg, .png" (change)="onFileChanged($event)">
+                        </div>
+                    </div>
+                    <img id="bufferImage"
+                        src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081"
+                        alt="Placeholder image"  width="80%" class="ml-3">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-primary btn-lg">Добавить</button>
+            <button type="button" class="btn btn-oultile-secondary btn-lg">Отмена</button>
+        </fieldset>
+    </form>
+    <p>{{puzzleForm.value | json}}</p>
+</div>

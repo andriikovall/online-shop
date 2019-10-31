@@ -61,7 +61,7 @@
                 </header>
                 <div class="filter-content">
                     <div class="card-body">
-                        <div class="spinner-border" *ngIf="!allFilters.types"></div>
+                        <div class="spinner-border" *ngIf="!allFilters.types.length"></div>
                         <div [formGroup]="filtersForm.controls.types">
                             <div class="custom-control custom-checkbox"
                                 *ngFor="let type of allFilters.types; let i=index">
@@ -78,45 +78,33 @@
     </div>
 </div>
 <div class="content" style="width: 75%">
-    <!-- {{^items.length}} -->
     <!-- {{/items.length}} //@todo -->
     <div class="card" *ngIf="this.currentFilters.name">
         <div class="card-body">Результаты поиска по запросу: <b>{{this.currentFilters.name}}</b></div>
     </div>
-    <!-- <a routerLink="/puzzles/new" style="text-decoration: none">
+    <a style="text-decoration: none" [routerLink]="['/puzzles/new']">
         <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
-    </a> -->
+    </a>
     <div class="content_puzzles">
-        <div class="spinner-border" *ngIf="!puzzles"></div>
+        <div class="spinner-border" *ngIf="!puzzles.length"></div>
         <div *ngFor="let puzzle of puzzles  | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalItems }"
             class="puzzle_block">
-            <!-- <a routerLink="/puzzles/{{puzzle._id}}"><img src="{{puzzle.photoUrl}}" alt="Puzzle image"></a> -->
-            <!-- <a routerLink="/puzzles/{{puzzle._id}}"> -->
-                <!-- <caption><b>{{puzzle.name}}</b></caption> -->
-            <!-- </a> -->
-            <!-- <p>{{puzzle.price}}₴</p> -->
-            <!-- <div class="puzzle_block_price"> -->
-                <!-- <table> -->
-                    <!-- <tr> -->
-                        <!-- <td>Рейтинг</td> -->
-                        <!-- <td>{{puzzle.rating}}/5</td> -->
-                    <!-- </tr> -->
-                <!-- </table> -->
-                <!-- <form action="/puzzles" method="post"> -->
-                <!-- <button id="btn_block_buy" name="puzzle_id" value="{{puzzle._id}}">В корзину</button> -->
-                <!-- </form> -->
-            <!-- </div> -->
-            <div class="card">
-                <!-- <div class="card-sale">🔥Hot Sale🔥</div> -->
-                <div class="card-img-wrapper">
-                    <img src="{{puzzle.photoUrl}}" alt="">
-                    <!-- <span class="card-img-top" style="background-image: url({{puzzle.photoUrl}})"></span> -->
-                </div>
-                <div class="card-body justify-content-between">
-                    <div class="card-price">{{puzzle.price}}</div>
-                    <h5 class="card-title">{{puzzle.name}}</h5>
-                    <button class="btn btn-primary">В корзину</button>
-                </div>
+            <a routerLink="/puzzles/{{puzzle._id}}"><img src="{{puzzle.photoUrl}}" alt="Puzzle image"
+                    height="250px"></a>
+            <a routerLink="/puzzles/{{puzzle._id}}">
+                <caption><b>{{puzzle.name}}</b></caption>
+            </a>
+            <p>{{puzzle.price}}₴</p>
+            <div class="puzzle_block_price">
+                <table>
+                    <tr>
+                        <td>Рейтинг</td>
+                        <td>{{puzzle.rating}}/5</td>
+                    </tr>
+                </table>
+                <form action="/puzzles" method="post">
+                    <button id="btn_block_buy" name="puzzle_id" value="{{puzzle._id}}">В корзину</button>
+                </form>
             </div>
         </div>
     </div>

@@ -14,7 +14,8 @@ import { AboutComponent } from './about/about.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component'
 import { UsersComponent } from './users/users.component';
 
-import { NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
 
 
 
@@ -27,7 +28,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     IndexComponent,
     AboutComponent,
     UsersComponent,
-    PuzzlesComponent
+    PuzzlesComponent,
+    PuzzlesNewComponent
   ],
   imports: [
     BrowserModule,

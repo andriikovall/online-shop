@@ -124,7 +124,7 @@
     display: inline-block;
     margin: 10px;
     width: 28%;
-    min-height: 350px;
+    height: 500px;
     padding-bottom: 10px;
     padding-left: 20px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
@@ -137,18 +137,24 @@
 .puzzle_block_price {
     width: 100%;
     position: relative;
-    bottom: 10%;
+    /* bottom: 100px; */
+}
+
+.puzzle_block caption {
+    min-height: 20%;
 }
 
 #btn_block_buy {
+    position: relative;
     right: 4%;
     width: 40%;
+    bottom: 5%;
     font-size: 15px;
     background: rgb(64,199,129);
     color: white;
     border-radius: 5px;
     padding: 10px;
-    margin: 0 auto;
+    margin: 10px auto;
     float: right;
 }
 

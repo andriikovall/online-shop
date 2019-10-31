@@ -1,14 +1,14 @@
 export class Puzzle {
     _id: number;
     name: string;
-    isAvailable: boolean;
-    isWCA: boolean;
+    isAvailable: boolean = true;
+    isWCA: boolean = true;
     description_md: string;
-    photoUrl: string;
+    photoUrl: any;
     typeId: string;
     price: number;
     manufacturerId: string;
-    lastModified: Date;
+    lastModified?: Date;
     rating? :number;
 
     public getRating() {

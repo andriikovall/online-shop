@@ -3,7 +3,7 @@ import { FormBuilder, FormArray, FormControl } from '@angular/forms';
 
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
 import { PaginationInstance } from 'ngx-pagination';
-import { Puzzle } from '../models/puzzle.model';
+import { Puzzle } from '../models/puzzle.model';  
 
 @Component({
   selector: 'app-puzzles',
@@ -14,7 +14,7 @@ import { Puzzle } from '../models/puzzle.model';
 export class PuzzlesComponent implements OnInit {
 
   allFilters;
-
+  
   filtersForm;
 
   currentFilters: {
@@ -45,11 +45,13 @@ export class PuzzlesComponent implements OnInit {
 
   constructor(
     private puzzlesService: ApiPuzzlesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
   }
 
+
   ngOnInit() {
+    console.log('HERE');
     this.puzzlesService.getFilters().subscribe((filters: any) => {
       this.allFilters = filters;
       const manufs = filters.manufacturers;
