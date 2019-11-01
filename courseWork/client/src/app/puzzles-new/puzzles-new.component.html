@@ -1,5 +1,6 @@
 <div class="content">
-    <form [formGroup]="puzzleForm" (ngSubmit)="onPuzzleSubmit(puzzleForm.value)">
+    <form [formGroup]="puzzleForm" *ngIf="puzzleForm && typesAndManufacturers"
+        (ngSubmit)="onPuzzleSubmit(this.puzzleForm.value)">
         <fieldset>
             <legend>Добавление головоломки</legend>
             <hr>
@@ -8,20 +9,26 @@
                     <div class="form-row">
                         <div class="form-group col-6">
                             <label for="inputName">Название</label>
-                            <input type="text" class="form-control form-control-lg" id="inputName"
-                                formControlName="name" placeholder="Gan, Moyu..." required>
+                            <input type="text" [class.is-invalid]="!nameIsValid()" class="form-control form-control-lg"
+                                id="inputName" formControlName="name" placeholder="Gan, Moyu..." required>
+                            <small *ngIf="!nameIsValid()" class="form-text text-danger">
+                                Длина имени должна быть 4 и больше символов</small>
+                            <!-- <div 
+                                class="alert alert-danger">Так низя</div> -->
                         </div>
                         <div class="form-group col-5">
                             <label for="inputPrice">Цена</label>
-                            <input id="inputPrice" class="form-control form-control-lg" type="number"
-                                formControlName="price" min="0" max="10000" placeholder="250">
+                            <input id="inputPrice" [class.is-invalid]="!priceIsValid()"
+                                class="form-control form-control-lg" type="number" formControlName="price" min="0"
+                                max="10000" placeholder="250">
                         </div>
                     </div>
                     <div class="form-row">
 
                         <div class="form-group col-5">
                             <label for="inputType">Выбор типа</label>
-                            <select class="form-control form-control-lg" formControlName="typeId">
+                            <select class="form-control form-control-lg" [class.is-invalid]="!typeIdIsValid()"
+                                formControlName="typeId">
                                 <option (click)="changeType(type._id)" [ngValue]="type._id"
                                     *ngFor="let type of typesAndManufacturers.types">{{type.value}}</option>
                             </select>
@@ -34,8 +41,10 @@
                         <div class="form-group col-5">
 
                             <label for="inputManufacturer">Выбор производителя</label>
-                            <select class="form-control form-control-lg" id="inputManufacturer" formControlName="manufacturerId">
-                                <option *ngFor="let m of typesAndManufacturers.manufacturers" [ngValue]="m._id">{{m.value}}</option>
+                            <select [class.is-invalid]="!manufacturerIdIsValid()" class="form-control form-control-lg"
+                                id="inputManufacturer" formControlName="manufacturerId">
+                                <option *ngFor="let m of typesAndManufacturers.manufacturers" [ngValue]="m._id">
+                                    {{m.value}}</option>
                             </select>
 
                         </div>
@@ -54,7 +63,8 @@
                         </div>
                         <div class="form-group col-3">
                             <label for="inputAvailable">В наличии</label>
-                            <select class="form-control form-control-lg" id="inputAvailable" name="isAvailable" formControlName="isAvailable">
+                            <select class="form-control form-control-lg" id="inputAvailable" name="isAvailable"
+                                formControlName="isAvailable">
                                 <option [ngValue]="true"> Да</option>
                                 <option [ngValue]="false">Нет</option>
                             </select>
@@ -63,8 +73,10 @@
                     <div class="form-row ml-1">
                         <div class="form-group">
                             <label for="inputDescrition">Описание</label>
-                            <textarea class="form-control" id="inputDescrition" rows="10" cols="70"
-                                formControlName="description_md"></textarea>
+                            <textarea [class.is-invalid]="!description_mdIsValid()" class="form-control"
+                                id="inputDescrition" rows="10" cols="70" formControlName="description_md"></textarea>
+                            <small *ngIf="!description_mdIsValid()" class="form-text text-danger">
+                                Этот текст не должен быть пустым</small>
                         </div>
                     </div>
                 </div>
@@ -73,17 +85,20 @@
                         <label>Картинка</label>
                         <div class="custom-file">
                             <label for="customFile">Выберите файл</label>
-                            <input type="file" accept=".jpg, .jpeg, .png" (change)="onFileChanged($event)">
+                            <!-- <input type="file" accept=".jpg, .jpeg, .png" (change)="onFileChanged($event)"> -->
+                            <input  #imageInput type="file" accept="image/*" (change)="onFileSeleceted(imageInput)" />
                         </div>
                     </div>
                     <img id="bufferImage"
                         src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081"
-                        alt="Placeholder image"  width="80%" class="ml-3">
+                        alt="Placeholder image" width="80%" class="ml-3">
                 </div>
             </div>
-            <button type="submit" class="btn btn-outline-primary btn-lg">Добавить</button>
+            <button type="submit" class="btn btn-outline-primary btn-lg" *ngIf="puzzleForm.valid">Добавить</button>
+            <button type="submit" class="btn btn-outline-primary btn-lg" *ngIf="!puzzleForm.valid"
+                disabled>Добавить</button>
             <button type="button" class="btn btn-oultile-secondary btn-lg">Отмена</button>
         </fieldset>
+        <p>{{puzzleForm.value | json}}</p>
     </form>
-    <p>{{puzzleForm.value | json}}</p>
 </div>

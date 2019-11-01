@@ -5,6 +5,7 @@ export class Puzzle {
     isWCA: boolean = true;
     description_md: string;
     photoUrl: any;
+    file: any;
     typeId: string;
     price: number;
     manufacturerId: string;
