@@ -4,19 +4,9 @@ const path    = require('path');
 const uploadsDir = 'data/fs';
 const uploadsFullPath = path.join(__dirname, uploadsDir);
 
-// const storageConfig = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, uploadsFullPath);
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + file.originalname);
-//     }
-// });
-
 const storage = multer({
-    fileFilter: fileFilter });
-    
-    
+    fileFilter: fileFilter 
+});
 
 function isImage(multerFile) {
     const fileExtension = getFileExtension(multerFile) || '';

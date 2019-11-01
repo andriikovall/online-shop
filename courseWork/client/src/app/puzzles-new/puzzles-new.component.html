@@ -86,7 +86,7 @@
                         <div class="custom-file">
                             <label for="customFile">Выберите файл</label>
                             <!-- <input type="file" accept=".jpg, .jpeg, .png" (change)="onFileChanged($event)"> -->
-                            <input  #imageInput type="file" accept="image/*" (change)="onFileSeleceted(imageInput)" />
+                            <input  #imageInput type="file" accept="image/*" (change)="onFileSeleceted($event)">
                         </div>
                     </div>
                     <img id="bufferImage"

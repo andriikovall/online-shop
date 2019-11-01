@@ -1,5 +1,5 @@
 export class Puzzle {
-    _id: number;
+    _id: string;
     name: string;
     isAvailable: boolean = true;
     isWCA: boolean = true;

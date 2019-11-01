@@ -110,7 +110,7 @@ class Puzzle {
     }
 
     static getTypeById(typeId) {
-        return Type.getById(typeId);
+        return Type.getById(typeId).then(t => t.name);
     }
 
     static getManufacturerById(manufacturerId) {
@@ -139,13 +139,13 @@ class Puzzle {
     }
 
     static getPuzzleFromFormRequest(req) {
-        const name = req.body.inputName;
+        const name = req.body.name;
         const price = trimPrice(parseInt(req.body.inputPrice));
-        const typeId = req.body.type;
-        const manufacturerId = req.body.manufacturer;
+        const typeId = req.body.typeId;
+        const manufacturerId = req.body.manufacturerId;
         const isWCA = !!(req.body.isWCA);
         const isAvailable = !!(req.body.isAvailable);
-        const bio = req.body.description;
+        const bio = req.body.description_md;
         let photoUrl;
         let puzzle = new Puzzle(name, photoUrl, typeId, isWCA, price, isAvailable, manufacturerId, bio)
         if (!req.file) {

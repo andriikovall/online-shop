@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+//import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
 import { Puzzle } from '../models/puzzle.model';
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
@@ -8,7 +8,7 @@ import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 class ImageSnippet {
-  constructor(public src: string, public file: File) {}
+  constructor(public src: string, public file: File) { }
 }
 
 
@@ -21,6 +21,8 @@ export class PuzzlesNewComponent implements OnInit {
 
   @Input()
   puzzle: Puzzle;
+
+  file: File;
 
   puzzleForm: FormGroup;
 
@@ -54,7 +56,7 @@ export class PuzzlesNewComponent implements OnInit {
         typeId: new FormControl(this.puzzle.typeId,
           [Validators.required]),
         price: new FormControl(this.puzzle.price,
-          [Validators.required, Validators.min(0), Validators.max(1000000)])
+          [Validators.required, Validators.min(0), Validators.max(99999999999)]) 
       });
     });
   }
@@ -81,14 +83,29 @@ export class PuzzlesNewComponent implements OnInit {
   }
 
 
-  public onFileSeleceted(imageInput: any) {
-    this.puzzle.file = imageInput.files[0];
+  public onFileSeleceted(event: any) {
+    this.file = event.target.files[0]; 
   }
 
   public onPuzzleSubmit(value) {
     this.puzzle = value;
-    console.log(value);
+    this.puzzle.file = this.file;
+    const uploadFormData = this.getFormDataFromObj(this.puzzle);
+    this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe(res => {
+      console.log(res);
+    })
   }
 
+  private getFormDataFromObj(obj: object | any) {
+    let uploadFormData = new FormData();
+    for (var key in obj) {
+      console.log(key);
+      if ((typeof obj[key]).toLowerCase() === 'file' && obj.name)
+        uploadFormData.append(key, obj[key], obj.name);
+      else
+        uploadFormData.append(key, obj[key]);
+    }
+    return uploadFormData;
+  }
 
 }

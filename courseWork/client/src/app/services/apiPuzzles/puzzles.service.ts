@@ -27,4 +27,9 @@ export class ApiPuzzlesService {
     filters.offset = offset;
     return this.httpClient.post(this.buildApiLink('/puzzles'), filters);
   }
+
+  public insertPuzzleMultipart(puzzle: FormData) {
+    const url = this.buildApiLink('/puzzles/new/mp');
+    return this.httpClient.post(url, puzzle);
+  }
 }

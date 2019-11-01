@@ -41,7 +41,7 @@ app.set('views', viewsDir);
 const publicDir = path.join(__dirname, 'public');
 app.use(express.static(publicDir));
 
-app.use(storage.single("image"));
+app.use(storage.single("file"));
 
 const partialsDir = path.join(viewsDir, "partials");
 app.engine('mst', mustache(partialsDir));

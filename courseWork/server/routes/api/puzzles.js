@@ -2,13 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Puzzle = require('../../models/puzzle');
 
-
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json({ extended: false });
 
 function responseWithError(err, status, res) {
     res.status(status).json({
-        err: err.toString(), 
+        msg: err.toString(), 
         status
     });
 }
@@ -28,7 +27,7 @@ router.get('/all', async (req, res) => {
         const puzzles = await Puzzle.getAll();
         res.json(puzzles);
     } catch (err) {
-        res.sendStatus(500);
+        responseWithError(err, 500, res);
     }
 });
 
@@ -55,13 +54,16 @@ router.delete('/:id([\\da-z]{24})', async (req, res) => {
     }
 });
 
-router.post('/new', async (req, res) => {
+router.post('/new/mp', async (req, res) => {
 
     const puzzle = await Puzzle.getPuzzleFromFormRequest(req);
     try {
-        await Puzzle.insert(puzzle);
-    } catch {
-        res.sendStatus(500);
+        const insertedPuzzle = await Puzzle.insert(puzzle);
+        res.status(201).send({
+            puzzle: insertedPuzzle
+        });
+    } catch (err) {
+        responseWithError(err, 500, res);
     }
 
 });
