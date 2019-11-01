@@ -89,8 +89,8 @@
         <div class="spinner-border" *ngIf="!puzzles.length"></div>
         <div *ngFor="let puzzle of puzzles  | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalItems }"
             class="puzzle_block">
-            <a [routerLink]="['/puzzles', puzzle._id]"><img src="{{puzzle.photoUrl}}" alt="Puzzle image"
-                    height="250px"></a>
+            <a [routerLink]="['/puzzles', puzzle._id]">
+                <img src="{{puzzle.photoUrl}}" alt="Puzzle image" height="250px"></a>
             <a [routerLink]="['/puzzles', puzzle._id]">
                 <caption><b>{{puzzle.name}}</b></caption>
             </a>

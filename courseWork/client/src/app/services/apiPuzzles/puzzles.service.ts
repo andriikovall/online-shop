@@ -22,6 +22,11 @@ export class ApiPuzzlesService {
     return  this.httpClient.get(url);
   }
 
+  public deleteById(id: string) { 
+    const url = this.buildApiLink('/puzzles/') + id;
+    return this.httpClient.delete(url);
+  }
+
   public getFilters() {
     const url = this.buildApiLink('/puzzles/filters');
     return this.httpClient.get(url);
@@ -37,4 +42,5 @@ export class ApiPuzzlesService {
     const url = this.buildApiLink('/puzzles/new/mp');
     return this.httpClient.post(url, puzzle);
   }
+
 }

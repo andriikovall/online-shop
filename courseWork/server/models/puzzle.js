@@ -4,17 +4,17 @@ const paginator = require('../utils/pagination');
 
 const Manufacturer = require('./manufacturer');
 const Type = require('./puzzle_types');
-
-const defaultPhotoUrl = 'https://uaprom-static.c2.prom.st/image/new_design/images/no_image-hce614324446b22b42a09b69093e309fce.png';
-
 const mongoose = require('mongoose');
 const puzzleSchema = require('../schemas').puzzleSchema;
 const puzzleModel = new mongoose.model('Puzzle', puzzleSchema);
+const manufacturerModel = require('./manufacturer').model;
+const typeModel = require('./puzzle_types').model;
 
 const imageUploader = require('../cloudinaryConfig');
-
 const Datauri = require('datauri');
 const getFileExt = require('../multerStorage').getFileExtension;
+
+const defaultPhotoUrl = 'https://uaprom-static.c2.prom.st/image/new_design/images/no_image-hce614324446b22b42a09b69093e309fce.png';
 
 class Puzzle {
 
@@ -30,7 +30,9 @@ class Puzzle {
     }
 
     static getById(id) {
-        return puzzleModel.findById(id);
+        return puzzleModel.findById(id).
+            populate({ path: 'manufacturerId', model: manufacturerModel }). 
+            populate({ path: 'typeId', model: typeModel })
     }
 
     static getAll() {

@@ -6,9 +6,9 @@ export class Puzzle {
     description_md: string;
     photoUrl: any;
     file: any;
-    typeId: string;
+    typeId: any;
     price: number;
-    manufacturerId: string;
+    manufacturerId: any;
     lastModified?: Date;
     rating? :number;
 

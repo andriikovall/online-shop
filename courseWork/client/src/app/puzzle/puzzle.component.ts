@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Puzzle } from '../models/puzzle.model';
 import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
 
@@ -15,7 +16,8 @@ export class PuzzleComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private puzzlesService: ApiPuzzlesService
+    private puzzlesService: ApiPuzzlesService, 
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -23,6 +25,16 @@ export class PuzzleComponent implements OnInit {
     this.puzzlesService.getById(puzzleId).subscribe((puzzle: Puzzle) => {
       this.puzzle = puzzle;
     })
+  }
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    }, (reason) => {
+    });
+  }
+
+  onDelete() {
+
   }
 
 }

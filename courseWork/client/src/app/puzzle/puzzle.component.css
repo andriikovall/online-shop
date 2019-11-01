@@ -1,0 +1,81 @@
+.puzzle_data {
+    display: inline-block;
+    position: relative;
+    left: 10px;
+    width: 90%;
+}
+
+.puzzle_data img {
+    position: relative;
+    top: 18px;
+}
+
+.puzzle_data p {
+    font-size: 22px;
+}
+
+.puzzle_data h1 {
+    margin-top: 0px;
+}
+
+
+
+.puzzle_price {
+    display: inline-block;
+    position: relative;
+    right: 50px;
+    top: -10px;
+    float: right;
+}
+
+.puzzle_price b {
+    font-size: 32px;
+}
+
+.puzzle_price p {
+    font-size: 29px;
+}
+
+.puzzle_price #btn_buy {
+    display: block;
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgb(63, 194, 126);
+    box-shadow: 0 -3px rgb(53,167,110) inset;
+    transition: 0.2s;
+}
+
+#btn_buy:hover {
+    background: rgb(23, 156, 88);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+
+.puzzle_short_info {
+    display: inline-block;
+    width: 100%;
+    /* float: right; */
+}
+
+.puzzle_specs {
+    position: relative;
+    left: 5%;
+    top: 20px;
+    margin: auto;
+    display: inline-block;
+}
+
+.puzzle_specs table {
+    display: block;
+    text-align: left;
+    border-spacing: 20px;
+}
+
+.puzzle_bio p {
+    font-size: 18px;
+}

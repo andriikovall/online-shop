@@ -31,13 +31,13 @@ router.get('/all', async (req, res) => {
     }
 });
 
-router.get('/:id([\\da-z]{,24})', async (req, res) => {
+router.get('/:id([\\da-z]{24})', async (req, res) => {
     const puzzle_id = req.params.id
     try {
         const puzzle = await Puzzle.getById(puzzle_id);
         if (!puzzle)
             res.status(404).json({
-                err: 'No user with such id'
+                err: 'No puzzle with such id'
             });
         else 
             res.json(puzzle);
@@ -47,10 +47,11 @@ router.get('/:id([\\da-z]{,24})', async (req, res) => {
     }
 });
 
-router.delete('/:id([\\da-z]{,24})', async (req, res) => {
+router.delete('/:id([\\da-z]+)', async (req, res) => {
     try {
         const puzzleId = req.params.id;
-        await Puzzle.deleteById(puzzleId);
+        const result = await Puzzle.deleteById(puzzleId);
+        res.json(result);
     } catch (err) {
         res.sendStatus(500);
     }

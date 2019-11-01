@@ -1,13 +1,40 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Вы уверены?</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+
+
 <div class="content">
     <div *ngIf="puzzle" class="puzzle_data">
         <div class="puzzle_short_info">
             <h2>{{puzzle.name}}</h2>
-            <img src="{{puzzle.photoUrl}}" alt="puzzle image" style="display:inline-block" width="200px" style="float:left">
+            <img src="{{puzzle.photoUrl}}" alt="puzzle image" style="display:inline-block" width="200px"
+                style="float:left">
             <div class="puzzle_specs">
                 <table>
-                    <tr><th>Тип</th><td>{{puzzle.typeId}}</td></tr>
-                    <tr><th>Производитель</th><td>{{puzzle.manufacturerId}}</td></tr>
-                    <tr><th>WCA</th><td>{{puzzle.isWCA}}</td></tr>
+                    <tr>
+                        <th>Тип</th>
+                        <td>{{puzzle.typeId.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Производитель</th>
+                        <td>{{puzzle.manufacturerId.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>WCA</th>
+                        <td>{{puzzle.isWCA}}</td>
+                    </tr>
                 </table>
             </div>
 
@@ -15,22 +42,21 @@
                 <b>Цена</b>
                 <p>{{puzzle.price}}₴</p>
                 <!-- <form method="POST"> -->
-                    <button id="btn_buy" name="puzzle_id" value="{{puzzle._id}}">В корзину</button>
+                <button id="btn_buy" name="puzzle_id" value="{{puzzle._id}}">В корзину</button>
                 <!-- </form> -->
             </div>
 
         </div>
-        <form method="post" action="/puzzles/{{puzzle._id}}?_method=DELETE" onsubmit="return deleteClicked()">
-             <button type="submit" class="btn btn-danger mt-5">Удалить</button> 
-        </form> 
+
+        <button type="submit" class="btn btn-danger mt-5" (click)="onDelete()">Удалить</button>
 
         <div class="puzzle_bio">
             <hr>
-            <h3>Описание</h3> 
+            <h3>Описание</h3>
             <hr>
             <p>{{puzzle.description_md}}</p>
             <!-- {{! @todo MDparser }} -->
         </div>
-        
+
     </div>
 </div>

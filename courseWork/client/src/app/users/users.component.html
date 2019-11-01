@@ -1,5 +1,6 @@
 <div class="content">
-    <table class="table">
+    <div class="spinner-border" *ngIf="!users"></div>
+    <table *ngIf="users" class="table">
         <!-- {{! <th scope="row">1</th> для жирного шрифта номерации}} -->
         <caption>Пользователи</caption>
         <thead>
@@ -18,6 +19,5 @@
                 <td scope="col">{{user.registeredAt}}</td>
             </tr>
         </tbody>
-        <div class="spinner-border" *ngIf="!users"></div>
     </table>
 </div>
