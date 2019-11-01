@@ -16,6 +16,7 @@ import { UsersComponent } from './users/users.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
+import { PuzzleComponent } from './puzzle/puzzle.component';
 
 
 
@@ -29,7 +30,8 @@ import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
     AboutComponent,
     UsersComponent,
     PuzzlesComponent,
-    PuzzlesNewComponent
+    PuzzlesNewComponent,
+    PuzzleComponent
   ],
   imports: [
     BrowserModule,

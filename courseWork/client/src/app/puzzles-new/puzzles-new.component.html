@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-row">
 
-                        <div class="form-group col-5">
+                        <div class="form-group col-4">
                             <label for="inputType">Выбор типа</label>
                             <select class="form-control form-control-lg" [class.is-invalid]="!typeIdIsValid()"
                                 formControlName="typeId">
@@ -38,7 +38,7 @@
                             <button type="submit" class="btn btn-outline-primary mt-5" onclick="return false">+</button>
                         </div>
 
-                        <div class="form-group col-5">
+                        <div class="form-group col-6">
 
                             <label for="inputManufacturer">Выбор производителя</label>
                             <select [class.is-invalid]="!manufacturerIdIsValid()" class="form-control form-control-lg"
@@ -54,14 +54,14 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-2">
+                        <div class="form-group col-3">
                             <label for="inputWCA">WCA</label>
                             <select class="form-control form-control-lg" name="isWCA" formControlName="isWCA">
                                 <option [ngValue]="true" selected> Да</option>
                                 <option [ngValue]="false">Нет</option>
                             </select>
                         </div>
-                        <div class="form-group col-3">
+                        <div class="form-group col-4">
                             <label for="inputAvailable">В наличии</label>
                             <select class="form-control form-control-lg" id="inputAvailable" name="isAvailable"
                                 formControlName="isAvailable">
@@ -94,11 +94,11 @@
                         alt="Placeholder image" width="80%" class="ml-3">
                 </div>
             </div>
-            <button type="submit" class="btn btn-outline-primary btn-lg" *ngIf="puzzleForm.valid">Добавить</button>
-            <button type="submit" class="btn btn-outline-primary btn-lg" *ngIf="!puzzleForm.valid"
-                disabled>Добавить</button>
-            <button type="button" class="btn btn-oultile-secondary btn-lg">Отмена</button>
+            <button [class.disabled]="!puzzleForm.valid" type="submit" class="btn btn-outline-primary btn-lg">Добавить</button>
+            <!-- <button type="submit" class="btn btn-outline-primary btn-lg" *ngIf="!puzzleForm.valid"
+                disabled>Добавить</button> -->
+            <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button>
         </fieldset>
-        <p>{{puzzleForm.value | json}}</p>
+        <!-- <p>{{puzzleForm.value | json}}</p> -->
     </form>
 </div>

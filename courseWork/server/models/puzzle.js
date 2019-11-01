@@ -16,8 +16,6 @@ const imageUploader = require('../cloudinaryConfig');
 const Datauri = require('datauri');
 const getFileExt = require('../multerStorage').getFileExtension;
 
-const MAX_PUZZLE_PRICE = 100000;
-
 class Puzzle {
 
     constructor(name, photoUrl, typeId, isWCA, price, isAvailable = true, manufacturerId, description_md = '') {
@@ -61,16 +59,15 @@ class Puzzle {
         return puzzleModel.countDocuments(findPredicate).then(count => {
             pageNum = paginator.trimPageNum(pageNum, count, pageSize);
             const scippedItems = paginator.getScippedItemsCount(pageNum, pageSize);
-            return puzzleModel.find(findPredicate).skip(scippedItems).limit(pageSize);
-        }).
-            then(val => ([val, count]));
+            return [puzzleModel.find(findPredicate).skip(scippedItems).limit(pageSize), count];
+        });
     }
 
     static getFilteredSearch(filters) {
         const manufs = filters.manufacturers || [];
         const types = filters.types || [];
         const priceFrom = filters.priceFrom || 0 - 1;
-        const priceTo = filters.priceTo || 1000000000;
+        const priceTo = filters.priceTo || 99999999999999999;
         const limit = filters.limit;
         const offset = filters.offset;
         const searchedName = filters.name;
@@ -140,7 +137,7 @@ class Puzzle {
 
     static getPuzzleFromFormRequest(req) {
         const name = req.body.name;
-        const price = trimPrice(parseInt(req.body.inputPrice));
+        const price = trimPrice(parseInt(req.body.price));
         const typeId = req.body.typeId;
         const manufacturerId = req.body.manufacturerId;
         const isWCA = !!(req.body.isWCA);
@@ -169,12 +166,8 @@ class Puzzle {
 
 function trimPrice(price) {
     if (isNaN(price)) return 0;
-
     if (price < 0)
         price = 0;
-    else if (price > MAX_PUZZLE_PRICE) {
-        price = MAX_PUZZLE_PRICE;
-    }
     return price;
 }
 

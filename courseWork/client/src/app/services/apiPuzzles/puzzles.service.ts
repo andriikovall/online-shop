@@ -17,6 +17,11 @@ export class ApiPuzzlesService {
     return `${apiUrl}${path}`;
   }
 
+  public getById(id: string) {
+    const url = this.buildApiLink('/puzzles/') + id;
+    return  this.httpClient.get(url);
+  }
+
   public getFilters() {
     const url = this.buildApiLink('/puzzles/filters');
     return this.httpClient.get(url);

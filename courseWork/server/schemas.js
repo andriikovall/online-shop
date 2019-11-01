@@ -1,11 +1,14 @@
 /* eslint-disable no-undefined */
 const mongoose = require('mongoose');
 
+const shortid = require('shortid');
+
 
 const DEFAULT_USER_AVATAR_URL = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png';
 const DEFAULT_USER_BIO = 'Этот пользователь пока не написал о себе ни слова';
 
 const userSchema = new mongoose.Schema({
+    //_id: { type: String, default: shortid.generate },
     login: { type: String, required: true },
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
@@ -14,18 +17,19 @@ const userSchema = new mongoose.Schema({
     avaUrl: { type: String, default: DEFAULT_USER_AVATAR_URL },
     isDisabled: { type: Boolean, default: false },
     bio_md: { type: String, default: DEFAULT_USER_BIO },
-    cart: {type: mongoose.mongo.ObjectId, ref: 'Cart'},
-    orders: [{type: mongoose.mongo.ObjectId, ref: 'Order'}],
+    cart: { type: mongoose.mongo.ObjectId, ref: 'Cart' },
+    orders: [{ type: mongoose.mongo.ObjectId, ref: 'Order' }],
     puzzles: [{
         results: [Number],
         puzzle: { type: mongoose.mongo.ObjectId, ref: 'Puzzle', default: undefined },
     }],
-    friends: [{ type: mongoose.mongo.ObjectId, ref: 'User', default: undefined } ],
+    friends: [{ type: mongoose.mongo.ObjectId, ref: 'User', default: undefined }],
 });
 
 const DEFAULT_PUZZLE_BIO = 'У данного кубика нету описания';
 
 const puzzleSchema = new mongoose.Schema({
+    //_id: { type: String, default: shortid.generate },
     name: { type: String, default: '' },
     photoUrl: { type: String },
     typeId: { type: mongoose.mongo.ObjectId, ref: 'Type' },
@@ -38,36 +42,42 @@ const puzzleSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
-    cart:  { type: mongoose.mongo.ObjectId, ref: 'Cart' },
-    user:  { type: mongoose.mongo.ObjectId, ref: 'User' },
-    date:  { type: Date, default: Date.now },
-    state: { type: Number, default: 1 }, 
+    //_id: { type: String, default: shortid.generate },
+    cart: { type: mongoose.mongo.ObjectId, ref: 'Cart' },
+    user: { type: mongoose.mongo.ObjectId, ref: 'User' },
+    date: { type: Date, default: Date.now },
+    state: { type: Number, default: 1 },
     price: { type: Number, required: true },
     lastModified: { type: Date, default: Date.now }
 });
 
 
 const cartSchema = new mongoose.Schema({
-    puzzles: [{count:    {type: Number, default: 1}, 
-               puzzle: {type: mongoose.mongo.ObjectId, ref: 'Puzzle'}}], 
-    user: {type: mongoose.mongo.ObjectId, ref: 'User'}
+    //_id: { type: String, default: shortid.generate },
+    puzzles: [{
+        count: { type: Number, default: 1 },
+        puzzle: { type: mongoose.mongo.ObjectId, ref: 'Puzzle' }
+    }],
+    user: { type: mongoose.mongo.ObjectId, ref: 'User' }
 });
 
 const manufacturerSchema = new mongoose.Schema({
-    name: {type: String, default: 'Нет имени'}
-}); 
+    //_id: { type: String, default: shortid.generate },
+    name: { type: String, default: 'Нет имени' }
+});
 
 const typeSchema = new mongoose.Schema({
-    name: {type: String, default: 'Другое'}
-}); 
+    //_id: { type: String, default: shortid.generate },
+    name: { type: String, default: 'Другое' }
+});
 
 
 
-module.exports = { 
-    userSchema, 
-    orderSchema, 
-    puzzleSchema, 
-    cartSchema, 
-    manufacturerSchema, 
+module.exports = {
+    userSchema,
+    orderSchema,
+    puzzleSchema,
+    cartSchema,
+    manufacturerSchema,
     typeSchema
 };

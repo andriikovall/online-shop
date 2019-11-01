@@ -16,7 +16,7 @@ router.get('/all', async (req, res) => {
     }
 });
 
-router.get('/:id([\\da-z]{24})', async (req, res) => {
+router.get('/:id([\\da-z]{,24})', async (req, res) => {
     const user_id = req.params.id
     try {
         const user = await User.getById(user_id);

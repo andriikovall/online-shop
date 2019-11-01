@@ -16,7 +16,7 @@ router.get('/all', async (req, res) => {
     }
 });
 
-router.get('/:id([\\da-z]{24})', async (req, res) => {
+router.get('/:id([\\da-z]{,24})', async (req, res) => {
     const cart_id = req.params.id
     try {
         const cart = await Cart.getById(cart_id);
@@ -30,7 +30,7 @@ router.get('/:id([\\da-z]{24})', async (req, res) => {
     }
 });
 
-router.delete('/:id([\\da-z]{24})', async (req, res) => {
+router.delete('/:id([\\da-z]{,24})', async (req, res) => {
     try {
         const cartId = req.params.id;
         await Cart.deleteById(cartId);

@@ -51,7 +51,6 @@ export class PuzzlesComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log('HERE');
     this.puzzlesService.getFilters().subscribe((filters: any) => {
       this.allFilters = filters;
       const manufs = filters.manufacturers;
@@ -60,7 +59,7 @@ export class PuzzlesComponent implements OnInit {
       this.filtersForm = this.formBuilder.group({
         name: '',
         priceFrom: 0,
-        priceTo: 10000,
+        priceTo: 99999,
         manufacturers: this.formBuilder.group({}),
         types: this.formBuilder.group({})
       });

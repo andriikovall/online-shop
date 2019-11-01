@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from "@angular/router";
+import { Location } from '@angular/common';
 
 //import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
@@ -33,7 +35,9 @@ export class PuzzlesNewComponent implements OnInit {
 
 
   constructor(
-    private puzzlesService: ApiPuzzlesService
+    private puzzlesService: ApiPuzzlesService,
+    private router: Router, 
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -56,7 +60,7 @@ export class PuzzlesNewComponent implements OnInit {
         typeId: new FormControl(this.puzzle.typeId,
           [Validators.required]),
         price: new FormControl(this.puzzle.price,
-          [Validators.required, Validators.min(0), Validators.max(99999999999)]) 
+          [Validators.required, Validators.min(0), Validators.max(99999999999)])
       });
     });
   }
@@ -84,15 +88,16 @@ export class PuzzlesNewComponent implements OnInit {
 
 
   public onFileSeleceted(event: any) {
-    this.file = event.target.files[0]; 
+    this.file = event.target.files[0];
   }
 
   public onPuzzleSubmit(value) {
     this.puzzle = value;
     this.puzzle.file = this.file;
     const uploadFormData = this.getFormDataFromObj(this.puzzle);
-    this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe(res => {
-      console.log(res);
+    this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe((insertedPuzzle: Puzzle) => {
+      console.log(insertedPuzzle);
+      // this.navigateToPuzzle(insertedPuzzle._id); 
     })
   }
 
@@ -106,6 +111,14 @@ export class PuzzlesNewComponent implements OnInit {
         uploadFormData.append(key, obj[key]);
     }
     return uploadFormData;
+  }
+
+  public navigateToPuzzle(id: string) {
+    this.router.navigate(['/puzzles', id]);
+  }
+
+  public navigateBack() {
+    this.location.back();
   }
 
 }
