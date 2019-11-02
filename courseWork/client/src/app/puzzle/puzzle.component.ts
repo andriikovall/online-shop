@@ -5,7 +5,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
 
-@Component({ 
+@Component({
   selector: 'app-puzzle',
   templateUrl: './puzzle.component.html',
   styleUrls: ['./puzzle.component.css']
@@ -16,7 +16,7 @@ export class PuzzleComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private puzzlesService: ApiPuzzlesService, 
+    private puzzlesService: ApiPuzzlesService,
     private modalService: NgbModal
   ) { }
 
@@ -28,8 +28,12 @@ export class PuzzleComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    console.log(content)
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      console.log('EH')
+      console.log(result);
     }, (reason) => {
+
     });
   }
 
