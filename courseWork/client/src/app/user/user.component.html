@@ -1,0 +1,16 @@
+<div class="content">
+    <div *ngIf="user">
+        <img src="{{user.avaUrl}}" alt="User avatar" width="300px" id="user_avatar">
+        <div class="user_info">
+            <h1>{{user.first_name + ' ' + user.first_name}}</h1>
+            <p id="username">{{user.login}}</p>
+            <p>Дата регистрации {{user.registeredAt}}</p>
+        </div>
+        <hr>
+        <h3>О себе</h3>
+        <hr>
+        <div id="user_bio">
+            <p>{{user.bio_md}}</p>
+        </div>
+    </div>
+</div>

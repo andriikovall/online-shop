@@ -13,7 +13,7 @@
         </thead>
         <tbody *ngIf="users">
             <tr *ngFor="let user of users">
-                <td scope="col"><a routerLink="['/users', {{user._id}}]">{{user.login}}</a></td>
+                <td scope="col"><a [routerLink]="['/users', user._id]">{{user.login}}</a></td>
                 <td scope="col">{{user.first_name}}</td>
                 <td scope="col">{{user.last_name}}</td> 
                 <td scope="col">{{user.registeredAt}}</td>

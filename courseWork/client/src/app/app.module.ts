@@ -12,12 +12,14 @@ import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { IndexComponent } from './index/index.component';
 import { AboutComponent } from './about/about.component';
-import { PuzzlesComponent } from './puzzles/puzzles.component'
+import { PuzzlesComponent } from './puzzles/puzzles.component' 
 import { UsersComponent } from './users/users.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
+import { ConfirmComponent } from './modals/confirm/confirm.component';
+import { UserComponent } from './user/user.component';
 
 
 
@@ -32,7 +34,9 @@ import { PuzzleComponent } from './puzzle/puzzle.component';
     UsersComponent,
     PuzzlesComponent,
     PuzzlesNewComponent,
-    PuzzleComponent
+    PuzzleComponent,
+    ConfirmComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -44,11 +48,11 @@ import { PuzzleComponent } from './puzzle/puzzle.component';
     NgbModule
   ],
   providers: [
-    NgbActiveModal
+    NgbActiveModal, 
   ],
   bootstrap: [AppComponent],
-  // entryComponents: [
-  //   NgbModal
-  // ]
+  entryComponents: [
+    ConfirmComponent
+  ]
 })
 export class AppModule { }

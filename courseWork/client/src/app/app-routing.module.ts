@@ -7,6 +7,7 @@ import { UsersComponent } from './users/users.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
+import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'users', component: UsersComponent },
   { path: 'puzzles', component: PuzzlesComponent },
   { path: 'puzzles/new', component: PuzzlesNewComponent },
-  { path: 'puzzles/:id', component: PuzzleComponent }
+  { path: 'puzzles/:id', component: PuzzleComponent }, 
+  { path: 'users/:id'  , component: UserComponent }
 ];
 
 @NgModule({

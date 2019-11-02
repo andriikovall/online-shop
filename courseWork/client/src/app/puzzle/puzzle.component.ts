@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Puzzle } from '../models/puzzle.model';
 import { ActivatedRoute } from "@angular/router";
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from "@angular/router";
 
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
+
+import { ConfirmComponent } from '../modals/confirm/confirm.component';
 
 @Component({
   selector: 'app-puzzle',
@@ -17,7 +20,8 @@ export class PuzzleComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private puzzlesService: ApiPuzzlesService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -27,18 +31,22 @@ export class PuzzleComponent implements OnInit {
     })
   }
 
-  open(content) {
-    console.log(content)
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      console.log('EH')
-      console.log(result);
+  confirm() {
+    const modalRef = this.modalService.open(ConfirmComponent);
+    modalRef.componentInstance.header = 'ВЫ УВЕРЕНЫ?';
+    modalRef.result.then(res => {
+      if (res)
+        this.onDelete();
     }, (reason) => {
-
-    });
+      console.log('Нельзя удалять')
+    })
   }
 
   onDelete() {
-
+    this.puzzlesService.deleteById(this.puzzle._id).subscribe(res => {
+      console.log('HERE');
+      this.router.navigate(['/puzzles']);
+    })
   }
 
 }

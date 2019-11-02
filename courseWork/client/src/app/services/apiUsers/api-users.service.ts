@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiHelperService } from '../api-helper.service';
 
-import { apiUrl } from '../../../assets/api-url';
 
 
 @Injectable({
@@ -12,11 +12,17 @@ import { apiUrl } from '../../../assets/api-url';
 export class ApiUsersService { 
   
   constructor (
-    private httpClient: HttpClient
+    private httpClient: HttpClient, 
+    private linkBuilder: ApiHelperService
   ) { }
 
   public getAll() {
-    const url = `${apiUrl}/users/all`;
+    const url = this.linkBuilder.buildApiLink('/users/all');
+    return this.httpClient.get(url);
+  }
+
+  public getById(userId: string) {
+    const url =  this.linkBuilder.buildApiLink('/users/') + userId;
     return this.httpClient.get(url);
   }
 } 

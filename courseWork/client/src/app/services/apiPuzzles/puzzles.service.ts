@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { apiUrl } from '../../../assets/api-url';
-import { of } from 'rxjs';
+import { ApiHelperService } from '../api-helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +8,12 @@ import { of } from 'rxjs';
 export class ApiPuzzlesService {
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient, 
+    private linkBuilder: ApiHelperService
   ) { }
 
   private buildApiLink(path: string) {
-    return `${apiUrl}${path}`;
+    return this.linkBuilder.buildApiLink(path);
   }
 
   public getById(id: string) {

@@ -1,0 +1,17 @@
+.user_info {
+    width: 60%;
+    float: right;
+    font-size: 22px;
+}
+
+.user_info p {
+    font-size: 22px;    
+}
+
+#user_bio p{
+    font-size: 22px;
+}
+
+#username {
+    font-family: 'Courier New', Courier, monospace;
+}
