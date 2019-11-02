@@ -1,4 +1,5 @@
 <div class="menu">
+    <div class="spinner-border" *ngIf="!this.filtersForm"></div>
     <div class="card" *ngIf="this.filtersForm">
         <form [formGroup]="filtersForm" (ngSubmit)="onFiltersSubmit(filtersForm.value)">
             <header class="card-header">
@@ -41,7 +42,6 @@
                 </header>
                 <div class="filter-content">
                     <div class="card-body">
-                        <div class="spinner-border" *ngIf="!allFilters.manufacturers"></div>
                         <div [formGroup]="filtersForm.controls.manufacturers">
                             <div class="custom-control custom-checkbox"
                                 *ngFor="let m of allFilters.manufacturers; let i = index">
@@ -61,7 +61,6 @@
                 </header>
                 <div class="filter-content">
                     <div class="card-body">
-                        <div class="spinner-border" *ngIf="!allFilters.types.length"></div>
                         <div [formGroup]="filtersForm.controls.types">
                             <div class="custom-control custom-checkbox"
                                 *ngFor="let type of allFilters.types; let i=index">
@@ -78,15 +77,20 @@
     </div>
 </div>
 <div class="content" style="width: 75%">
-    <!-- {{/items.length}} //@todo -->
-    <div class="card" *ngIf="this.currentFilters.name">
+    <div class="card" *ngIf="puzzles && this.currentFilters.name && puzzles.length">
         <div class="card-body">Результаты поиска по запросу: <b>{{this.currentFilters.name}}</b></div>
     </div>
-    <a style="text-decoration: none" [routerLink]="['/puzzles/new']">
+    <div class="card" *ngIf="puzzles && !puzzles.length">
+        <div class="card-body">Головоломок по названию: <b>{{this.currentFilters.name}}</b> не найдено</div>
+    </div>
+    <a style="text-decoration: none" [routerLink]="['/puzzles/new']" *ngIf="this.puzzles">
         <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
     </a>
+    <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="!this.puzzles">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Загрузка...
+    </button>
     <div *ngIf="this.puzzles" class="content_puzzles">
-        <div class="spinner-border" *ngIf="!puzzles.length"></div>
         <div *ngFor="let puzzle of puzzles  | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalItems }"
             class="puzzle_block">
             <a [routerLink]="['/puzzles', puzzle._id]">
@@ -108,9 +112,11 @@
             </div>
         </div>
     </div>
-    <div class="mx-10">
-        <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
-        </pagination-controls>
+    <div class="text-center" *ngIf="puzzles">
+        <div class="mx-10">
+            <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
+            </pagination-controls>
+        </div>
     </div>
 </div>
 <!-- <li *ngFor="let item of collection | paginate: { itemsPerPage: 10, currentPage: p, totalItems: res.count }">...</li> -->
