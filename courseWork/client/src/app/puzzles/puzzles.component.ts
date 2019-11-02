@@ -3,7 +3,7 @@ import { FormBuilder, FormArray, FormControl } from '@angular/forms';
 
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
 import { PaginationInstance } from 'ngx-pagination';
-import { Puzzle } from '../models/puzzle.model';  
+import { Puzzle } from '../models/puzzle.model';
 
 @Component({
   selector: 'app-puzzles',
@@ -14,7 +14,7 @@ import { Puzzle } from '../models/puzzle.model';
 export class PuzzlesComponent implements OnInit {
 
   allFilters;
-  
+
   filtersForm;
 
   currentFilters: {
@@ -50,29 +50,34 @@ export class PuzzlesComponent implements OnInit {
   }
 
 
+  private setDefaultFilters(filters: any) {
+    const manufs = filters.manufacturers;
+    const types = filters.types;
+
+    this.filtersForm = this.formBuilder.group({
+      name: '',
+      priceFrom: 0,
+      priceTo: 99999,
+      manufacturers: this.formBuilder.group({}),
+      types: this.formBuilder.group({})
+    });
+
+    manufs.forEach(m => {
+      this.currentFilters.manufacturers.push(m._id);
+      this.filtersForm.controls.manufacturers.addControl(m._id, new FormControl(true))
+    })
+
+    types.forEach(t => {
+      this.currentFilters.types.push(t._id);
+      this.filtersForm.controls.types.addControl(t._id, new FormControl(true))
+    })
+  }
+
+
   ngOnInit() {
     this.puzzlesService.getFilters().subscribe((filters: any) => {
       this.allFilters = filters;
-      const manufs = filters.manufacturers;
-      const types = filters.types;
-
-      this.filtersForm = this.formBuilder.group({
-        name: '',
-        priceFrom: 0,
-        priceTo: 99999,
-        manufacturers: this.formBuilder.group({}),
-        types: this.formBuilder.group({})
-      });
-
-      manufs.forEach(m => {
-        this.currentFilters.manufacturers.push(m._id);
-        this.filtersForm.controls.manufacturers.addControl(m._id, new FormControl(true))
-      })
-
-      types.forEach(t => {
-        this.currentFilters.types.push(t._id);
-        this.filtersForm.controls.types.addControl(t._id, new FormControl(true))
-      })
+      this.setDefaultFilters(this.allFilters);
       this.updatePuzzles();
     });
   }
@@ -112,6 +117,10 @@ export class PuzzlesComponent implements OnInit {
   public pageChanged(pageNum) {
     this.config.currentPage = pageNum;
     this.updatePuzzles();
+  }
+
+  public resetFilters() {
+    this.setDefaultFilters(this.allFilters);
   }
 
 }

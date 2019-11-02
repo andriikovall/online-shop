@@ -1,9 +1,10 @@
 <div class="menu">
     <div class="spinner-border" *ngIf="!this.filtersForm"></div>
     <div class="card" *ngIf="this.filtersForm">
-        <form [formGroup]="filtersForm" (ngSubmit)="onFiltersSubmit(filtersForm.value)">
+        <form [formGroup]="filtersForm">
             <header class="card-header">
                 <h3>Фильтры</h3>
+                <button class="btn btn-small" (click)="resetFilters()"><small> Восстановаить фильтры</small></button>
             </header>
             <article class="card-group-item">
                 <header class="card-header">
@@ -72,7 +73,7 @@
                     </div>
                 </div>
             </article>
-            <button type="submit" class="btn">Поиск</button>
+            <button type="submit" class="btn" (click)="onFiltersSubmit(filtersForm.value)">Поиск</button>
         </form>
     </div>
 </div>
