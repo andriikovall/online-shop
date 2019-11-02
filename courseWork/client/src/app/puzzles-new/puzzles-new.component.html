@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="form-group col-1">
-                            <button type="submit" class="btn btn-outline-primary mt-5" onclick="return false">+</button>
+                            <button class="btn btn-outline-primary mt-5" disabled>+</button>
                         </div>
 
                         <div class="form-group col-6">
@@ -49,7 +49,7 @@
 
                         </div>
                         <div class="form-group col-1">
-                            <button type="submit" class="btn btn-outline-primary mt-5" onclick="return false">+</button>
+                            <button class="btn btn-outline-primary mt-5" disabled>+</button>
                         </div>
                     </div>
 
@@ -86,7 +86,7 @@
                         <div class="custom-file">
                             <label for="customFile">Выберите файл</label>
                             <!-- <input type="file" accept=".jpg, .jpeg, .png" (change)="onFileChanged($event)"> -->
-                            <input  #imageInput type="file" accept="image/*" (change)="onFileSeleceted($event)">
+                            <input #imageInput type="file" accept="image/*" (change)="onFileSeleceted($event)">
                         </div>
                     </div>
                     <img id="bufferImage"
@@ -94,11 +94,13 @@
                         alt="Placeholder image" width="80%" class="ml-3">
                 </div>
             </div>
-            <button [class.disabled]="!puzzleForm.valid" type="submit" class="btn btn-outline-primary btn-lg">Добавить</button>
-            <!-- <button type="submit" class="btn btn-outline-primary btn-lg" *ngIf="!puzzleForm.valid"
-                disabled>Добавить</button> -->
-            <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button>
         </fieldset>
         <!-- <p>{{puzzleForm.value | json}}</p> -->
     </form>
+    <span *ngIf="puzzleForm && typesAndManufacturers">
+        <button *ngIf="puzzleForm.valid" class="btn btn-outline-primary btn-lg"
+            (click)="confirmCreation(puzzleForm.value)">Добавить</button>
+        <button *ngIf="!puzzleForm.valid" class="btn btn-outline-primary btn-lg" disabled>Добавить</button>
+        <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button>
+    </span>
 </div>

@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from "@angular/router";
 import { Location } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 //import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { ConfirmSafetyComponent } from '../modals/confirm-safety/confirm-safety.component';
 
 import { Puzzle } from '../models/puzzle.model';
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
@@ -37,7 +40,8 @@ export class PuzzlesNewComponent implements OnInit {
   constructor(
     private puzzlesService: ApiPuzzlesService,
     private router: Router, 
-    private location: Location
+    private location: Location, 
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit() {
@@ -95,16 +99,14 @@ export class PuzzlesNewComponent implements OnInit {
     this.puzzle = value;
     this.puzzle.file = this.file;
     const uploadFormData = this.getFormDataFromObj(this.puzzle);
-    this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe((insertedPuzzle: Puzzle) => {
-      console.log(insertedPuzzle);
-      // this.navigateToPuzzle(insertedPuzzle._id); 
+    this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe((res: any) => {
+      this.navigateToPuzzle(res.puzzle._id); 
     })
   }
 
   private getFormDataFromObj(obj: object | any) {
     let uploadFormData = new FormData();
     for (var key in obj) {
-      console.log(key);
       if ((typeof obj[key]).toLowerCase() === 'file' && obj.name)
         uploadFormData.append(key, obj[key], obj.name);
       else
@@ -119,6 +121,18 @@ export class PuzzlesNewComponent implements OnInit {
 
   public navigateBack() {
     this.location.back();
+  }
+
+  public confirmCreation(formValue) {
+    console.log('confirmCreation');
+    const modalRef = this.modalService.open(ConfirmSafetyComponent);
+    // modalRef.componentInstance.header = 'Подтвердите действие'; 
+    modalRef.result.then(res => {
+      if (res)
+        this.onPuzzleSubmit(formValue);
+    }, (reason) => {
+      console.log('Отмена добавления'); 
+    })
   }
 
 }

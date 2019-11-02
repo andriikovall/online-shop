@@ -18,8 +18,9 @@ import { UsersComponent } from './users/users.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
-import { ConfirmComponent } from './modals/confirm/confirm.component';
+import { ConfirmComponent } from './modals/confirm-danger/confirm.component';
 import { UserComponent } from './user/user.component';
+import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.component';
 
 
 
@@ -36,7 +37,8 @@ import { UserComponent } from './user/user.component';
     PuzzlesNewComponent,
     PuzzleComponent,
     ConfirmComponent,
-    UserComponent
+    UserComponent,
+    ConfirmSafetyComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { UserComponent } from './user/user.component';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    ConfirmComponent
+    ConfirmComponent, 
+    ConfirmSafetyComponent
   ]
 })
 export class AppModule { }

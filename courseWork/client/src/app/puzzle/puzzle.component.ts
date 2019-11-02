@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
 
-import { ConfirmComponent } from '../modals/confirm/confirm.component';
+import { ConfirmComponent } from '../modals/confirm-danger/confirm.component';
 
 @Component({
   selector: 'app-puzzle',
