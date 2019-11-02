@@ -8,7 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ConfirmComponent implements OnInit {
 
-  @Input() header: string = 'Подтверджение действия';
+  @Input() header: string = 'Подтвердите действие';
   @Input() text:   string = 'Вы уверены?';
   @Input() yes:    string = 'Да';
   @Input() no:     string = 'Нет';

@@ -33,7 +33,7 @@ export class PuzzleComponent implements OnInit {
 
   confirm() {
     const modalRef = this.modalService.open(ConfirmComponent);
-    modalRef.componentInstance.header = 'ВЫ УВЕРЕНЫ?';
+    // modalRef.componentInstance.header = 'Подтвердите действие'; 
     modalRef.result.then(res => {
       if (res)
         this.onDelete();
