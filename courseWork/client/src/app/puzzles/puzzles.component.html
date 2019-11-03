@@ -1,10 +1,9 @@
 <div class="menu">
     <div class="spinner-border" *ngIf="!this.filtersForm"></div>
-    
-    <div class="card">
-        <div class="card-body" >
+    <div class="card" *ngIf="this.filtersForm">
+        <div class="card-body">
             <h4 class="card-title">Фильры</h4>
-            <a class="card-link" (click)="resetFilters()">Убрать фильтры</a>
+            <a (click)="resetFilters()" class="link">Убрать фильтры</a>
             <form [formGroup]="filtersForm">
                 <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-1"
                         href="#collapse-1" role="button">Цена</a>
@@ -25,7 +24,7 @@
                                         <div class="form-group" style="margin: -1px;margin-top: 0px;">
                                             <label>до</label>
                                             <input type="number" class="form-control" formControlName="priceTo"
-                                                placeholder="10,000₴" min="0" max="99999" step="10"
+                                                placeholder="10,000₴" min="0" max="99999999" step="10"
                                                 style="height: 39px;max-width: 100%;width: 100%;" /></div>
                                     </div>
                                 </div>

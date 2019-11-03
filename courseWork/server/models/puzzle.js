@@ -47,39 +47,27 @@ class Puzzle {
         return puzzleModel.findByIdAndDelete(puzzle_id);
     }
 
-    /**
-    WHERE title LIKE ('%' || :search_text || '%')
-    LIMIT :page_size
-    OFFSET :skipped_items
+    // static getByNameLike(searchedName, pageNum, pageSize) { //@todo refactor with filters
+    //     const findPredicate = { name: { $regex: `.*${searchedName}.*`, $options: "i" } };
 
-    skipped_items := (page_number - 1) * page_size;
-     */
-
-    static getByNameLike(searchedName, pageNum, pageSize) { //@todo refactor with filters
-        const findPredicate = { name: { $regex: `.*${searchedName}.*`, $options: "i" } };
-
-        return puzzleModel.countDocuments(findPredicate).then(count => {
-            pageNum = paginator.trimPageNum(pageNum, count, pageSize);
-            const scippedItems = paginator.getScippedItemsCount(pageNum, pageSize);
-            return [puzzleModel.find(findPredicate).skip(scippedItems).limit(pageSize), count];
-        });
-    }
+    //     return puzzleModel.countDocuments(findPredicate).then(count => {
+    //         pageNum = paginator.trimPageNum(pageNum, count, pageSize);
+    //         const scippedItems = paginator.getScippedItemsCount(pageNum, pageSize);
+    //         return [puzzleModel.find(findPredicate).skip(scippedItems).limit(pageSize), count];
+    //     });
+    // }
 
     static getFilteredSearch(filters) {
-        const manufs = filters.manufacturers || [];
-        const types = filters.types || [];
-        const priceFrom = filters.priceFrom || 0 - 1;
-        const priceTo = filters.priceTo || 99999999999999999;
+        const manufs = filters.manufacturers;
+        const types = filters.types;
+        const priceFrom = getValidatedFilterPrice(filters.priceFrom);
+        const priceTo = getValidatedFilterPrice(filters.priceTo);
         const limit = filters.limit;
-        const offset = filters.offset;
-        const searchedName = filters.name;
+        const offset = filters.offset || 0;
+        const searchedName = filters.name || '';
 
-        const findPredicate = {
-            name: { $regex: `.*${searchedName}.*`, $options: "i" },
-            manufacturerId: { $in: manufs },
-            typeId: { $in: types },
-            price: { $gt: priceFrom, $lt: priceTo },
-        }
+        const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName);
+
 
 
         const promises = [
@@ -96,8 +84,6 @@ class Puzzle {
             })
 
     }
-
-
 
     static update(puzzle) {
         return puzzleModel.findByIdAndUpdate(puzzle.id, puzzle);
@@ -166,11 +152,40 @@ class Puzzle {
     }
 };
 
+function getValidatedFilterPrice(val) {
+    if (val == 0) return val;
+    if (!val || val < 0) return null;
+    return val;
+}
+
 function trimPrice(price) {
     if (isNaN(price)) return 0;
     if (price < 0)
         price = 0;
     return price;
+}
+
+function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName) {
+    let findPredicate = {
+        name: { $regex: `.*${searchedName}.*`, $options: "i" }
+    };
+
+    if (manufs) {
+        findPredicate.manufacturerId = {};
+        findPredicate.manufacturerId.$in = manufs;
+    }
+    if (types) {
+        findPredicate.typeId = {};
+        findPredicate.typeId.$in = types;
+    }
+    if (priceFrom != null || priceTo != null) {
+        findPredicate.price = {};
+        if (priceFrom != null)
+            findPredicate.price.$gt = priceFrom - 1;
+        if (priceTo != null)
+            findPredicate.price.$lt = priceTo + 1;
+    } 
+    return findPredicate;
 }
 
 Puzzle.model = puzzleModel;
