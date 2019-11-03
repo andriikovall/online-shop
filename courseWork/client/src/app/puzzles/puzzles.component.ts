@@ -105,12 +105,11 @@ export class PuzzlesComponent implements OnInit {
       name: this.currentFilters.name
     };
 
-    
+
     const limit = this.config.itemsPerPage;
     const offset = (this.config.currentPage - 1) * this.config.itemsPerPage;
     this.puzzlesService.getPuzzles(limit, offset, puzzleReqFilters).
-    subscribe((data: any) => {
-      console.log(puzzleReqFilters);
+      subscribe((data: any) => {
         this.puzzles = data.puzzles;
         this.totalItems = data.count;
       });
