@@ -9,17 +9,21 @@
                 <label>Логин</label>
                 <input formControlName="login" class="form-control" placeholder="SuperMacho138"
                     [class.is-invalid]="this.formHelper.isInvalidFormControl('login', this.loginForm)">
+                <div class="invalid-feedback">Длина от 5 до 50 символов</div>
             </div>
             <div class="form-group">
                 <a class="float-right">Забыли пароль?</a>
                 <label>Пароль</label>
                 <input formControlName="password" class="form-control" type="password"
                     [class.is-invalid]="this.formHelper.isInvalidFormControl('password', this.loginForm)">
+                <div class="invalid-feedback">Длина от 5 до 50 символов</div>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block" (click)="modal.close(true)"> Войти </button>
             </div>
         </form>
     </article>
-    <div class="border-top card-body text-center">Нет аккаунта?<button (click)="modal.close('reg')" class="btn btn-link">Зарегестрироватся</button></div>
+    <div class="border-top card-body text-center">Нет аккаунта?<button (click)="modal.close('reg')"
+            class="btn btn-link">Зарегестрироватся</button></div>
+            <pre>{{loginForm.value | json}}</pre>
 </div>

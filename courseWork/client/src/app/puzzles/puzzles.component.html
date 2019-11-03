@@ -4,7 +4,7 @@
         <div class="card-body">
             <h4 class="card-title">Фильры</h4>
             <hr>
-            <a (click)="resetFilters()" class="link">Убрать фильтры</a>
+            <button (click)="resetFilters()" class="btn btn-link">Убрать фильтры</button>
             <form [formGroup]="filtersForm">
                 <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-1"
                         href="#collapse-1" role="button">Цена</a>

@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     const validators = [
       Validators.required, 
       Validators.minLength(5),
-      Validators.maxLength(20), 
+      Validators.maxLength(50), 
     ];
 
     this.registerForm = new FormGroup({

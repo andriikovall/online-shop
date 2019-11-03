@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     const validators = [
       Validators.required,
       Validators.minLength(5),
-      Validators.maxLength(20)
+      Validators.maxLength(50)
     ];
     this.loginForm = new FormGroup({
       login: new FormControl('', validators),

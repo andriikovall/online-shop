@@ -186,14 +186,4 @@
 .menu ul a:hover {  
     transition: 1s;
     background-color: rgb(44, 116, 175);
-}
-
-.link {
-    color: rgb(92, 120, 165) !important;
-}
-
-.link:hover {
-    cursor: pointer;
-    text-decoration: underline;
-    color: rgb(22, 116, 117) !important;
-}
+} 
