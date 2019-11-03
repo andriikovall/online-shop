@@ -24,7 +24,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item" *ngIf="!user">
-                <a class="nav-link" (click)="loginClicked()">Войти</a>
+                <a class="nav-link" (click)="loginClicked()" style="cursor: pointer;">Войти</a>
             </li>
             <li class="nav-item dropdown" *ngIf="user">
                 <a class="nav-link dropdown-toggle" routerLink="#" id="navbardrop" data-toggle="dropdown">
