@@ -21,6 +21,9 @@ import { PuzzleComponent } from './puzzle/puzzle.component';
 import { ConfirmComponent } from './modals/confirm-danger/confirm.component';
 import { UserComponent } from './user/user.component';
 import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.component';
+import { ShellComponent } from './components/shell/shell.component';
+import { RegisterComponent } from './modals/register/register.component';
+import { LoginComponent } from './modals/login/login.component';
 
 
 
@@ -38,7 +41,10 @@ import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.c
     PuzzleComponent,
     ConfirmComponent,
     UserComponent,
-    ConfirmSafetyComponent
+    ConfirmSafetyComponent,
+    ShellComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,9 @@ import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.c
   bootstrap: [AppComponent],
   entryComponents: [
     ConfirmComponent, 
-    ConfirmSafetyComponent
+    ConfirmSafetyComponent, 
+    RegisterComponent, 
+    LoginComponent
   ]
 })
 export class AppModule { }
