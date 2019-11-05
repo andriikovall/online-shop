@@ -24,10 +24,10 @@ export class AuthService {
       .pipe(
         tap(
           (res: any) => {
-            localStorage.setItem('token', res.token)
-            localStorage.setItem('role', res.role)
-            console.log(res);
-            this.setCurrentUserData(res._id, res.role);
+            localStorage.setItem('id', res.user._id);
+            localStorage.setItem('token', res.token);
+            localStorage.setItem('role', res.user.role);
+            this.setCurrentUserData(res.user._id, res.user.role);
           }
         )
       )
@@ -54,7 +54,7 @@ export class AuthService {
   public isAuthenticated() {
     // const token = this.getToken();
     // return tokenNotExpired(null, token); @todo learn
-    return this.userId === null || this.userRole === null;
+    return this.userId !== null && this.userRole !== null;
   }
 
   public getToken() {

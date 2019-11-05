@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const passport = require('passport');
 
 const User = require('../models/user/user');
@@ -6,7 +8,7 @@ const JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt;
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'probabluSmthSecretDownHere'
+  secretOrKey: process.env.JWT_SECRET
 }
 
 passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
@@ -22,3 +24,5 @@ passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
   }
 }
 ));
+
+module.exports = passport;

@@ -18,20 +18,12 @@ util.validatePassword = (password, expectedHash) => {
 
 
 util.generateJWT = (user) => {
-    const expMinutes = 1;
+    const expMinutes = 60;
 
     return jwt.sign({
         role: user.role,
         _id: user._id,
-        exp: Math.floor(Date.now() / 1000) + (60 * expMinutes),
-    }, 'probablySecret');
+    }, process.env.JWT_SECRET, { expiresIn: 60 * 60  });
 }
-
-// userSchema.methods.toAuthJSON = function () {
-//     return {
-//         _id: this._id,
-//         token: this.generateJWT()
-//     };
-// };
 
 module.exports = util;
