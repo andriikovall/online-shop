@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const cartSchema = require('../schemas').cartSchema;
 const cartModel = new mongoose.model('cart', cartSchema);
 const puzzleModel = require('./puzzle').model;
-const userModel =   require('./user').model;
+const userModel =   require('./user/user').model;
 
 class Cart {
 

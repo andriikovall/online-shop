@@ -5,10 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormHelperService } from '../../services/form-helper.service';
-
-import { RegisterComponent } from '../register/register.component';
-
-
+import { AuthService } from '../../services/auth/auth.service';
 
 
 @Component({
@@ -23,7 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal, 
     public formHelper: FormHelperService, 
-    private modalService: NgbModal,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -38,9 +35,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public isInvalidFormControl(control: string) {
-    const item = this.loginForm.get(control);
-    return item.invalid && (item.dirty || item.touched);
+  public login() {
+    if (!this.loginForm.valid)
+      return;
+    this.auth.login(this.loginForm.value).subscribe(res => {
+      console.log(res);
+    })
   }
 
 }

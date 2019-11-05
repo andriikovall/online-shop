@@ -8,11 +8,12 @@ const DEFAULT_USER_AVATAR_URL = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/
 const DEFAULT_USER_BIO = 'Этот пользователь пока не написал о себе ни слова';
 
 const userSchema = new mongoose.Schema({
-    //_id: { type: String, default: shortid.generate },
+    // //_id: { type:String default: shortid.generate },
     login: { type: String, required: true },
+    passwordHash: { type: String, required: true },
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
-    role: { type: Number, default: 2 },
+    role: { type: String, default: 'customer' },
     registeredAt: { type: Date, default: Date.now },
     avaUrl: { type: String, default: DEFAULT_USER_AVATAR_URL },
     isDisabled: { type: Boolean, default: false },
@@ -20,7 +21,7 @@ const userSchema = new mongoose.Schema({
     cart: { type: mongoose.mongo.ObjectId, ref: 'Cart' },
     orders: [{ type: mongoose.mongo.ObjectId, ref: 'Order' }],
     puzzles: [{
-        results: [Number],
+        results: [ Number ],
         puzzle: { type: mongoose.mongo.ObjectId, ref: 'Puzzle', default: undefined },
     }],
     friends: [{ type: mongoose.mongo.ObjectId, ref: 'User', default: undefined }],
@@ -29,7 +30,7 @@ const userSchema = new mongoose.Schema({
 const DEFAULT_PUZZLE_BIO = 'У данного кубика нету описания';
 
 const puzzleSchema = new mongoose.Schema({
-    //_id: { type: String, default: shortid.generate },
+    //_id: { type: String | mongoose.Schema.Types.ObjectId, default: shortid.generate },
     name: { type: String, default: '' },
     photoUrl: { type: String },
     typeId: { type: mongoose.mongo.ObjectId, ref: 'Type' },
@@ -42,7 +43,7 @@ const puzzleSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
-    //_id: { type: String, default: shortid.generate },
+    //_id: { type: String | mongoose.Schema.Types.ObjectId, default: shortid.generate },
     cart: { type: mongoose.mongo.ObjectId, ref: 'Cart' },
     user: { type: mongoose.mongo.ObjectId, ref: 'User' },
     date: { type: Date, default: Date.now },
@@ -53,7 +54,7 @@ const orderSchema = new mongoose.Schema({
 
 
 const cartSchema = new mongoose.Schema({
-    //_id: { type: String, default: shortid.generate },
+    //_id: { type: String | mongoose.Schema.Types.ObjectId, default: shortid.generate },
     puzzles: [{
         count: { type: Number, default: 1 },
         puzzle: { type: mongoose.mongo.ObjectId, ref: 'Puzzle' }
@@ -62,12 +63,12 @@ const cartSchema = new mongoose.Schema({
 });
 
 const manufacturerSchema = new mongoose.Schema({
-    //_id: { type: String, default: shortid.generate },
+    //_id: { type: String | mongoose.Schema.Types.ObjectId, default: shortid.generate },
     name: { type: String, default: 'Нет имени' }
 });
 
 const typeSchema = new mongoose.Schema({
-    //_id: { type: String, default: shortid.generate },
+    //_id: { type: String | mongoose.Schema.Types.ObjectId, default: shortid.generate },
     name: { type: String, default: 'Другое' }
 });
 

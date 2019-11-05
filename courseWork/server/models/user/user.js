@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-const userSchema = require('../schemas').userSchema;
+
+const userSchema = require('../../schemas').userSchema;
 const userModel = new mongoose.model('User', userSchema);
 
-const Cart = require('./cart');
+const Cart = require('../cart');
 const cartModel = Cart.model;
 
 class User {
@@ -30,7 +31,7 @@ class User {
         return Cart.insert(cart).
             then((cart) => {
                 return userModel.findByIdAndUpdate(userId, { $set: { cart: cart._id } }).
-                    then (() => cart._id);
+                    then(() => cart._id);
             });
     }
 
@@ -49,6 +50,11 @@ class User {
     static update(user) {
         return userModel.findByIdAndUpdate(user.id, user);
     }
+
+    static getByLogin(login) {
+        return userModel.findOne({ login });
+    }
+
 };
 
 User.model = userModel;

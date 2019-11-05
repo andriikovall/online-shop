@@ -1,5 +1,5 @@
 const utils = require('../utils/files');
-const { storage, uploadsDir } = require('../multerStorage');
+const { storage, uploadsDir } = require('../config/multerStorage');
 const paginator = require('../utils/pagination');
 
 const Manufacturer = require('./manufacturer');
@@ -10,9 +10,9 @@ const puzzleModel = new mongoose.model('Puzzle', puzzleSchema);
 const manufacturerModel = require('./manufacturer').model;
 const typeModel = require('./puzzle_types').model;
 
-const imageUploader = require('../cloudinaryConfig');
+const imageUploader = require('../config/cloudinaryConfig');
 const Datauri = require('datauri');
-const getFileExt = require('../multerStorage').getFileExtension;
+const getFileExt = require('../config/multerStorage').getFileExtension;
 
 const defaultPhotoUrl = 'https://uaprom-static.c2.prom.st/image/new_design/images/no_image-hce614324446b22b42a09b69093e309fce.png';
 

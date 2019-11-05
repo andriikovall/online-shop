@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const orderSchema = require('../schemas').orderSchema;
 const orderModel = new mongoose.model('Order', orderSchema);
 const cartModel = require('./cart').model;
-const userModel = require('./user').model;
+const userModel = require('./user/user').model;
 
 class Order {
 

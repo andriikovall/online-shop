@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -12,9 +12,8 @@ import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { IndexComponent } from './index/index.component';
 import { AboutComponent } from './about/about.component';
-import { PuzzlesComponent } from './puzzles/puzzles.component' 
+import { PuzzlesComponent } from './puzzles/puzzles.component'
 import { UsersComponent } from './users/users.component';
-
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
@@ -24,6 +23,8 @@ import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.c
 import { ShellComponent } from './components/shell/shell.component';
 import { RegisterComponent } from './modals/register/register.component';
 import { LoginComponent } from './modals/login/login.component';
+
+import { TokenInterceptor } from './services/token/token-interseptor.service';
 
 
 
@@ -52,17 +53,18 @@ import { LoginComponent } from './modals/login/login.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPaginationModule, 
+    NgxPaginationModule,
     NgbModule
   ],
   providers: [
-    NgbActiveModal, 
+    NgbActiveModal,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    ConfirmComponent, 
-    ConfirmSafetyComponent, 
-    RegisterComponent, 
+    ConfirmComponent,
+    ConfirmSafetyComponent,
+    RegisterComponent,
     LoginComponent
   ]
 })

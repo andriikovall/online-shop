@@ -3,14 +3,14 @@ const app = express();
 const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const User = require('./models/user');
+const User = require('./models/user/user');
 const Puzzle = require('./models/puzzle');
 const Order = require('./models/order');
 const Cart = require('./models/cart');
 const pagination = require('./utils/pagination');
 const apiRoutes = require('./routes/api/api');
 const fs = require('fs-extra-promise');
-const { storage, uploadsDir, uploadsFullPath } = require('./multerStorage');
+const { storage, uploadsDir, uploadsFullPath } = require('./config/multerStorage');
 const PORT = parseInt(process.argv[2]) || process.env.PORT || 12010;
 
 
@@ -46,6 +46,8 @@ app.use(storage.single("file"));
 const partialsDir = path.join(viewsDir, "partials");
 app.engine('mst', mustache(partialsDir));
 app.set('view engine', 'mst');
+app.use(require('morgan')('dev'));
+
 
 app.use('/api', apiRoutes);
 

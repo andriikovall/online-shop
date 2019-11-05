@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label>Пароль</label>
-                <input class="form-control" type="password" formControlName="password" 
+                <input class="form-control" type="password" formControlName="password" (change)="comparePasswords()"
                 [class.is-invalid]="this.formHelper.isInvalidFormControl('password', this.registerForm)">
                 <div class="invalid-feedback">Длина от 5 до 50 символов</div>
             </div>
@@ -40,7 +40,7 @@
                 <div class="invalid-feedback">Пароли должны совпадать</div>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary btn-block">Зарегестрироватся</button>
+                <button class="btn btn-primary btn-block" [class.disabled]="!(registerForm.valid && passwordsEqual)" (click)="registerClicked()">Зарегестрироватся</button>
             </div>
             <small class="text-muted">Это маленький текст, который никто никогда не читает. Давайте, если вы прочитали, то напишите мне в телегу это)</small>
         </form>

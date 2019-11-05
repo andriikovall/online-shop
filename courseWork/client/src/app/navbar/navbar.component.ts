@@ -20,6 +20,10 @@ export class NavbarComponent implements OnInit {
   openRegistration = 'reg';
   openLogin = 'log';
 
+  links = {
+    
+  }
+
   constructor(
     private modalService: NgbModal
   ) { }

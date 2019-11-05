@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormHelperService } from '../../services/form-helper.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal, 
-    public formHelper: FormHelperService
+    public formHelper: FormHelperService, 
+    public auth: AuthService
 
   ) { }
 
@@ -43,6 +45,15 @@ export class RegisterComponent implements OnInit {
     const passwordRepeat = this.registerForm.get('passwordRepeat').value;
 
     this.passwordsEqual = (password === passwordRepeat);
+  }
+
+  registerClicked() {
+    if (!(this.registerForm.valid && this.passwordsEqual)) 
+      return;
+    console.log(this.registerForm.value);
+    this.auth.register(this.registerForm.value).subscribe(response => {
+      console.log(response);
+    })
   }
 
 
