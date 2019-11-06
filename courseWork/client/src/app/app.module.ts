@@ -43,7 +43,7 @@ import { RolesDirective } from './directives/roles.directive';
     ConfirmComponent,
     UserComponent,
     ConfirmSafetyComponent,
-    ShellComponent,
+    ShellComponent, 
     RegisterComponent,
     LoginComponent,
     RolesDirective

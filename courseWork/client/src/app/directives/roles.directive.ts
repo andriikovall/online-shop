@@ -15,7 +15,7 @@ export class RolesDirective {
   }
 
   @Input() set roles(allowedRoles: Array<string>) {
-    const userRole: string = this.userService.getUserRole() || 'guest';
+    const userRole: string = this.userService.userRole || 'guest';
     let shouldShow: boolean = !!allowedRoles.find(role => (role || '').toLowerCase() === userRole);
     if (userRole.toLowerCase() === 'admin') {
       shouldShow = true;

@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid)
       return;
     this.auth.login(this.loginForm.value).subscribe(res => {
-      console.log(res);
       this.modal.close(true);
       this.isInvalidLoginOrPassword = false;
     }, err => {

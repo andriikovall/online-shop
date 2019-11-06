@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 const utils = require('../../models/user/utils');
 const User = require('../../models/user/user');
@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
 
     if (futureUser) {
         res.status(409).json({
-            messgae: 'Account with such login not found'
+            messgae: 'Account with such login is found'
         })
         return;
     } else {

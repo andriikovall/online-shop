@@ -5,6 +5,9 @@ const Puzzle = require('../../models/puzzle');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json({ extended: false });
 
+const {checkAdmin, checkAuth, checkManager} = require('../../config/passport');
+
+
 function responseWithError(err, status, res) {
     res.status(status).json({
         msg: err.toString(), 
@@ -47,7 +50,7 @@ router.get('/:id([\\da-z]{24})', async (req, res) => {
     }
 });
 
-router.delete('/:id([\\da-z]+)', async (req, res) => {
+router.delete('/:id([\\da-z]+)', checkAuth, checkManager, async (req, res) => {
     try {
         const puzzleId = req.params.id;
         const result = await Puzzle.deleteById(puzzleId);
@@ -57,7 +60,7 @@ router.delete('/:id([\\da-z]+)', async (req, res) => {
     }
 });
 
-router.post('/new/mp', async (req, res) => {
+router.post('/new/mp',  checkAuth, checkManager ,async (req, res) => {
 
     const puzzle = await Puzzle.getPuzzleFromFormRequest(req);
     try {

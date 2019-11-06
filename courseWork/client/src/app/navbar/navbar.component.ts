@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from "@angular/router";
 
-
 import { AuthService } from '../services/auth/auth.service';
 
 import { LoginComponent } from '../modals/login/login.component';
@@ -23,7 +22,7 @@ export class NavbarComponent implements OnInit {
   openRegistration = 'reg';
   openLogin = 'log';
 
-  // successMessage: string;
+  linksAreActive = true;
 
   links = {
     
@@ -37,7 +36,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     const authRequired = (this.route.snapshot.queryParamMap.get('sessionExpired') || '') === 'true';
-    console.log(authRequired);
     if (authRequired)
       this.loginClicked();
   }
@@ -50,6 +48,7 @@ export class NavbarComponent implements OnInit {
         return;
       }
       this.successMessage.emit('Вы успешно вошли!');
+      this.reloadLinks();
     }, (reason) => {
     })
   }
@@ -62,15 +61,24 @@ export class NavbarComponent implements OnInit {
         return;
       }
       this.successMessage.emit('Вы успешно зарегестрировались!');
+      this.reloadLinks();
     }, (reason) => {
     })
   }
 
   public logoutClicked() {
     this.modalService.open(ConfirmComponent).result.then(res => {
-      if (res) 
+      if (res) {
         this.auth.logout();
+        this.successMessage.emit('Вы успешно вышли!');
+        this.reloadLinks();
+      }
     })
+  }
+
+  public reloadLinks() {
+    this.linksAreActive = false;
+    setTimeout(() => this.linksAreActive = true, 1);
   }
 
 

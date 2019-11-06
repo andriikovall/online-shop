@@ -10,16 +10,9 @@ import { PuzzleComponent } from './puzzle/puzzle.component';
 import { UserComponent } from './user/user.component';
 import { ShellComponent } from './components/shell/shell.component';
 
-
-// const routes: Routes = [
-//   { path: '', component: IndexComponent },
-//   { path: 'about', component: AboutComponent },
-//   { path: 'users', component: UsersComponent },
-//   { path: 'puzzles', component: PuzzlesComponent },
-//   { path: 'puzzles/new', component: PuzzlesNewComponent },
-//   { path: 'puzzles/:id', component: PuzzleComponent },
-//   { path: 'users/:id', component: UserComponent }
-// ];
+import { AuthGuard } from './guards/auth/auth.guard';
+import { AdminGuard } from './guards/admin/admin.guard';
+import { ManagerGuard } from './guards/manager/manager.guard';
 
 const newRoutes: Routes = [
   {
@@ -29,7 +22,7 @@ const newRoutes: Routes = [
       { path: 'about', component: AboutComponent },
       { path: 'users', component: UsersComponent },
       { path: 'puzzles', component: PuzzlesComponent },
-      { path: 'puzzles/new', component: PuzzlesNewComponent },
+      { path: 'puzzles/new', component: PuzzlesNewComponent, canActivate: [ManagerGuard]},
       { path: 'puzzles/:id', component: PuzzleComponent },
       { path: 'users/:id', component: UserComponent }
     ]

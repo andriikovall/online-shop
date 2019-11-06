@@ -53,8 +53,7 @@ export class RegisterComponent implements OnInit {
       return;
     console.log(this.registerForm.value);
     this.auth.register(this.registerForm.value).subscribe(response => {
-      console.log(response);
-      this.modal.close(true)
+      this.modal.close(true);
       this.loginAlreadyExists = false;
     }, 
     err => {

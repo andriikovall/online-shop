@@ -25,4 +25,19 @@ passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
 }
 ));
 
-module.exports = passport;
+
+const checkAdmin = (req, res, next) => {
+  if (!req.user) res.sendStatus(401); 
+  else if (req.user.role !== 'admin') res.sendStatus(403);
+  else next(); 
+}
+const checkAuth = passport.authenticate('jwt', { session: false });
+
+const checkManager = (req, res, next) => {
+  console.log(req.user);
+  if (!req.user) res.sendStatus(401); 
+  else if (req.user.role !== 'manager' && req.user.role !== 'admin') res.sendStatus(403);
+  else next(); 
+}
+
+module.exports = {checkAdmin, checkAuth, checkManager};

@@ -6,8 +6,8 @@
             <hr>
             <button (click)="resetFilters()" class="btn btn-link">Убрать фильтры</button>
             <form [formGroup]="filtersForm">
-                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-1"
-                        href="#collapse-1" role="button">Цена</a>
+                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
+                        aria-controls="collapse-1" href="#collapse-1" role="button">Цена</a>
                     <div class="collapse" id="collapse-1">
                         <div class="card">
                             <div class="card-body">
@@ -33,8 +33,8 @@
                         </div>
                     </div>
                 </div>
-                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-2"
-                        href="#collapse-2" role="button">Название</a>
+                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
+                        aria-controls="collapse-2" href="#collapse-2" role="button">Название</a>
                     <div class="collapse" id="collapse-2">
                         <div class="card">
                             <div class="card-body">
@@ -48,8 +48,9 @@
                         </div>
                     </div>
                 </div>
-                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-3"
-                        href="#collapse-3" role="button" style="max-height: 88px;min-height: 33px;">Производитель</a>
+                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
+                        aria-controls="collapse-3" href="#collapse-3" role="button"
+                        style="max-height: 88px;min-height: 33px;">Производитель</a>
                     <div class="collapse" id="collapse-3">
                         <div class="card">
                             <div [formGroup]="filtersForm.controls.manufacturers">
@@ -65,8 +66,9 @@
                         </div>
                     </div>
                 </div>
-                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-4"
-                        href="#collapse-4" role="button" style="max-height: 88px;min-height: 33px;">Тип</a>
+                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
+                        aria-controls="collapse-4" href="#collapse-4" role="button"
+                        style="max-height: 88px;min-height: 33px;">Тип</a>
                     <div class="collapse" id="collapse-4">
                         <div class="card">
                             <div [formGroup]="filtersForm.controls.types">
@@ -80,24 +82,27 @@
                         </div>
                     </div>
                 </div>
-            </form><button class="btn btn-info btn-block btn-lg" type="submit" (click)="onFiltersSubmit(filtersForm.value)">Поиск</button>
+            </form><button class="btn btn-info btn-block btn-lg" type="submit"
+                (click)="onFiltersSubmit(filtersForm.value)">Поиск</button>
         </div>
     </div>
 </div>
 <div class="content" style="width: 75%">
-    <div class="card" *ngIf="puzzles && this.currentFilters.name && puzzles.length">
+    <div class="container" *ngIf="this.auth.userIsManager()">
+        <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="!this.puzzles">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Загрузка...
+        </button>
+        <a style="text-decoration: none" [routerLink]="['/puzzles/new']" *ngIf="this.puzzles">
+            <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
+        </a>
+    </div>
+    <div class="card" *ngIf="this.puzzles && this.currentFilters.name && puzzles.length">
         <div class="card-body">Результаты поиска по запросу: <b>{{this.currentFilters.name}}</b></div>
     </div>
     <div class="card" *ngIf="puzzles && !puzzles.length">
         <div class="card-body">Головоломок по названию: <b>{{this.currentFilters.name}}</b> не найдено</div>
     </div>
-    <a style="text-decoration: none" [routerLink]="['/puzzles/new']" *ngIf="this.puzzles">
-        <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
-    </a>
-    <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="!this.puzzles">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Загрузка...
-    </button>
     <div *ngIf="this.puzzles" class="content_puzzles">
         <div *ngFor="let puzzle of puzzles  | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalItems }"
             class="puzzle_block">

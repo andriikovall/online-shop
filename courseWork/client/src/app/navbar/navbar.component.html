@@ -5,15 +5,15 @@
     </button>
     <div id="navbarNavDropdown" class="navbar-collapse collapse">
 
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto" *ngIf="linksAreActive"> 
             <li class="nav-item">
                 <a class="nav-link" routerLink="/">Домой</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/puzzles">Головоломки</a>
             </li>
-            <li *roles="['manager']" class="nav-item">
-                <a class="nav-link" routerLink="/rers">Пользователи</a>
+            <li  class="nav-item">
+                <a class="nav-link" routerLink="/users">Пользователи</a>
             </li>
             <li *roles="['manager']" class="nav-item">
                 <a class="nav-link" routerLink="/orders">Заказы</a>
@@ -31,7 +31,7 @@
                     Моя страница
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" [routerLink]="['/users', this.auth.getUserId()]">Профиль</a>
+                    <a class="dropdown-item" [routerLink]="['/users', this.auth.userId]">Профиль</a>
                     <a class="dropdown-item">Корзина</a>
                     <hr>
                     <a class="dropdown-item" (click)="logoutClicked()" style="cursor: pointer;">Выйти</a>

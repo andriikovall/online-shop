@@ -4,6 +4,7 @@ import { FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { Puzzle } from '../models/puzzle.model';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-puzzles',
@@ -46,6 +47,7 @@ export class PuzzlesComponent implements OnInit {
   constructor(
     private puzzlesService: ApiPuzzlesService,
     private formBuilder: FormBuilder,
+    public auth: AuthService
   ) {
   }
 
@@ -104,7 +106,6 @@ export class PuzzlesComponent implements OnInit {
       priceTo: this.currentFilters.priceTo,
       name: this.currentFilters.name
     };
-
 
     const limit = this.config.itemsPerPage;
     const offset = (this.config.currentPage - 1) * this.config.itemsPerPage;

@@ -11,18 +11,11 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
 
-  userId: string;
-  userRole: string;
-
   constructor(
     private linkBuilder: ApiHelperService,
     private httpClient: HttpClient, 
     private router: Router
   ) { 
-    const role = this.getUserRole() || null;
-    const userId = this.getUserId() || null;
-    this.userId = userId;
-    this.userRole = role;
   }
 
   public login(user) {
@@ -31,9 +24,7 @@ export class AuthService {
       .pipe(
         tap(
           (res: any) => {
-            localStorage.setItem('id', res.user._id);
             localStorage.setItem('token', res.token);
-            localStorage.setItem('role', res.user.role);
             this.setCurrentUserData(res.user._id, res.user.role);
           }
         )
@@ -55,32 +46,37 @@ export class AuthService {
   }
 
   public userIsManager() {
-    return this.userRole.toLowerCase() === 'manager';
+    return this.userRole.toLowerCase() === 'manager' || this.userIsAdmin();
   }
 
   public isAuthenticated() {
     // const token = this.getToken();
     // return tokenNotExpired(null, token); @todo learn
-    return this.userId !== null && this.userRole !== null;
+    return this.userId !== '' && this.userRole !== 'guest';
   }
 
   public getToken() {
     return localStorage.getItem('token');
   }
 
-  public getUserRole() {
-    return localStorage.getItem('role');
-  }
-
-  public getUserId() {
-    return localStorage.getItem('id');
-  }
-
   public logout() {
     localStorage.clear();
-    this.userId = null;
-    this.userRole = null;
     this.router.navigate(['/']);
+  }
+
+  get userRole() {
+    return localStorage.getItem('role') || 'guest';
+  }
+  set userRole(role: string) {
+    localStorage.setItem('role', role);
+  }
+
+  get userId() {
+    return localStorage.getItem('id') || '';
+  }
+
+  set userId(id: string) {
+    localStorage.setItem('id', id);
   }
 
 }
