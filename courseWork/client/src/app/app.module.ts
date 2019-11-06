@@ -24,8 +24,8 @@ import { ShellComponent } from './components/shell/shell.component';
 import { RegisterComponent } from './modals/register/register.component';
 import { LoginComponent } from './modals/login/login.component';
 
-import { TokenInterceptor } from './services/token/token-interseptor.service';
-
+import { TokenInterseptorService } from './services/token/token-interseptor.service';
+import { RolesDirective } from './directives/roles.directive';
 
 
 @NgModule({
@@ -45,7 +45,8 @@ import { TokenInterceptor } from './services/token/token-interseptor.service';
     ConfirmSafetyComponent,
     ShellComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    RolesDirective
   ],
   imports: [
     BrowserModule,
@@ -58,7 +59,7 @@ import { TokenInterceptor } from './services/token/token-interseptor.service';
   ],
   providers: [
     NgbActiveModal,
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterseptorService, multi: true }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

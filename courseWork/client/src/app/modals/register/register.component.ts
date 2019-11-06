@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
   passwordsEqual: boolean = false;
+  loginAlreadyExists: boolean = false;
 
   constructor(
     public modal: NgbActiveModal, 
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
     const validators = [
       Validators.required, 
       Validators.minLength(5),
-      Validators.maxLength(50), 
+      Validators.maxLength(30), 
     ];
 
     this.registerForm = new FormGroup({
@@ -53,6 +54,13 @@ export class RegisterComponent implements OnInit {
     console.log(this.registerForm.value);
     this.auth.register(this.registerForm.value).subscribe(response => {
       console.log(response);
+      this.modal.close(true)
+      this.loginAlreadyExists = false;
+    }, 
+    err => {
+      console.log(err);
+      if (err.status == 409)
+        this.loginAlreadyExists = true;
     })
   }
 

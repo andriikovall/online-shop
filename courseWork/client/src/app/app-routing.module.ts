@@ -38,7 +38,9 @@ const newRoutes: Routes = [
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(newRoutes)],
+  imports: [RouterModule.forRoot(newRoutes, {
+    onSameUrlNavigation: 'reload'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

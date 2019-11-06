@@ -12,7 +12,7 @@ export class ConfirmComponent implements OnInit {
   @Input() text:   string = 'Вы уверены?';
   @Input() yes:    string = 'Да';
   @Input() no:     string = 'Нет';
-  @Input() danger: string = 'Эта операция не может быть отменена'
+  @Input() danger: string = ''
 
   constructor(
     public modal: NgbActiveModal

@@ -11,9 +11,15 @@ export class ShellComponent implements OnInit {
 
   user: User;
 
+  alertMessage: string;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSuccesAlert(alert) {
+    this.alertMessage = alert;
   }
 
 }

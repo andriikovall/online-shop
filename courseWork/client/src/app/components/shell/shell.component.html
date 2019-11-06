@@ -1,2 +1,3 @@
-<app-navbar [user]="user"></app-navbar> 
-<app-main></app-main>
+<ngb-alert *ngIf="alertMessage" type="success" (close)="alertMessage = null">{{ alertMessage }}</ngb-alert>
+<app-navbar (successMessage)="onSuccesAlert($event)"></app-navbar> 
+<app-main></app-main> 

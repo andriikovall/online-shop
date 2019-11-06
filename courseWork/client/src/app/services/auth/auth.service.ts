@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiHelperService } from '../api-helper.service';
+import { Router } from "@angular/router";
 
 import { tap } from 'rxjs/operators';
 
@@ -10,13 +11,19 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
 
-  userId: string = null;
-  userRole: string = null;
+  userId: string;
+  userRole: string;
 
   constructor(
     private linkBuilder: ApiHelperService,
-    private httpClient: HttpClient
-  ) { }
+    private httpClient: HttpClient, 
+    private router: Router
+  ) { 
+    const role = this.getUserRole() || null;
+    const userId = this.getUserId() || null;
+    this.userId = userId;
+    this.userRole = role;
+  }
 
   public login(user) {
     const url = this.linkBuilder.buildApiLink('/auth/login');
@@ -59,6 +66,21 @@ export class AuthService {
 
   public getToken() {
     return localStorage.getItem('token');
+  }
+
+  public getUserRole() {
+    return localStorage.getItem('role');
+  }
+
+  public getUserId() {
+    return localStorage.getItem('id');
+  }
+
+  public logout() {
+    localStorage.clear();
+    this.userId = null;
+    this.userRole = null;
+    this.router.navigate(['/']);
   }
 
 }

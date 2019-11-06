@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormHelperService } from '../../services/form-helper.service';
 import { AuthService } from '../../services/auth/auth.service';
@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
+  isInvalidLoginOrPassword: boolean = false;
+
   constructor(
     public modal: NgbActiveModal, 
     public formHelper: FormHelperService, 
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit {
     const validators = [
       Validators.required,
       Validators.minLength(5),
-      Validators.maxLength(50)
+      Validators.maxLength(30)
     ];
     this.loginForm = new FormGroup({
       login: new FormControl('', validators),
@@ -40,6 +42,13 @@ export class LoginComponent implements OnInit {
       return;
     this.auth.login(this.loginForm.value).subscribe(res => {
       console.log(res);
+      this.modal.close(true);
+      this.isInvalidLoginOrPassword = false;
+    }, err => {
+      if (err.status == 404 || err.status == 401) {
+        this.isInvalidLoginOrPassword = true;
+      }
+      console.log(err);
     })
   }
 
