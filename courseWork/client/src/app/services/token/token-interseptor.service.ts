@@ -25,6 +25,7 @@ export class TokenInterseptorService implements HttpInterceptor {
         (error: HttpErrorResponse) => {
           if (error.status === 401) {
             this.authService.logout();
+            alert('Вы не авторизированы, либо закончилось время сессии');
           }
           return throwError(error)
         }

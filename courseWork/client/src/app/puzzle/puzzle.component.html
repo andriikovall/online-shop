@@ -30,8 +30,8 @@
             </div>
 
         </div>
-
-        <button type="submit" class="btn btn-danger mt-5" (click)="confirm()">Удалить</button>
+        
+        <button *ngIf="this.auth.userIsManager()" class="btn btn-danger mt-5" (click)="confirm()">Удалить</button>
 
         <div class="puzzle_bio">
             <hr>

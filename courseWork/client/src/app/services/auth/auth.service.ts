@@ -14,9 +14,9 @@ export class AuthService {
 
   constructor(
     private linkBuilder: ApiHelperService,
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient,
     private router: Router
-  ) { 
+  ) {
   }
 
   public login(user) {
@@ -26,7 +26,6 @@ export class AuthService {
         tap(
           (res: any) => {
             localStorage.setItem('token', res.token);
-            // this.setCurrentUserData(res.user._id, res.user.role);
           }
         )
       )
@@ -36,11 +35,6 @@ export class AuthService {
     const url = this.linkBuilder.buildApiLink('/auth/register');
     return this.httpClient.post(url, user);
   }
-
-  // public setCurrentUserData(userId, userRole) {
-  //   this.userId = userId;
-  //   this.userRole = userRole;
-  // }
 
   public userIsAdmin() {
     return this.userRole.toLowerCase() === 'admin';
@@ -75,10 +69,6 @@ export class AuthService {
     return defaultRole;
   }
 
-  // set userRole(role: string) {
-  //   localStorage.setItem('role', role);
-  // }
-
   get userId() {
     const defaultId = '';
     const token = this.getToken();
@@ -89,18 +79,12 @@ export class AuthService {
     return defaultId;
   }
 
-  // set userId(id: string) {
-  //   localStorage.setItem('id', id);
-  // }
-
   private getDecodedAccessToken(token: string): any {
-    try{
-        return jwt_decode(token);
+    try {
+      return jwt_decode(token);
     }
-    catch(Error){
-        return null;
+    catch (Error) {
+      return null;
     }
   }
-
-
 }

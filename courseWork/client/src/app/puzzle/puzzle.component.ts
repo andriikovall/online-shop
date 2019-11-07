@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from "@angular/router";
 
+import { AuthService } from '../services/auth/auth.service';
 import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
 
 import { ConfirmComponent } from '../modals/confirm-danger/confirm.component';
@@ -18,10 +19,11 @@ export class PuzzleComponent implements OnInit {
   puzzle: Puzzle;
 
   constructor(
+    public auth: AuthService,
     private route: ActivatedRoute,
     private puzzlesService: ApiPuzzlesService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router, 
   ) { }
 
   ngOnInit() {
