@@ -5,10 +5,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 //import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
-import { ConfirmSafetyComponent } from '../modals/confirm-safety/confirm-safety.component';
+import { ConfirmSafetyComponent } from '../../modals/confirm-safety/confirm-safety.component';
 
-import { Puzzle } from '../models/puzzle.model';
-import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
+import { Puzzle } from '../../models/puzzle.model';
+import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 

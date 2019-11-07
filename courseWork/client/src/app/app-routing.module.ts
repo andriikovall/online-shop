@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IndexComponent } from './index/index.component';
-import { AboutComponent } from './about/about.component';
-import { UsersComponent } from './users/users.component';
-import { PuzzlesComponent } from './puzzles/puzzles.component';
-import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
-import { PuzzleComponent } from './puzzle/puzzle.component';
-import { UserComponent } from './user/user.component';
+import { IndexComponent } from './components/index/index.component';
+import { AboutComponent } from './components/about/about.component';
+import { UsersComponent } from './components/users/users.component';
+import { PuzzlesComponent } from './components/puzzles/puzzles.component';
+import { PuzzlesNewComponent } from './components/puzzles-new/puzzles-new.component';
+import { PuzzleComponent } from './components/puzzle/puzzle.component';
+import { UserComponent } from './components/user/user.component';
 import { ShellComponent } from './components/shell/shell.component';
 
 import { AuthGuard } from './guards/auth/auth.guard';

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Puzzle } from '../models/puzzle.model';
+import { Puzzle } from '../../models/puzzle.model';
 import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from "@angular/router";
 
-import { AuthService } from '../services/auth/auth.service';
-import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 
-import { ConfirmComponent } from '../modals/confirm-danger/confirm.component';
+import { ConfirmComponent } from '../../modals/confirm-danger/confirm.component';
 
 @Component({
   selector: 'app-puzzle',

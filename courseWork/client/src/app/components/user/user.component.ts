@@ -3,11 +3,11 @@ import { ActivatedRoute } from "@angular/router";
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { User } from '../models/user.model';
+import { User } from '../../models/user.model';
 
-import { ApiUsersService } from '../services/apiUsers/api-users.service';
-import { ConfirmSafetyComponent } from '../modals/confirm-safety/confirm-safety.component';
-
+import { ApiUsersService } from '../../services/apiUsers/api-users.service';
+import { ConfirmSafetyComponent } from '../../modals/confirm-safety/confirm-safety.component';
+ 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',

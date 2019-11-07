@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ApiUsersService } from '../services/apiUsers/api-users.service';
+import { ApiUsersService } from '../../services/apiUsers/api-users.service';
 
 
 @Component({

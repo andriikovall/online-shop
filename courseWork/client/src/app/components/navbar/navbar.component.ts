@@ -2,11 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from "@angular/router";
 
-import { AuthService } from '../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
-import { LoginComponent } from '../modals/login/login.component';
-import { RegisterComponent } from '../modals/register/register.component';
-import { ConfirmComponent } from '../modals/confirm-danger/confirm.component';
+import { LoginComponent } from '../../modals/login/login.component';
+import { RegisterComponent } from '../../modals/register/register.component';
+import { ConfirmComponent } from '../../modals/confirm-danger/confirm.component';
 
 
 @Component({

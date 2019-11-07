@@ -7,19 +7,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { HeaderComponent } from './header/header.component';
-import { MainComponent } from './main/main.component';
-import { IndexComponent } from './index/index.component';
-import { AboutComponent } from './about/about.component';
-import { PuzzlesComponent } from './puzzles/puzzles.component'
-import { UsersComponent } from './users/users.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HeaderComponent } from './components/header/header.component';
+import { MainComponent } from './components/main/main.component';
+import { IndexComponent } from './components/index/index.component';
+import { AboutComponent } from './components/about/about.component';
+import { PuzzlesComponent } from './components/puzzles/puzzles.component'
+import { UsersComponent } from './components/users/users.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { PuzzlesNewComponent } from './puzzles-new/puzzles-new.component';
-import { PuzzleComponent } from './puzzle/puzzle.component';
+import { PuzzlesNewComponent } from './components/puzzles-new/puzzles-new.component';
+import { PuzzleComponent } from './components/puzzle/puzzle.component';
 import { ConfirmComponent } from './modals/confirm-danger/confirm.component';
-import { UserComponent } from './user/user.component';
-import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.component';
+import { UserComponent } from './components/user/user.component';
+import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.component'; 
 import { ShellComponent } from './components/shell/shell.component';
 import { RegisterComponent } from './modals/register/register.component';
 import { LoginComponent } from './modals/login/login.component';

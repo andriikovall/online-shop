@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl } from '@angular/forms';
 
-import { ApiPuzzlesService } from '../services/apiPuzzles/puzzles.service';
+import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 import { PaginationInstance } from 'ngx-pagination';
-import { Puzzle } from '../models/puzzle.model';
-import { AuthService } from '../services/auth/auth.service';
+import { Puzzle } from '../../models/puzzle.model';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-puzzles',
