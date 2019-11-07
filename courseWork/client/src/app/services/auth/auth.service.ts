@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 
 import { tap } from 'rxjs/operators';
 
+import * as jwt_decode from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class AuthService {
         tap(
           (res: any) => {
             localStorage.setItem('token', res.token);
-            this.setCurrentUserData(res.user._id, res.user.role);
+            // this.setCurrentUserData(res.user._id, res.user.role);
           }
         )
       )
@@ -36,10 +37,10 @@ export class AuthService {
     return this.httpClient.post(url, user);
   }
 
-  public setCurrentUserData(userId, userRole) {
-    this.userId = userId;
-    this.userRole = userRole;
-  }
+  // public setCurrentUserData(userId, userRole) {
+  //   this.userId = userId;
+  //   this.userRole = userRole;
+  // }
 
   public userIsAdmin() {
     return this.userRole.toLowerCase() === 'admin';
@@ -65,18 +66,41 @@ export class AuthService {
   }
 
   get userRole() {
-    return localStorage.getItem('role') || 'guest';
+    const defaultRole = 'guest';
+    const token = this.getToken();
+    if (!token) return defaultRole;
+
+    const decodedToken = this.getDecodedAccessToken(token);
+    if (decodedToken) return decodedToken.role;
+    return defaultRole;
   }
-  set userRole(role: string) {
-    localStorage.setItem('role', role);
-  }
+
+  // set userRole(role: string) {
+  //   localStorage.setItem('role', role);
+  // }
 
   get userId() {
-    return localStorage.getItem('id') || '';
+    const defaultId = '';
+    const token = this.getToken();
+    if (!token) return defaultId;
+
+    const decodedToken = this.getDecodedAccessToken(token);
+    if (decodedToken) return decodedToken._id;
+    return defaultId;
   }
 
-  set userId(id: string) {
-    localStorage.setItem('id', id);
+  // set userId(id: string) {
+  //   localStorage.setItem('id', id);
+  // }
+
+  private getDecodedAccessToken(token: string): any {
+    try{
+        return jwt_decode(token);
+    }
+    catch(Error){
+        return null;
+    }
   }
+
 
 }

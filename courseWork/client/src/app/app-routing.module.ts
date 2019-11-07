@@ -20,14 +20,13 @@ const newRoutes: Routes = [
     children: [
       { path: '', component: IndexComponent },
       { path: 'about', component: AboutComponent },
-      { path: 'users', component: UsersComponent },
+      { path: 'users', component: UsersComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
       { path: 'puzzles', component: PuzzlesComponent },
       { path: 'puzzles/new', component: PuzzlesNewComponent, canActivate: [ManagerGuard]},
       { path: 'puzzles/:id', component: PuzzleComponent },
-      { path: 'users/:id', component: UserComponent }
+      { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }
     ]
   }, 
-  // { path: 'auth/register'}
 ]
 
 @NgModule({

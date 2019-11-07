@@ -34,11 +34,11 @@ class Order {
     }
 
     static update(order) {
-        return orderModel.findByIdAndUpdate(order.id, order);
+        return orderModel.findByIdAndUpdate(order.id, order, { new: true });
     }
 
     static setState(orderId, state) {
-        return orderModel.findByIdAndUpdate(orderId, { $set: { state: state } });
+        return orderModel.findByIdAndUpdate(orderId, { $set: { state: state } }, { new: true });
     }
 
 };

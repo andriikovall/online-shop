@@ -3,13 +3,16 @@ import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnaps
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
+import { Location } from '@angular/common';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate, CanActivateChild {
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService, 
+    private location: Location
   ) {
   }
 
@@ -17,6 +20,10 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       const isAdmin = this.auth.userIsAdmin();
+    if (!isAdmin) {
+      alert('Вы не админ, сори');
+      this.location.back();
+    }
     return isAdmin;
   }
   canActivateChild(

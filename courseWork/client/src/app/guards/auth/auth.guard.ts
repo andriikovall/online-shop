@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
+import { Location } from '@angular/common';
 
 
 @Injectable({
@@ -10,7 +11,8 @@ import { AuthService } from '../../services/auth/auth.service';
 export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService, 
+    private location: Location
   ) {
   }
   canActivate(
@@ -19,6 +21,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     const isAuthenticated = this.auth.isAuthenticated();
     if (!isAuthenticated) {
       alert('Вы не авторизированы'); //@todo потом сделать норм алерты
+      this.location.back();
     }
       return isAuthenticated;
   }

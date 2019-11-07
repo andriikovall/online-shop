@@ -25,7 +25,7 @@ class Manufacturer {
     }
 
     static update(manufacturer) {
-        return manufacturerModel.findByIdAndUpdate(manufacturer.id, manufacturer);
+        return manufacturerModel.findByIdAndUpdate(manufacturer._id, manufacturer);
     }
 };
 

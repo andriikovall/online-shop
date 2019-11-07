@@ -3,13 +3,16 @@ import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnaps
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
+import { Location } from '@angular/common';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ManagerGuard implements CanActivate, CanActivateChild {
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService, 
+    private location: Location
   ) {
   }
 
@@ -17,8 +20,10 @@ export class ManagerGuard implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isManager = this.auth.userIsAdmin() || this.auth.userIsManager();
-    if (!isManager)
+    if (!isManager) {
       alert('Вы не имеете доступ к этому'); //@todo сделать норм алерты
+      this.location.back();
+    }
     return isManager;
   }
   canActivateChild(

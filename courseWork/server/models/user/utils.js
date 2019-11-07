@@ -18,7 +18,7 @@ util.validatePassword = (password, expectedHash) => {
 
 
 util.generateJWT = (user) => {
-    const expMinutes = 60;
+    // const expMinutes = 60;
 
     return jwt.sign({
         role: user.role,

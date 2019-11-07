@@ -86,7 +86,7 @@ class Puzzle {
     }
 
     static update(puzzle) {
-        return puzzleModel.findByIdAndUpdate(puzzle.id, puzzle);
+        return puzzleModel.findByIdAndUpdate(puzzle.id, puzzle, { new: true });
     }
 
 

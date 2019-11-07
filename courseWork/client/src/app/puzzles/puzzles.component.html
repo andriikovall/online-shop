@@ -2,7 +2,7 @@
     <div class="spinner-border" *ngIf="!this.filtersForm"></div>
     <div class="card" *ngIf="this.filtersForm">
         <div class="card-body">
-            <h4 class="card-title">Фильры</h4>
+            <h4 class="card-title">Фильтры</h4>
             <hr>
             <button (click)="resetFilters()" class="btn btn-link">Убрать фильтры</button>
             <form [formGroup]="filtersForm">

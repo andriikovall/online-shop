@@ -8,7 +8,7 @@ const cartModel = Cart.model;
 
 class User {
 
-    constructor(id, login, fullname, role, date, avaUrl) {
+    constructor(id, login, fullname, role, date, avaUrl, bio) {
         this.id = id;
         this.login = login;
         this.fullname = fullname;
@@ -16,6 +16,7 @@ class User {
         this.registeredAt = date;
         this.avaUrl = avaUrl;
         this.isDisabled = false;
+        this.bio = bio;
     }
 
     static getById(id) {
@@ -48,7 +49,7 @@ class User {
     }
 
     static update(user) {
-        return userModel.findByIdAndUpdate(user.id, user);
+        return userModel.findOneAndUpdate({_id: user._id}, user, { new: true })
     }
 
     static getByLogin(login) {

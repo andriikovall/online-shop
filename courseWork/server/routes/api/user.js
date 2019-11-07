@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../../models/user/user');
 
+const {checkAdmin, checkAuth, checkManager} = require('../../config/passport');
+
+
 router.get('/', function (req, res) {
     res.status(500).send('Not implemented yet');
 });
@@ -28,5 +31,26 @@ router.get('/:id([\\da-z]{24})',async (req, res) => {
         res.sendStatus(500);
     }
 });
+
+router.patch('/:id([\\da-z]{24})', checkAuth, async (req, res) => {
+    const userToPatchId = req.params.id;
+    const canUpdate = (req.user.role.toUpperCase() === 'ADMIN' || req.user._id === userToPatchId);
+    if (canUpdate) {
+        try {
+            const response = await User.update(req.body);
+            console.log(response);
+            res.json(response); 
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                err
+            })
+        }
+    } else {
+        res.status(403).json({
+            err: 'No rights to update user'
+        })
+    }
+})
 
 module.exports = router;
