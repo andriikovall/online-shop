@@ -1,7 +1,3 @@
-const utils = require('../utils/files');
-const { storage, uploadsDir } = require('../config/multerStorage');
-const paginator = require('../utils/pagination');
-
 const Manufacturer = require('./manufacturer');
 const Type = require('./puzzle_types');
 const mongoose = require('mongoose');

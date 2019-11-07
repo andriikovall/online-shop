@@ -1,8 +1,4 @@
 const multer  = require('multer');
-const path    = require('path');
-
-const uploadsDir = 'data/fs';
-const uploadsFullPath = path.join(__dirname, uploadsDir);
 
 const storage = multer({
     fileFilter: fileFilter 
@@ -23,4 +19,4 @@ function fileFilter (req, file, cb) {
 }
 
 
-module.exports = {storage, uploadsDir, uploadsFullPath, getFileExtension};
+module.exports = {storage, getFileExtension};

@@ -34,7 +34,6 @@ const checkAdmin = (req, res, next) => {
 const checkAuth = passport.authenticate('jwt', { session: false });
 
 const checkManager = (req, res, next) => {
-  console.log(req.user);
   if (!req.user) res.sendStatus(401); 
   else if (req.user.role !== 'manager' && req.user.role !== 'admin') res.sendStatus(403);
   else next(); 

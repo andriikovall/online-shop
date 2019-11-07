@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
     res.status(500).send('Not implemented yet');
 });
 
-router.get('/all', async (req, res) => {
+router.get('/all', checkAuth, async (req, res) => {
     try {
         const users = await User.getAll();
         res.json(users);
@@ -35,10 +35,15 @@ router.get('/:id([\\da-z]{24})',async (req, res) => {
 router.patch('/:id([\\da-z]{24})', checkAuth, async (req, res) => {
     const userToPatchId = req.params.id;
     const canUpdate = (req.user.role.toUpperCase() === 'ADMIN' || req.user._id === userToPatchId);
+    if (!req.body) {
+        res.status(400).json({
+            err: 'Requset body is empty'
+        })
+        return;
+    }
     if (canUpdate) {
         try {
             const response = await User.update(req.body);
-            console.log(response);
             res.json(response); 
         } catch (err) {
             console.log(err);

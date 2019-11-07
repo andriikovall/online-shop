@@ -16,20 +16,15 @@ router.use(passport.initialize());
 
 router.use(cors());
 
+
 router.use('/users', userRoutes);
 router.use('/puzzles', puzzleRoutes);
 router.use('/carts', cartsRoutes);
 router.use('/auth', authRoutes);
-
-
-
-router.use((req, res) => {
-    res.sendStatus(404);
-});
+ 
 
 router.use((err, req, res) => {
     res.status(err.status || 500);
-
     res.json({
         error: {
             message: err.message

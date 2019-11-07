@@ -10,8 +10,7 @@ const {checkAdmin, checkAuth, checkManager} = require('../../config/passport');
 
 function responseWithError(err, status, res) {
     res.status(status).json({
-        msg: err.toString(), 
-        status
+        err
     });
 }
 
@@ -61,7 +60,6 @@ router.delete('/:id([\\da-z]+)', checkAuth, checkManager, async (req, res) => {
 });
 
 router.post('/new/mp',  checkAuth, checkManager ,async (req, res) => {
-
     const puzzle = await Puzzle.getPuzzleFromFormRequest(req);
     try {
         const insertedPuzzle = await Puzzle.insert(puzzle);
@@ -74,7 +72,7 @@ router.post('/new/mp',  checkAuth, checkManager ,async (req, res) => {
 
 });
 
-router.patch('/:id([\\da-z]{,24})', async (req, res) => {
+router.patch('/:id([\\da-z]{,24})', checkAuth, checkManager, async (req, res) => {
     const puzzle = await Puzzle.getPuzzleFromFormRequest(req);
 
     const puzzleId = req.params.id;
