@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 
 import { ConfirmComponent } from '../../modals/confirm-danger/confirm.component';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
 @Component({
   selector: 'app-puzzle',
@@ -18,18 +19,24 @@ export class PuzzleComponent implements OnInit {
 
   puzzle: Puzzle;
 
+  errorOrNotFound: boolean = false;
+
   constructor(
     public auth: AuthService,
     private route: ActivatedRoute,
     private puzzlesService: ApiPuzzlesService,
     private modalService: NgbModal,
     private router: Router, 
+    private alert: AlertService
   ) { }
 
   ngOnInit() {
     const puzzleId = this.route.snapshot.paramMap.get("id");
     this.puzzlesService.getById(puzzleId).subscribe((puzzle: Puzzle) => {
       this.puzzle = puzzle;
+    }, (err) => {
+      console.log(err);
+      this.errorOrNotFound = true;
     })
   }
 
@@ -46,7 +53,7 @@ export class PuzzleComponent implements OnInit {
 
   onDelete() {
     this.puzzlesService.deleteById(this.puzzle._id).subscribe(res => {
-      console.log('HERE');
+      this.alert.info('Головоломка удалена')
       this.router.navigate(['/puzzles']);
     })
   }

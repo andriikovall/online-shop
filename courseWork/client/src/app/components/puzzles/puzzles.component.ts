@@ -5,6 +5,7 @@ import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { Puzzle } from '../../models/puzzle.model';
 import { AuthService } from '../../services/auth/auth.service';
+import { AlertService } from '../../services/alert/alert.service';
 
 @Component({
   selector: 'app-puzzles',
@@ -45,9 +46,10 @@ export class PuzzlesComponent implements OnInit {
 
 
   constructor(
+    public auth: AuthService, 
+    public alerts: AlertService,
     private puzzlesService: ApiPuzzlesService,
     private formBuilder: FormBuilder,
-    public auth: AuthService
   ) {
   }
 
@@ -124,5 +126,9 @@ export class PuzzlesComponent implements OnInit {
   public resetFilters() {
     this.setDefaultFilters(this.allFilters);
   }
+
+  buyClicked(puzzleId: string) {
+    this.alerts.error('Еще не реализовано');
+  } 
 
 }

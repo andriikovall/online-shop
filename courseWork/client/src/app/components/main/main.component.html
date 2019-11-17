@@ -1,10 +1,14 @@
 <div class="data">
 
-    <router-outlet></router-outlet>
+    <div class="container px-3 py-3 content" id="content">
+        <router-outlet></router-outlet>
+    </div>
 
     <footer class="page-footer font-small blue">
-        <div class="footer-copyright text-center py-3">© Создатель сайта: <a href="https://t.me/ZioSmith">@ZioSmith</a>
+        <div class="footer-copyright text-center py-3">
+            © Создатель сайта: <a href="https://t.me/ZioSmith">@ZioSmith</a>
+            <br><a [routerLink]="['/developer/v1']">API</a>
         </div>
     </footer>
-    
+
 </div>

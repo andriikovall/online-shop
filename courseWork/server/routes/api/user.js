@@ -2,14 +2,30 @@ const express = require('express');
 const router = express.Router();
 const User = require('../../models/user/user');
 
-const {checkAdmin, checkAuth, checkManager} = require('../../config/passport');
+const { checkAdmin, checkAuth, checkManager } = require('../../config/passport');
 
 
-router.get('/', function (req, res) {
-    res.status(500).send('Not implemented yet');
-});
+router.post('/', checkAuth, async (req, res, next) => {
+    const limit = req.body.limit;
+    const offset = req.body.offset;
+    const name = req.body.name || '';
+    if (limit === undefined) {
+        limit = 10;
+    } if (offset === undefined) {
+        offset = 0;
+    }
+    try {
+        const response = await User.getPaginated(limit, offset, name);
+        res.json(response);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            err
+        })
+    }
+})
 
-router.get('/all', checkAuth, async (req, res) => {
+router.get('/all', checkAuth, async (req, res, next) => {
     try {
         const users = await User.getAll();
         res.json(users);
@@ -18,44 +34,58 @@ router.get('/all', checkAuth, async (req, res) => {
     }
 });
 
-router.get('/:id([\\da-z]{24})',async (req, res) => {
-    const user_id = req.params.id;
-    try {
-        const user = await User.getById(user_id);
-        if (!user)
-            res.sendStatus(404);
-        else 
-            res.json(user);
 
-    } catch (err) {
-        res.sendStatus(500);
-    }
-});
-
-router.patch('/:id([\\da-z]{24})', checkAuth, async (req, res) => {
+router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, async (req, res, next) => {
     const userToPatchId = req.params.id;
     const canUpdate = (req.user.role.toUpperCase() === 'ADMIN' || req.user._id === userToPatchId);
     if (!req.body) {
-        res.status(400).json({
-            err: 'Requset body is empty'
+        next({
+            status: 400, 
+            message: 'Requset body is empty'
         })
         return;
     }
     if (canUpdate) {
         try {
             const response = await User.update(req.body);
-            res.json(response); 
+            res.json(response);
         } catch (err) {
             console.log(err);
-            res.status(500).json({
-                err
-            })
+            next(err);
+            return;
         }
     } else {
-        res.status(403).json({
-            err: 'No rights to update user'
-        })
+        next({
+            status: 403, 
+            message: 'No rights to update user'
+        });
+        return;
     }
 })
+
+router.get('/:id([\\da-z]{1,24})', checkUserById, checkAuth, async (req, res, next) => {
+    res.json(req.foundUser);
+});
+
+async function checkUserById(req, res, next) {
+    const userId = req.params.id;
+    if (userId.length != 24) {
+        next({
+            status: 404,
+            message: `User with id ${userId} not found`
+        });
+        return;
+    }
+    const user = await User.getById(userId);
+    if (!user) {
+        next({
+            status: 404,
+            message: `User with id ${userId} not found`
+        });
+        return;
+    }
+    req.foundUser = user;
+    next();
+}
 
 module.exports = router;

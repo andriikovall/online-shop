@@ -187,3 +187,13 @@
     transition: 1s;
     background-color: rgb(44, 116, 175);
 } 
+
+
+#filters .btn-block {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+#puzzles-container-content .card{
+    /* max-width: 200px; */
+}

@@ -42,7 +42,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
     const login = req.body.login || '';
     try {
         const futureUser = await User.getByLogin(login).select('_id role passwordHash');
@@ -52,12 +52,12 @@ router.post('/login', async (req, res) => {
             });
             return;
         }
-        console.log(futureUser);
-
+        
         const passwordValidated = utils.validatePassword(req.body.password, futureUser.passwordHash);
 
         if (!passwordValidated) {
-            res.status(401).json({
+            next({
+                status: 401,
                 message: 'Wrong password'
             });
             return;

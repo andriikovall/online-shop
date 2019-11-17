@@ -1,32 +1,13 @@
-table caption {
+caption {
     caption-side: top;
-    font-size: 30px;
+    font-size: 40px;
 }
 
 .data {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     display: block;
     position: relative;
     max-width: inherit;
     height: 100%;
-}
-
-
-.content {
-    display: block;
-    float: right;
-    position: relative;
-    margin-left: 1%;
-    margin-right: 1%;
-    width: 98%;
-    margin-top: 15px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color:  white;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.6);
-    font-size: 22px;
 }
 
 footer {
@@ -34,11 +15,22 @@ footer {
     width: 100%;
 }
 
-.content {
-    font-size: 30px;
+table {
+    overflow: scroll;
+    font-size: 25px;
 }
 
-table caption {
-    caption-side: top;
-    font-size: 30px;
+#content {
+    box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.6);
+    margin-top: 10px;
 }
+
+.content p {
+    font-size: 20px !important;
+}
+
+#puzzles .card {
+    height: 100%;
+}
+  
+  

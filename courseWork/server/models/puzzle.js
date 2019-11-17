@@ -27,7 +27,7 @@ class Puzzle {
 
     static getById(id) {
         return puzzleModel.findById(id).
-            populate({ path: 'manufacturerId', model: manufacturerModel }). 
+            populate({ path: 'manufacturerId', model: manufacturerModel }).
             populate({ path: 'typeId', model: typeModel })
     }
 
@@ -58,13 +58,11 @@ class Puzzle {
         const types = filters.types;
         const priceFrom = getValidatedFilterPrice(filters.priceFrom);
         const priceTo = getValidatedFilterPrice(filters.priceTo);
-        const limit = filters.limit;
-        const offset = filters.offset || 0;
+        const limit = parseInt(filters.limit);
+        const offset = parseInt(filters.offset);
         const searchedName = filters.name || '';
 
         const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName);
-
-
 
         const promises = [
             puzzleModel.countDocuments(findPredicate),
@@ -78,7 +76,6 @@ class Puzzle {
                     puzzles
                 };
             })
-
     }
 
     static update(puzzle) {
@@ -120,13 +117,15 @@ class Puzzle {
     }
 
     static getPuzzleFromFormRequest(req) {
+        if (!req.body.name || !req.body.typeId || !req.body.manufacturerId) 
+            return null;
         const name = req.body.name;
         const price = trimPrice(parseInt(req.body.price));
         const typeId = req.body.typeId;
         const manufacturerId = req.body.manufacturerId;
         const isWCA = !!(req.body.isWCA);
         const isAvailable = !!(req.body.isAvailable);
-        const bio = req.body.description_md;
+        const bio = req.body.description_md || '';
         let photoUrl;
         let puzzle = new Puzzle(name, photoUrl, typeId, isWCA, price, isAvailable, manufacturerId, bio)
         if (!req.file) {
@@ -180,7 +179,7 @@ function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName) {
             findPredicate.price.$gt = priceFrom - 1;
         if (priceTo != null)
             findPredicate.price.$lt = priceTo + 1;
-    } 
+    }
     return findPredicate;
 }
 

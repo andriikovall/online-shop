@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { Location } from '@angular/common';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
 
 @Injectable({
@@ -12,7 +13,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private auth: AuthService, 
-    private location: Location
+    private location: Location, 
+    private alerts: AlertService, 
+    private router: Router
   ) {
   }
   canActivate(
@@ -20,8 +23,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isAuthenticated = this.auth.isAuthenticated();
     if (!isAuthenticated) {
-      alert('Вы не авторизированы'); //@todo потом сделать норм алерты
-      this.location.back();
+      this.router.navigate(['/forbidden'], {queryParams: { msg: 'Пожалуйста авторизируйтесь'}});
     }
       return isAuthenticated;
   }

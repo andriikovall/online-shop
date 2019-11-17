@@ -11,7 +11,7 @@ html, body {
   }
 
 body {
-    width: 1400px;
+    max-width: 1400px;
     position:relative;
     height: 100%;
     margin: 0px auto;
@@ -24,18 +24,5 @@ footer {
 }
 
 .content {
-    display: block;
-    float: right;
-    position: relative;
-    margin-left: 1%;
-    margin-right: 1%;
-    width: 98%;
-    margin-top: 15px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color:  white;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.6);
-    font-size: 30px;
+    font-size: 20px;
 }

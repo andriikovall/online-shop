@@ -21,12 +21,19 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets", 
+              "src/app/markdown" 
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css", 
+              "node_modules/prismjs/themes/prism.css" 
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/marked/lib/marked.js", 
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-json.min.js", 
+              "node_modules/prismjs/components/prism-javascript.min.js"
+            ]
           },
           "configurations": {
             "production": {

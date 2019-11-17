@@ -11,6 +11,7 @@ import { Puzzle } from '../../models/puzzle.model';
 import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) { }
@@ -42,6 +43,7 @@ export class PuzzlesNewComponent implements OnInit {
     private router: Router, 
     private location: Location, 
     private modalService: NgbModal,
+    private alert: AlertService
   ) { }
 
   ngOnInit() {
@@ -64,7 +66,7 @@ export class PuzzlesNewComponent implements OnInit {
         typeId: new FormControl(this.puzzle.typeId,
           [Validators.required]),
         price: new FormControl(this.puzzle.price,
-          [Validators.required, Validators.min(0), Validators.max(99999999999)])
+          [Validators.required, Validators.min(0), Validators.max(999999999)])
       });
     });
   }
@@ -100,7 +102,7 @@ export class PuzzlesNewComponent implements OnInit {
     this.puzzle.file = this.file;
     const uploadFormData = this.getFormDataFromObj(this.puzzle);
     this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe((res: any) => {
-      this.navigateToPuzzle(res.puzzle._id); 
+      this.navigateToPuzzle(res.puzzle._id);
     })
   }
 

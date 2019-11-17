@@ -17,6 +17,8 @@ export class UserComponent implements OnInit {
 
   user: User;
 
+  errorOrNotFound: boolean = false;
+
   constructor(
     private usersService: ApiUsersService, 
     private route: ActivatedRoute,
@@ -36,6 +38,9 @@ export class UserComponent implements OnInit {
     this.usersService.getById(userId).subscribe((user: User) => {
       this.user = user;
       this.selectedRole = user.role;
+    }, (err) => {
+      console.log(err);
+      this.errorOrNotFound = true;
     })
   }
 

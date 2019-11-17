@@ -33,7 +33,12 @@ class Cart {
         return cartModel.findByIdAndUpdate(cart.id, {puzzles: cart.puzzles});
     }
 
-    static insertPuzzle(cart, puzzleId) {
+    static async insertPuzzle(cart, puzzleId) {
+        try {
+            cart = await this.getById(cart);
+        } catch {
+        }
+        console.log('inserting puzzle into cart', cart);    
         let countAdded = false;
         cart.puzzles.forEach(element => {
             if (puzzleId == element.puzzle._id) {
@@ -48,6 +53,7 @@ class Cart {
     }
 
     static removePuzzle(cart, puzzleId) {
+        console.log(cart);
         cart.puzzles.forEach((element, index) => {
             if (puzzleId == element.puzzle._id) {
                 element.count--;

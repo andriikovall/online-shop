@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { ApiHelperService } from '../api-helper.service';
 import { Router } from "@angular/router";
 
+import { AlertService } from '../../services/alert/alert.service';
+
+
 import { tap } from 'rxjs/operators';
 
 import * as jwt_decode from "jwt-decode";
@@ -15,7 +18,8 @@ export class AuthService {
   constructor(
     private linkBuilder: ApiHelperService,
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router, 
+    private alerts: AlertService
   ) {
   }
 

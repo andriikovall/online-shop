@@ -9,6 +9,9 @@ import { PuzzlesNewComponent } from './components/puzzles-new/puzzles-new.compon
 import { PuzzleComponent } from './components/puzzle/puzzle.component';
 import { UserComponent } from './components/user/user.component';
 import { ShellComponent } from './components/shell/shell.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { DeveloperComponent } from './components/developer/developer.component';
 
 import { AuthGuard } from './guards/auth/auth.guard';
 import { AdminGuard } from './guards/admin/admin.guard';
@@ -24,7 +27,11 @@ const newRoutes: Routes = [
       { path: 'puzzles', component: PuzzlesComponent },
       { path: 'puzzles/new', component: PuzzlesNewComponent, canActivate: [ManagerGuard]},
       { path: 'puzzles/:id', component: PuzzleComponent },
-      { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }
+      { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }, 
+      { path: 'forbidden', component: ForbiddenComponent },
+      { path: 'developer/v1',  component: DeveloperComponent },
+      { path: '**', redirectTo: '404'},
+      { path: '404',        component: NotFoundComponent },
     ]
   }, 
 ]

@@ -2,9 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -19,13 +20,17 @@ import { PuzzlesNewComponent } from './components/puzzles-new/puzzles-new.compon
 import { PuzzleComponent } from './components/puzzle/puzzle.component';
 import { ConfirmComponent } from './modals/confirm-danger/confirm.component';
 import { UserComponent } from './components/user/user.component';
-import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.component'; 
+import { ConfirmSafetyComponent } from './modals/confirm-safety/confirm-safety.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { RegisterComponent } from './modals/register/register.component';
 import { LoginComponent } from './modals/login/login.component';
 
 import { TokenInterseptorService } from './services/token/token-interseptor.service';
 import { RolesDirective } from './directives/roles.directive';
+import { AlertComponent } from './components/alert/alert.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { DeveloperComponent } from './components/developer/developer.component';
 
 
 @NgModule({
@@ -43,10 +48,14 @@ import { RolesDirective } from './directives/roles.directive';
     ConfirmComponent,
     UserComponent,
     ConfirmSafetyComponent,
-    ShellComponent, 
+    ShellComponent,
     RegisterComponent,
     LoginComponent,
-    RolesDirective
+    RolesDirective,
+    AlertComponent,
+    NotFoundComponent,
+    ForbiddenComponent,
+    DeveloperComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +64,8 @@ import { RolesDirective } from './directives/roles.directive';
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    NgbModule
+    NgbModule,
+    MarkdownModule.forRoot({ loader: HttpClient })
   ],
   providers: [
     NgbActiveModal,

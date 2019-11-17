@@ -5,7 +5,7 @@ export class User {
     first_name: string;
     last_name: string;
     login: string;
-    password?: string;
+    //password?: string;
     role: string;
     bio_md?: string;
     avaUrl: any;

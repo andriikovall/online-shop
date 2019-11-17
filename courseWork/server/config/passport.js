@@ -4,8 +4,9 @@ const passport = require('passport');
 
 const User = require('../models/user/user');
 
-const JwtStrategy = require('passport-jwt').Strategy,
-  ExtractJwt = require('passport-jwt').ExtractJwt;
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_SECRET
@@ -27,16 +28,17 @@ passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
 
 
 const checkAdmin = (req, res, next) => {
-  if (!req.user) res.sendStatus(401); 
+  if (!req.user) res.sendStatus(401);
   else if (req.user.role !== 'admin') res.sendStatus(403);
-  else next(); 
+  else next();
 }
+
 const checkAuth = passport.authenticate('jwt', { session: false });
 
 const checkManager = (req, res, next) => {
-  if (!req.user) res.sendStatus(401); 
+  if (!req.user) res.sendStatus(401);
   else if (req.user.role !== 'manager' && req.user.role !== 'admin') res.sendStatus(403);
-  else next(); 
+  else next();
 }
 
-module.exports = {checkAdmin, checkAuth, checkManager};
+module.exports = { checkAdmin, checkAuth, checkManager };

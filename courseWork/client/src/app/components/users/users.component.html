@@ -1,23 +1,47 @@
 <div class="content">
-    <caption>Пользователи</caption>
     <div class="spinner-border" *ngIf="!users"></div>
+    <div class="row">
+        <div class="col">
+            <caption><h2>Пользователи</h2></caption>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Gan, MoYu..." [(ngModel)]="searchedName" />
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="form-row btn btn-primary mb-1" (click)="onSearch()">
+                            Поиск
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <table class="table" *ngIf="users">
         <!-- {{! <th scope="row">1</th> для жирного шрифта номерации}} -->
-            <thead>
-                <tr>
-                    <th scope="col">Логин</th>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Фамилия</th>
-                    <th scope="col">Дата регистрации</th>
-                </tr>
-            </thead>
-            <tbody *ngIf="users">
-                <tr *ngFor="let user of users">
-                    <td scope="col"><a [routerLink]="['/users', user._id]">{{user.login}}</a></td>
-                    <td scope="col">{{user.first_name}}</td>
-                    <td scope="col">{{user.last_name}}</td>
-                    <td scope="col">{{user.registeredAt}}</td>
-                </tr>
-            </tbody>
+        <thead>
+            <tr>
+                <th scope="col">Логин</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Дата регистрации</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="users">
+            <tr
+                *ngFor="let user of users | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalUsers }">
+                <td scope="col"><a [routerLink]="['/users', user._id]">{{user.login}}</a></td>
+                <td scope="col">{{user.first_name}}</td>
+                <td scope="col">{{user.last_name}}</td>
+                <td scope="col">{{user.registeredAt}}</td>
+            </tr>
+        </tbody>
     </table>
+    <div class="mx-10">
+        <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
+        </pagination-controls>
+    </div>
+
 </div>

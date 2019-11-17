@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { LoginComponent } from '../../modals/login/login.component';
 import { RegisterComponent } from '../../modals/register/register.component';
 import { ConfirmComponent } from '../../modals/confirm-danger/confirm.component';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
 
 @Component({
@@ -16,8 +17,6 @@ import { ConfirmComponent } from '../../modals/confirm-danger/confirm.component'
 })
 export class NavbarComponent implements OnInit {
 
-  
-  @Output() successMessage = new EventEmitter<String>();
 
   openRegistration = 'reg';
   openLogin = 'log';
@@ -31,7 +30,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     public auth: AuthService,
     private modalService: NgbModal, 
-    private route: ActivatedRoute 
+    private route: ActivatedRoute, 
+    private alerts: AlertService
   ) { }
 
   ngOnInit() {
@@ -47,8 +47,8 @@ export class NavbarComponent implements OnInit {
         this.registerClicked(); 
         return;
       }
-      this.successMessage.emit('Вы успешно вошли!');
       this.reloadLinks();
+      this.alerts.success('Вы успешно вошли!');
     }, (reason) => {
     })
   }
@@ -60,8 +60,8 @@ export class NavbarComponent implements OnInit {
         this.loginClicked();
         return;
       }
-      this.successMessage.emit('Вы успешно зарегестрировались!');
       this.reloadLinks();
+      this.alerts.success('Вы успешно зарегестрировались!');
     }, (reason) => {
     })
   }
@@ -70,8 +70,8 @@ export class NavbarComponent implements OnInit {
     this.modalService.open(ConfirmComponent).result.then(res => {
       if (res) {
         this.auth.logout();
-        this.successMessage.emit('Вы успешно вышли!');
         this.reloadLinks();
+        this.alerts.success('Вы успешно вышли!');
       }
     })
   }

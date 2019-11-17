@@ -18,4 +18,4 @@ app.use(storage.single("file"));
 
 app.use(require('morgan')('dev')); 
 
-app.use('/api', apiRoutes);
+app.use('/api/v1', apiRoutes);

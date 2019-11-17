@@ -41,6 +41,26 @@ class Order {
         return orderModel.findByIdAndUpdate(orderId, { $set: { state: state } }, { new: true });
     }
 
+    static getFilteredSearch(string, limit, offset) {
+        string = string || '';
+
+        //const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName);
+        //@todo
+
+        const promises = [
+            orderModel.countDocuments({}),
+            orderModel.find({}).limit(limit).skip(offset)
+        ];
+
+        return Promise.all(promises).
+            then(([count, orders]) => {
+                return {
+                    count,
+                    orders
+                };
+            })
+    }
+
 };
 
 Order.model = orderModel;

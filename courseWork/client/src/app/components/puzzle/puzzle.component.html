@@ -1,4 +1,5 @@
 <div class="content">
+    <p *ngIf="errorOrNotFound">Ошибка либо головоломку не найдено</p>
     <div *ngIf="puzzle" class="puzzle_data">
         <div class="puzzle_short_info">
             <h2>{{puzzle.name}}</h2>

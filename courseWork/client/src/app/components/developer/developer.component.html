@@ -1,0 +1,18 @@
+<div class="container-fluid mr-4 px-4 py-4">
+    <!-- <markdown [src]="'https://raw.githubusercontent.com/jfcere/ngx-markdown/master/README.md'"></markdown> -->
+    <div class="container-fluid my-3">
+        <h1>Апи нашего сайта</h1>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let article of readmes; index as index">
+            <button class="nav-link btn btn-link" [class.active]="selectedIndex == index"
+                (click)="onNavClicked(index)">{{article.name}}</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link btn btn-link disabled">Результаты сборки</button>
+        </li>
+    </ul>
+    <div class="container-fluid my-2 mx-1">
+        <markdown [src]="readmes[selectedIndex].src" (error)="onMdError($event)"></markdown>
+    </div>
+</div>
