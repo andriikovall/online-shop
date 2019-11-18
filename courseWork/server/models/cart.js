@@ -30,26 +30,26 @@ class Cart {
     }
 
     static update(cart) {
-        return cartModel.findByIdAndUpdate(cart.id, {puzzles: cart.puzzles})
+        return cartModel.findByIdAndUpdate(cart._id, {puzzles: cart.puzzles})
             .populate({ path: 'puzzles.puzzle', model: puzzleModel })
             .populate({ path: 'user', model: userModel });
     }
 
     static async insertPuzzle(cart, puzzleId) {
-        try {
-            cart = await this.getById(cart);
-        } catch {
-        }
-        let countAdded = false;
-        cart.puzzles.forEach(element => {
-            if (puzzleId == element.puzzle._id) {
-                element.count++;
-                countAdded = true;
-            } 
-        });
-        if (!countAdded) {
-            cart.puzzles.push({ count: 1, puzzle: puzzleId });
-        }
+        // try {
+        //     cart = await this.getById(cart);
+        // } catch {
+        // }
+        // let countAdded = false;
+        // cart.puzzles.forEach(element => {
+        //     if (puzzleId == element.puzzle._id) {
+        //         element.count++;
+        //         countAdded = true;
+        //     } 
+        // });
+        // if (!countAdded) {
+        //     cart.puzzles.push({ count: 1, puzzle: puzzleId });
+        // }
         return this.update(cart);
     }
 
