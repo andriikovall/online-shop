@@ -97,9 +97,20 @@
                     </div>
                 </div>
                 <div class="col-md-8 offset-lg-0">
-                    <div class="card" *ngIf="!puzzles.length">
-                        <div class="card-body">
-                                Головоломок не найдено
+                    <div class="container mb-4" *ngIf="this.auth.userIsManager()">
+                        <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="!this.puzzles">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Загрузка...
+                        </button>
+                        <a style="text-decoration: none" [routerLink]="['/puzzles/new']" *ngIf="this.puzzles">
+                            <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
+                        </a>
+                    </div>
+                    <div class="card" *ngIf="this.puzzles && this.currentFilters.name && puzzles.length">
+                        <div class="card-body">Результаты поиска по запросу: <b>{{this.currentFilters.name}}</b></div>
+                    </div>
+                    <div class="card" *ngIf="puzzles && !puzzles.length">
+                        <div class="card-body">Головоломок по названию: <b>{{this.currentFilters.name}}</b> не найдено
                         </div>
                     </div>
                     <div class="row" id="puzzles-container-content" *ngIf="this.puzzles">
@@ -114,7 +125,7 @@
                                         </div>
                                     </a>
                                     <h6 class="mt-2">{{puzzle.price}}</h6>
-                                    <button class="btn btn-primary btn-block" type="button">Купить</button>
+                                    <button class="btn btn-primary btn-block" type="button" (click)="buyClicked(puzzle._id)">В корзину</button>
                                 </div>
                             </div>
                         </div>

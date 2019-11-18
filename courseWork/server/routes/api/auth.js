@@ -13,7 +13,6 @@ router.post('/register', async (req, res) => {
         return;
     }
     const futureUser = await User.getByLogin(req.body.login);
-    console.log(futureUser);
 
     if (futureUser) {
         res.status(409).json({

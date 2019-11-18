@@ -82,7 +82,6 @@ router.get('/filters', async (req, res, next) => {
 });
 
 router.get('/:id([\\da-z]{1,24})', checkPuzzle, async (req, res, next) => {
-    console.log(req.puzzle);
     res.json(req.puzzle);
 });
 

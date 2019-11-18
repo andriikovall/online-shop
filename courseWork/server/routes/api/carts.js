@@ -33,9 +33,13 @@ router.post('/remove/:puzzleId([\\da-z]{24})', checkAuth, checkUserCart, checkPu
     }
 });
 
+router.get('/', checkAuth, checkUserCart, async (req, res, next) => {
+    res.json(req.cart.puzzles);
+});
+
 router.post('/insert/:puzzleId([\\da-z]{24})', checkAuth, checkUserCart, checkPuzzle, async (req, res, next) => {
     const puzzleId = req.puzzleId;
-    const cartId = req.cartId;
+    const cartId = req.cart._id;
     try {
         const responseCart = await Cart.insertPuzzle(cartId, puzzleId);
         res.json({

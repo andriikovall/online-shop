@@ -7,7 +7,10 @@ import { AuthService } from '../../services/auth/auth.service';
 import { LoginComponent } from '../../modals/login/login.component';
 import { RegisterComponent } from '../../modals/register/register.component';
 import { ConfirmComponent } from '../../modals/confirm-danger/confirm.component';
+import { CartComponent } from '../../modals/cart/cart.component';
+
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { CartService } from 'src/app/services/apiCarts/cart.service';
 
 
 @Component({
@@ -31,7 +34,8 @@ export class NavbarComponent implements OnInit {
     public auth: AuthService,
     private modalService: NgbModal, 
     private route: ActivatedRoute, 
-    private alerts: AlertService
+    private alerts: AlertService, 
+    private cartService: CartService
   ) { }
 
   ngOnInit() {
@@ -81,5 +85,13 @@ export class NavbarComponent implements OnInit {
     setTimeout(() => this.linksAreActive = true, 1);
   }
 
+
+  public cartClicked() {
+    this.modalService.open(CartComponent).result.then((res) => {
+      console.log(res);
+    }, (reason) => {
+      console.log(reason);
+    })
+  }
 
 }

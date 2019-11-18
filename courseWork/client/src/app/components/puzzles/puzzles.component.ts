@@ -6,6 +6,7 @@ import { PaginationInstance } from 'ngx-pagination';
 import { Puzzle } from '../../models/puzzle.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { AlertService } from '../../services/alert/alert.service';
+import { CartService } from 'src/app/services/apiCarts/cart.service';
 
 @Component({
   selector: 'app-puzzles',
@@ -50,6 +51,7 @@ export class PuzzlesComponent implements OnInit {
     public alerts: AlertService,
     private puzzlesService: ApiPuzzlesService,
     private formBuilder: FormBuilder,
+    private cartService: CartService
   ) {
   }
 
@@ -128,7 +130,10 @@ export class PuzzlesComponent implements OnInit {
   }
 
   buyClicked(puzzleId: string) {
-    this.alerts.error('Еще не реализовано');
+    this.alerts.info('Test');
+    this.cartService.insertPuzzle(puzzleId).subscribe((res) => {
+      this.alerts.success('Головоломка добвлена в корзину!');
+    }, console.error)
   } 
 
 }

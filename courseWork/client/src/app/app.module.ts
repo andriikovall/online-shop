@@ -31,6 +31,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { DeveloperComponent } from './components/developer/developer.component';
+import { CartComponent } from './modals/cart/cart.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { DeveloperComponent } from './components/developer/developer.component';
     AlertComponent,
     NotFoundComponent,
     ForbiddenComponent,
-    DeveloperComponent
+    DeveloperComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ import { DeveloperComponent } from './components/developer/developer.component';
     ConfirmComponent,
     ConfirmSafetyComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent, 
+    CartComponent
   ]
 })
-export class AppModule { }
+export class AppModule { } 

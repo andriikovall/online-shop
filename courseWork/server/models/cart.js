@@ -30,7 +30,9 @@ class Cart {
     }
 
     static update(cart) {
-        return cartModel.findByIdAndUpdate(cart.id, {puzzles: cart.puzzles});
+        return cartModel.findByIdAndUpdate(cart.id, {puzzles: cart.puzzles})
+            .populate({ path: 'puzzles.puzzle', model: puzzleModel })
+            .populate({ path: 'user', model: userModel });
     }
 
     static async insertPuzzle(cart, puzzleId) {
@@ -38,7 +40,6 @@ class Cart {
             cart = await this.getById(cart);
         } catch {
         }
-        console.log('inserting puzzle into cart', cart);    
         let countAdded = false;
         cart.puzzles.forEach(element => {
             if (puzzleId == element.puzzle._id) {

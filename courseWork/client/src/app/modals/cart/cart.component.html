@@ -1,0 +1,36 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title mb-4 mt-1">Корзина</h4>
+    </header>
+    <article class="card-body">
+        <div class="col">
+            <div class="card" *ngFor="let cartItem of this.puzzles">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="container-fluid">
+                                <img src="{{cartItem.puzzle.photoUrl}}"
+                                    alt="фото тут" width="150px">
+                                <h3 class="mt-3">{{cartItem.puzzle.name}}</h3>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="container-fluid">
+                                <td scope="col">
+                                    <div class="row">
+                                        <p>Цена <b>{{cartItem.puzzle.price}}</b></p>
+                                    </div>
+                                    <span class="btn-group mt-5">
+                                        <button type="submit" class="btn btn-outline-primary" (click)="removePuzzle(cartItem.puzzle._id)">-</button>
+                                        <span class="mx-3 mt-1">{{cartItem.count}}</span>
+                                        <button type="submit" class="btn btn-outline-primary" (click)="insertPuzzle(cartItem.puzzle._id)">+</button>
+                                    </span>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>

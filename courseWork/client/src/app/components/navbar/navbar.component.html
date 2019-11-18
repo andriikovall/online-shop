@@ -64,12 +64,6 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/about">О нас</a>
                 </li>
-                <!-- <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                        aria-expanded="false" href="#">Dropdown </a>
-                    <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First
-                            Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a
-                            class="dropdown-item" role="presentation" href="#">Third Item</a></div>
-                </li> -->
                 <li class="nav-item" *ngIf="!this.auth.isAuthenticated()">
                     <a class="nav-link" (click)="loginClicked()" style="cursor: pointer;">Войти</a>
                 </li>
@@ -79,7 +73,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" [routerLink]="['/users', this.auth.userId]">Профиль</a>
-                        <a class="dropdown-item">Корзина</a>
+                        <a class="dropdown-item" (click)="cartClicked()"  style="cursor: pointer;">Корзина</a>
                         <hr>
                         <a class="dropdown-item" (click)="logoutClicked()" style="cursor: pointer;">Выйти</a>
                     </div>

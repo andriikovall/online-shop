@@ -23,7 +23,7 @@ export class ApiUsersService {
 
   public getById(userId: string) {
     const url = this.linkBuilder.buildApiLink('/users/') + userId;
-    return this.httpClient.get(url);
+    return this.httpClient.get<User>(url); 
   }
 
   public updateUser(user: User) {
