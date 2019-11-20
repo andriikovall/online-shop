@@ -4,33 +4,42 @@
     </header>
     <article class="card-body">
         <div class="col">
-            <div class="card" *ngFor="let cartItem of this.puzzles">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="container-fluid">
-                                <img src="{{cartItem.puzzle.photoUrl}}"
-                                    alt="фото тут" width="150px">
-                                <h3 class="mt-3">{{cartItem.puzzle.name}}</h3>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="container-fluid">
-                                <td scope="col">
-                                    <div class="row">
-                                        <p>Цена <b>{{cartItem.puzzle.price}}</b></p>
-                                    </div>
-                                    <span class="btn-group mt-5">
-                                        <button  type="submit" class="btn btn-outline-primary" (click)="removePuzzle(cartItem.puzzle._id)">-</button>
-                                        <span class="mx-3 mt-1">{{cartItem.count}}</span>
-                                        <button  type="submit" class="btn btn-outline-primary" (click)="insertPuzzle(cartItem.puzzle._id)">+</button>
-                                    </span>
-                                </td>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <app-loading *ngIf="!this.puzzles"></app-loading>
+            <div class="card" *ngIf="this.puzzles && this.puzzles.length == 0">
+                <div class="card-body">Корзина пуста</div>
             </div>
+            <table class="table">
+                <tr>
+                    <th>Головоломка</th>
+                    <th>Цена</th>
+                </tr>
+                <tr *ngFor="let cartItem of this.puzzles">
+                    <td>
+                        <a [routerLink]="['/puzzles', cartItem.puzzle._id]" (click)="modal.close()">
+                            <div class="container-fluid">
+                                <img src="{{cartItem.puzzle.photoUrl}}" alt="фото тут" width="100px">
+                                <h6 class="mt-3">{{cartItem.puzzle.name}}</h6>
+                            </div>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <p>Цена <b>{{cartItem.puzzle.price}}</b></p>
+                        </div>
+                        <span class="btn-group mt-5">
+                            <button type="submit" class="btn btn-outline-primary"
+                                (click)="removePuzzle(cartItem.puzzle._id)">-</button>
+                            <span class="mx-3 mt-1">{{cartItem.count}}</span>
+                            <button type="submit" class="btn btn-outline-primary"
+                                (click)="insertPuzzle(cartItem.puzzle._id)">+</button>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="table-info">
+                    <td>Всего</td>
+                    <td>{{this.cartFullPrice}}</td>
+                </tr>
+            </table>
         </div>
     </article>
 </div>

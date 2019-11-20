@@ -126,7 +126,6 @@ export class PuzzlesNewComponent implements OnInit {
   }
 
   public confirmCreation(formValue) {
-    console.log('confirmCreation');
     const modalRef = this.modalService.open(ConfirmSafetyComponent);
     // modalRef.componentInstance.header = 'Подтвердите действие'; 
     modalRef.result.then(res => {

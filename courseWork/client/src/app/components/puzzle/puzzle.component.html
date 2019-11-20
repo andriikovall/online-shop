@@ -1,5 +1,6 @@
 <div class="content">
     <p *ngIf="errorOrNotFound">Ошибка либо головоломку не найдено</p>
+    <app-loading *ngIf="!this.puzzle && !errorOrNotFound"></app-loading>
     <div *ngIf="puzzle" class="puzzle_data">
         <div class="puzzle_short_info">
             <h2>{{puzzle.name}}</h2>
@@ -26,7 +27,7 @@
                 <b>Цена</b>
                 <p>{{puzzle.price}}₴</p>
                 <!-- <form method="POST"> -->
-                <button id="btn_buy" name="puzzle_id" value="{{puzzle._id}}">В корзину</button>
+                <button id="btn_buy" (click)="onBuyClicked()">В корзину</button>
                 <!-- </form> -->
             </div>
 

@@ -41,7 +41,7 @@
                 <div class="invalid-feedback">Пароли должны совпадать</div>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary btn-block" [class.disabled]="!(registerForm.valid && passwordsEqual)" (click)="registerClicked()">Зарегестрироватся</button>
+                <button type="submit" class="btn btn-primary btn-block" [class.disabled]="!(registerForm.valid && passwordsEqual)" (click)="registerClicked()">Зарегестрироватся</button>
             </div>
             <small class="text-muted">Это маленький текст, который никто никогда не читает. Давайте, если вы прочитали, то напишите мне в телегу это)</small>
         </form>

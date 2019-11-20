@@ -62,6 +62,12 @@ class Puzzle {
         const offset = parseInt(filters.offset);
         const searchedName = filters.name || '';
 
+        if (isNaN(limit)) {
+            limit = 10;
+        } if (isNaN(offset)) {
+            offset = 0;
+        }
+
         const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName);
 
         const promises = [

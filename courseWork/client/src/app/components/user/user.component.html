@@ -1,10 +1,8 @@
 <div class="content">
     <div class="text-center" *ngIf="!user && !errorOrNotFound">
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+        <app-loading></app-loading>
     </div>
-    <p *ngIf="errorOrNotFound">Ошибка или пользователь не найден</p> 
+    <p *ngIf="errorOrNotFound">Ошибка или пользователь не найден</p>
     <div *ngIf="user" class="container">
         <div class="col">
             <div class="row">
@@ -12,18 +10,18 @@
                     <img src="{{user.avaUrl}}" alt="User avatar" width="400px" id="user_avatar">
                 </div>
                 <div class="col">
-                    <h1>{{user.first_name + ' ' + user.first_name}}</h1>
+                    <h1>{{user.first_name + ' ' + user.last_name}}</h1>
                     <p id="username">{{user.login}}</p>
-                    <p>Дата регистрации {{user.registeredAt}}</p>
+                    <p>Дата регистрации {{user.registeredAt | date:'dd-MM-yyyy'}}</p>
                     <p>Роль {{user.role}}</p>
                     <div *roles="['admin']">
                         <select class="form-control form-control-lg" *ngIf="user.role !== 'admin'"
-                            [value]="selectedRole"
-                            (change)="onRoleSeleted($event.target.value)">
-                            <option  *ngFor="let role of roles">{{role}}</option>
+                            [value]="selectedRole" (change)="onRoleSeleted($event.target.value)">
+                            <option *ngFor="let role of roles">{{role}}</option>
                         </select>
                     </div>
-                    <button *ngIf="user.role != selectedRole" class="btn btn-outline-primary my-3" (click)="onRoleChange()">Изменить роль пользователя</button>
+                    <button *ngIf="user.role != selectedRole" class="btn btn-outline-primary my-3"
+                        (click)="onRoleChange()">Изменить роль пользователя</button>
                 </div>
             </div>
             <div class="col">

@@ -3,6 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
+                    <app-loading *ngIf="!this.filtersForm"></app-loading>
                     <div class="card" *ngIf="this.filtersForm">
                         <div class="card-body" id="filters">
                             <h4 class="card-title">Фильтры</h4>
@@ -109,9 +110,13 @@
                     <div class="card" *ngIf="this.puzzles && this.currentFilters.name && puzzles.length">
                         <div class="card-body">Результаты поиска по запросу: <b>{{this.currentFilters.name}}</b></div>
                     </div>
-                    <div class="card" *ngIf="puzzles && !puzzles.length">
+                    <div class="card" *ngIf="puzzles && !puzzles.length && this.currentFilters.name.length != 0">
                         <div class="card-body">Головоломок по названию: <b>{{this.currentFilters.name}}</b> не найдено
                         </div>
+                    </div>
+                    <app-loading *ngIf="!this.puzzles"></app-loading>
+                    <div class="card" *ngIf="this.puzzles && this.currentFilters.name.length == 0 && this.puzzles.length == 0">
+                        <div class="card-body">Головоломок не найдено</div>
                     </div>
                     <div class="row" id="puzzles-container-content" *ngIf="this.puzzles">
                         <div class="col"
@@ -125,7 +130,8 @@
                                         </div>
                                     </a>
                                     <h6 class="mt-2">{{puzzle.price}}</h6>
-                                    <button class="btn btn-primary btn-block" type="button" (click)="buyClicked(puzzle._id)">В корзину</button>
+                                    <button class="btn btn-primary btn-block" type="button"
+                                        (click)="buyClicked(puzzle._id)">В корзину</button>
                                 </div>
                             </div>
                         </div>

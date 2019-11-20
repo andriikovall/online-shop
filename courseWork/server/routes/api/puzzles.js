@@ -6,13 +6,6 @@ const {checkAdmin, checkAuth, checkManager} = require('../../config/passport');
 
 router.post('',  async (req, res, next) => {
     try {
-        const limit = req.body.limit;
-        const offset = req.body.offset;
-        if (limit === undefined) {
-            limit = 10;
-        } if (offset === undefined) {
-            offset = 0;
-        }
         const response = await Puzzle.getFilteredSearch(req.body);
         res.json(response);
     } catch (err) {

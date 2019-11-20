@@ -113,6 +113,7 @@ export class PuzzlesComponent implements OnInit {
 
     const limit = this.config.itemsPerPage;
     const offset = (this.config.currentPage - 1) * this.config.itemsPerPage;
+    this.puzzles = null;
     this.puzzlesService.getPuzzles(limit, offset, puzzleReqFilters).
       subscribe((data: any) => {
         this.puzzles = data.puzzles;
@@ -130,7 +131,6 @@ export class PuzzlesComponent implements OnInit {
   }
 
   buyClicked(puzzleId: string) {
-    this.alerts.info('Test');
     this.cartService.insertPuzzle(puzzleId).subscribe((res) => {
       this.alerts.success('Головоломка добвлена в корзину!');
     }, console.error)

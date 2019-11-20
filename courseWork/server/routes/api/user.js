@@ -19,9 +19,8 @@ router.post('/', checkAuth, async (req, res, next) => {
         res.json(response);
     } catch (err) {
         console.log(err);
-        res.status(500).json({
-            err
-        })
+        next(err);
+        return;
     }
 })
 
@@ -30,7 +29,7 @@ router.get('/all', checkAuth, async (req, res, next) => {
         const users = await User.getAll();
         res.json(users);
     } catch (err) {
-        res.sendStatus(500);
+        next(err);
     }
 });
 

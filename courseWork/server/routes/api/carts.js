@@ -39,6 +39,7 @@ router.get('/', checkAuth, checkUserCart, async (req, res, next) => {
 
 router.post('/insert/:puzzleId([\\da-z]{24})', checkAuth, checkUserCart, checkPuzzle, async (req, res, next) => {
     const puzzleId = req.puzzleId;
+    let countAdded = false;
     req.cart.puzzles.forEach(element => {
         if (puzzleId == element.puzzle._id) {
             element.count++;

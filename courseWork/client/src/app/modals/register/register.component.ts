@@ -49,9 +49,9 @@ export class RegisterComponent implements OnInit {
   }
 
   registerClicked() {
+    this.registerForm.markAllAsTouched();
     if (!(this.registerForm.valid && this.passwordsEqual)) 
       return;
-    console.log(this.registerForm.value);
     this.auth.register(this.registerForm.value).subscribe(response => {
       this.modal.close(true);
       this.loginAlreadyExists = false;

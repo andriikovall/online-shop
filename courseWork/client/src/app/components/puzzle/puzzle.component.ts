@@ -9,6 +9,7 @@ import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 
 import { ConfirmComponent } from '../../modals/confirm-danger/confirm.component';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { CartService } from 'src/app/services/apiCarts/cart.service';
 
 @Component({
   selector: 'app-puzzle',
@@ -27,7 +28,8 @@ export class PuzzleComponent implements OnInit {
     private puzzlesService: ApiPuzzlesService,
     private modalService: NgbModal,
     private router: Router, 
-    private alert: AlertService
+    private alerts: AlertService, 
+    private cartService: CartService
   ) { }
 
   ngOnInit() {
@@ -53,9 +55,15 @@ export class PuzzleComponent implements OnInit {
 
   onDelete() {
     this.puzzlesService.deleteById(this.puzzle._id).subscribe(res => {
-      this.alert.info('Головоломка удалена')
+      this.alerts.info('Головоломка удалена')
       this.router.navigate(['/puzzles']);
     })
+  }
+
+  onBuyClicked() {
+    this.cartService.insertPuzzle(this.puzzle._id).subscribe((res) => {
+      this.alerts.success('Головоломка добвлена в корзину!');
+    }, console.error)
   }
 
 }
