@@ -29,7 +29,9 @@
             </tr>
         </thead>
         <app-loading *ngIf="!this.users"></app-loading>
-        
+        <div class="card" *ngIf="this.users && this.users.length == 0">
+            <div class="card-body">Пользователей не найдено</div>
+        </div>
         <tbody *ngIf="users">
             <tr *ngFor="let user of users | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalUsers }">
                 <td scope="col"><a [routerLink]="['/users', user._id]">{{user.login}}</a></td>
