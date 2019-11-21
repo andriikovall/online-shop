@@ -1,8 +1,10 @@
 <div class="card">
-    <header class="card-header">
-        <!-- <a class="float-right btn btn-outline-primary" (click)="modal.close('reg')">Регистрация</a> -->
-        <h4 class="card-title mb-4 mt-1">Войти</h4>
-    </header>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Войти</h4>
+        <button type="button" class="close" (click)="modal.dismiss(false)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div> 
     <article class="card-body">
         <form [formGroup]="loginForm" [class.invalid]="this.isInvalidLoginOrPassword">
             <div class="form-group">

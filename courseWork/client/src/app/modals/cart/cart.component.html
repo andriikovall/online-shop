@@ -1,11 +1,13 @@
 <div class="card">
-    <header class="card-header">
-        <h4 class="card-title mb-4 mt-1">Корзина</h4>
-    </header>
-    <article class="card-body">
+    <div class="modal-header"> 
+        <h4 class="modal-title" id="modal-basic-title">Корзина</h4>
+        <button type="button" class="close" (click)="modal.dismiss(false)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <article class="modal-body">
         <div class="col">
-            <app-loading *ngIf="!this.puzzles"></app-loading>
-            <div class="card" *ngIf="this.puzzles && this.puzzles.length == 0">
+            <div class="card" *ngIf="this.puzzles && this.puzzles.length == 0 && !this.loading">
                 <div class="card-body">Корзина пуста</div>
             </div>
             <table class="table">
@@ -13,6 +15,7 @@
                     <th>Головоломка</th>
                     <th>Цена</th>
                 </tr>
+                <app-loading *ngIf="this.loading"></app-loading>
                 <tr *ngFor="let cartItem of this.puzzles">
                     <td>
                         <a [routerLink]="['/puzzles', cartItem.puzzle._id]" (click)="modal.close()">
@@ -28,10 +31,10 @@
                         </div>
                         <span class="btn-group mt-5">
                             <button type="submit" class="btn btn-outline-primary"
-                                (click)="removePuzzle(cartItem.puzzle._id)">-</button>
+                                (click)="removePuzzle(cartItem.puzzle._id)" [class.disabled]="this.loading">-</button>
                             <span class="mx-3 mt-1">{{cartItem.count}}</span>
                             <button type="submit" class="btn btn-outline-primary"
-                                (click)="insertPuzzle(cartItem.puzzle._id)">+</button>
+                                (click)="insertPuzzle(cartItem.puzzle._id)" [class.disabled]="this.loading">+</button>
                         </span>
                     </td>
                 </tr>

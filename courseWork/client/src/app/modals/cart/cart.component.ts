@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
 
   puzzles: CartItem[];
 
-  loading: boolean = false;
+  loading: boolean = true;
 
   constructor(
     private usersService: ApiUsersService,
@@ -29,15 +29,15 @@ export class CartComponent implements OnInit {
 
   private updatePuzzles() {
     this.puzzles = [];
-    this.loading = true;
     this.cartService.getCartPuzzles().subscribe((res: CartItem[]) => {
       this.loading = false;
       this.puzzles = res;
     }, console.error);
   }
-
-
+  
+  
   removePuzzle(puzzleId: string) {
+    this.loading = true;
     this.cartService.removePuzzle(puzzleId).subscribe((res: any) => {
       this.puzzles = res.cart.puzzles;
       this.updatePuzzles();
@@ -45,6 +45,7 @@ export class CartComponent implements OnInit {
   }
 
   insertPuzzle(puzzleId: string) {
+    this.loading = true;
     this.cartService.insertPuzzle(puzzleId).subscribe((res: any) => {
       this.puzzles = res.cart.puzzles;
       this.updatePuzzles();
