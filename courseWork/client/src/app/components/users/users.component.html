@@ -1,13 +1,16 @@
 <div class="content">
     <div class="row">
         <div class="col">
-            <caption><h2>Пользователи</h2></caption>
+            <caption>
+                <h2>Пользователи</h2>
+            </caption>
         </div>
         <div class="col">
             <div class="form-group">
                 <div class="form-row">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="id, логин или имя" [(ngModel)]="searchedName" />
+                        <input type="text" class="form-control" placeholder="id, логин или имя"
+                            [(ngModel)]="searchedName" />
                     </div>
                     <div class="col-2">
                         <button type="submit" class="form-row btn btn-primary mb-1" (click)="onSearch()">
@@ -33,7 +36,8 @@
             <div class="card-body">Пользователей не найдено</div>
         </div>
         <tbody *ngIf="users">
-            <tr *ngFor="let user of users | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalUsers }">
+            <tr
+                *ngFor="let user of users | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalUsers }">
                 <td scope="col"><a [routerLink]="['/users', user._id]">{{user.login}}</a></td>
                 <td scope="col">{{user.first_name}}</td>
                 <td scope="col">{{user.last_name}}</td>
@@ -45,5 +49,7 @@
         <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
         </pagination-controls>
     </div>
+
+    <pre>{{searchedName}}</pre>
 
 </div>

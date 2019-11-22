@@ -24,9 +24,9 @@ router.get('/:id([\\da-z]{24})', checkAuth, checkCartBelongingToUser, async (req
 router.post('/remove/:puzzleId([\\da-z]{24})', checkAuth, checkUserCart, checkPuzzle, async (req, res, next) => {
     const puzzleId = req.params.puzzleId;
     try {
-        const responseCart = await Cart.removePuzzle(req.cart, puzzleId);
+        await Cart.removePuzzle(req.cart, puzzleId);
         res.json({
-            cart: responseCart
+            cart: req.cart
         })
     } catch (err) {
         next(err);
@@ -39,21 +39,11 @@ router.get('/', checkAuth, checkUserCart, async (req, res, next) => {
 
 router.post('/insert/:puzzleId([\\da-z]{24})', checkAuth, checkUserCart, checkPuzzle, async (req, res, next) => {
     const puzzleId = req.puzzleId;
-    let countAdded = false;
-    req.cart.puzzles.forEach(element => {
-        if (puzzleId == element.puzzle._id) {
-            element.count++;
-            countAdded = true;
-        } 
-    });
-    if (!countAdded) {
-        req.cart.puzzles.push({ count: 1, puzzle: puzzleId });
-    }
     console.log(req.cart.puzzles)
     try {
-        const responseCart = await Cart.update(req.cart);
+        await Cart.insertPuzzle(req.cart, puzzleId); //req.cart is modified
         res.json({
-            cart: responseCart
+            cart: req.cart
         });
         return;
     } catch (err) {

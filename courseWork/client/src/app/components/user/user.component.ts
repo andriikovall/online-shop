@@ -41,7 +41,6 @@ export class UserComponent implements OnInit {
   roles: string[] = [
     'customer',
     'manager',
-    'admin'
   ];
 
   selectedRole: string;

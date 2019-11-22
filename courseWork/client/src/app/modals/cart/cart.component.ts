@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
     this.loading = true;
     this.cartService.removePuzzle(puzzleId).subscribe((res: any) => {
       this.puzzles = res.cart.puzzles;
-      this.updatePuzzles();
+      this.loading = false;
     }, console.error);
   }
 
@@ -48,7 +48,7 @@ export class CartComponent implements OnInit {
     this.loading = true;
     this.cartService.insertPuzzle(puzzleId).subscribe((res: any) => {
       this.puzzles = res.cart.puzzles;
-      this.updatePuzzles();
+      this.loading = false;
     }, console.error);
   }
 

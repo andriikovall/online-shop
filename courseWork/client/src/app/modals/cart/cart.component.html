@@ -15,7 +15,7 @@
                     <th>Головоломка</th>
                     <th>Цена</th>
                 </tr>
-                <app-loading *ngIf="this.loading"></app-loading>
+                <app-loading *ngIf="this.puzzles == null"></app-loading>
                 <tr *ngFor="let cartItem of this.puzzles">
                     <td>
                         <a [routerLink]="['/puzzles', cartItem.puzzle._id]" (click)="modal.close()">
