@@ -3,11 +3,11 @@
         <app-loading></app-loading>
     </div>
     <p *ngIf="errorOrNotFound">Ошибка или пользователь не найден</p>
-    <div *ngIf="user" class="container">
+    <div *ngIf="user" class="container-fluid">
         <div class="col">
             <div class="row">
-                <div class="col">
-                    <img src="{{user.avaUrl}}" alt="User avatar" width="400px" id="user_avatar">
+                <div class="col-md-4 mx-auto text-center">
+                    <img src="{{user.avaUrl}}" alt="User avatar" width="100%">
                 </div>
                 <div class="col">
                     <h1>{{user.first_name + ' ' + user.last_name}}</h1>

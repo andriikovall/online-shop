@@ -12,7 +12,7 @@ const authRoutes = require('./auth');
 const orderRoutes = require('./order');
 
 router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json())
+router.use(bodyParser.json());
 
 const passport = require('passport');
 router.use(passport.initialize());

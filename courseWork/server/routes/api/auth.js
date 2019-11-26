@@ -9,16 +9,15 @@ router.post('/register', async (req, res) => {
     if (!req.body.login || !req.body.password) {
         res.status(400).json({
             messgae: 'Login and password fields cant be empty'
-        })
+        });
         return;
     }
     const futureUser = await User.getByLogin(req.body.login);
 
     if (futureUser) {
         res.status(409).json({
-            messgae: 'Account with such login is found'
-        })
-        return;
+            message: 'Account with such login is found'
+        });
     } else {
 
         const passwordHash = utils.getHash(req.body.password);
@@ -28,7 +27,7 @@ router.post('/register', async (req, res) => {
             login: req.body.login,
             passwordHash: passwordHash,
             role: 'customer'
-        }
+        };
         try {
             const reply = await User.insert(user);
             res.status(201).json(reply);
@@ -68,7 +67,7 @@ router.post('/login', async (req, res, next) => {
         const response = {
             token: `Bearer ${token}`,
             user: decodedToken
-        }
+        };
         res.status(200).json(response)
 
     } catch (error) {
@@ -77,7 +76,7 @@ router.post('/login', async (req, res, next) => {
             message: error.message ? error.message : error
         })
     }
-})
+});
 
 
 module.exports = router;
