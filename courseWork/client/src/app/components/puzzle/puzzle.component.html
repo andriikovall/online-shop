@@ -32,7 +32,7 @@
             </div>
 
         </div>
-        
+
         <button *ngIf="this.auth.userIsManager()" class="btn btn-danger mt-5" (click)="confirm()">Удалить</button>
 
         <div class="puzzle_bio">
@@ -40,7 +40,6 @@
             <h3>Описание</h3>
             <hr>
             <p>{{puzzle.description_md}}</p>
-            <!-- {{! @todo MDparser }} -->
         </div>
 
     </div>
