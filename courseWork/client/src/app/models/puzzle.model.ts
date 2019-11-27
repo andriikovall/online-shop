@@ -4,17 +4,11 @@ export class Puzzle {
     isAvailable: boolean = true;
     isWCA: boolean = true;
     description_md: string;
-    photoUrl: any;
+    photoUrl: string;
     file: any;
-    typeId: any;
+    typeId: any = '';
     price: number;
-    manufacturerId: any;
+    manufacturerId: any = '';
     lastModified?: Date;
     rating? :number;
-
-    public getRating() {
-        this.rating = 4; 
-        //@todo
-        return 4;
-    }
   }

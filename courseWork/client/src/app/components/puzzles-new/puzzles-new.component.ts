@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-
-//import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { ConfirmSafetyComponent } from '../../modals/confirm-safety/confirm-safety.component';
 
 import { Puzzle } from '../../models/puzzle.model';
@@ -12,10 +10,6 @@ import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert/alert.service';
-
-class ImageSnippet {
-  constructor(public src: string, public file: File) { }
-}
 
 
 @Component({
@@ -32,6 +26,8 @@ export class PuzzlesNewComponent implements OnInit {
 
   puzzleForm: FormGroup;
 
+  isEditing = false;
+
   typesAndManufacturers: any;
 
   selectedType: any;
@@ -40,15 +36,26 @@ export class PuzzlesNewComponent implements OnInit {
 
   constructor(
     private puzzlesService: ApiPuzzlesService,
-    private router: Router, 
-    private location: Location, 
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
     private modalService: NgbModal,
     private alert: AlertService
   ) { }
 
+  setPuzzle() {
+    if ( window.history.state.manufacturerId ) {
+      this.puzzle = window.history.state;
+      this.isEditing = true;
+      this.puzzle._id = this.route.snapshot.paramMap.get('id');
+    } else {
+      this.puzzle = new Puzzle();
+    }
+  }
+
   ngOnInit() {
     if (!this.puzzle) {
-      this.puzzle = new Puzzle();
+      this.setPuzzle();
     }
     this.puzzlesService.getFilters().subscribe((filters: any) => {
       this.typesAndManufacturers = filters;
@@ -61,12 +68,12 @@ export class PuzzlesNewComponent implements OnInit {
           [Validators.required]),
         description_md: new FormControl(this.puzzle.description_md,
           [Validators.required]),
-        manufacturerId: new FormControl(this.puzzle.manufacturerId,
+        manufacturerId: new FormControl(this.puzzle.manufacturerId._id || '',
           [Validators.required]),
-        typeId: new FormControl(this.puzzle.typeId,
+        typeId: new FormControl(this.puzzle.typeId._id || '',
           [Validators.required]),
         price: new FormControl(this.puzzle.price,
-          [Validators.required, Validators.min(0), Validators.max(999999999)])
+          [Validators.required, Validators.min(0), Validators.max(9999999)])
       });
     });
   }
@@ -74,40 +81,44 @@ export class PuzzlesNewComponent implements OnInit {
   get name() { return this.puzzleForm.get('name'); }
   get price() { return this.puzzleForm.get('price'); }
   get description_md() { return this.puzzleForm.get('description_md'); }
-  get typeId() { return this.puzzleForm.get('typeId') }
-  get manufacturerId() { return this.puzzleForm.get('manufacturerId') }
+  get typeId() { return this.puzzleForm.get('typeId'); }
+  get manufacturerId() { return this.puzzleForm.get('manufacturerId'); }
 
-  nameIsValid() { return !(this.name.invalid && (this.name.dirty || this.name.touched)) }
-  priceIsValid() { return !(this.price.invalid && (this.price.dirty || this.price.touched)) }
-  description_mdIsValid() { return !(this.description_md.invalid && (this.description_md.dirty || this.description_md.touched)) }
-  typeIdIsValid() { return !(this.typeId.invalid && (this.typeId.dirty || this.typeId.touched)) }
-  manufacturerIdIsValid() { return !(this.manufacturerId.invalid && (this.manufacturerId.dirty || this.manufacturerId.touched)) }
-
-
-  public changeType(type) {
-    this.puzzle.typeId = type;
-  }
-
-  public changeManuf(manuf) {
-    this.puzzle.manufacturerId = manuf;
-  }
+  nameIsValid() { return !(this.name.invalid && (this.name.dirty || this.name.touched)); }
+  priceIsValid() { return !(this.price.invalid && (this.price.dirty || this.price.touched)); }
+  description_mdIsValid() { return !(this.description_md.invalid && (this.description_md.dirty || this.description_md.touched)); }
+  typeIdIsValid() { return !(this.typeId.invalid && (this.typeId.dirty || this.typeId.touched)); }
+  manufacturerIdIsValid() { return !(this.manufacturerId.invalid && (this.manufacturerId.dirty || this.manufacturerId.touched)); }
 
 
   public onFileSeleceted(event: any) {
     this.file = event.target.files[0];
   }
 
+  public getPuzzleForRequest(puzzle: Puzzle) {
+    const returnPuzzle = { ...this.puzzle, ...puzzle};
+    returnPuzzle._id = this.route.snapshot.paramMap.get('id');
+    returnPuzzle.file = this.file;
+    return returnPuzzle;
+  }
+
   public onPuzzleSubmit(value) {
-    this.puzzle = value;
-    this.puzzle.file = this.file;
+    this.puzzle = this.getPuzzleForRequest(value);
+    console.log(this.puzzle, 'ТО что отправляется');
     const uploadFormData = this.getFormDataFromObj(this.puzzle);
-    this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe((res: any) => {
-      this.navigateToPuzzle(res.puzzle._id);
-    })
+    if (this.isEditing) {
+      this.puzzlesService.updatePuzzleMultipart(uploadFormData, this.puzzle._id).subscribe((res: any) => {
+        this.navigateToPuzzle(this.puzzle._id);
+      });
+    } else {
+      this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe((res: any) => {
+        this.navigateToPuzzle(res.puzzle._id);
+      });
+    }
   }
 
   private getFormDataFromObj(obj: object | any) {
-    let uploadFormData = new FormData();
+    const uploadFormData = new FormData();
     for (var key in obj) {
       if ((typeof obj[key]).toLowerCase() === 'file' && obj.name)
         uploadFormData.append(key, obj[key], obj.name);
@@ -127,13 +138,13 @@ export class PuzzlesNewComponent implements OnInit {
 
   public confirmCreation(formValue) {
     const modalRef = this.modalService.open(ConfirmSafetyComponent);
-    // modalRef.componentInstance.header = 'Подтвердите действие'; 
     modalRef.result.then(res => {
-      if (res)
+      if (res) {
         this.onPuzzleSubmit(formValue);
+      }
     }, (reason) => {
-      console.log('Отмена добавления'); 
-    })
+      console.log('Отмена добавления', reason);
+    });
   }
 
 }

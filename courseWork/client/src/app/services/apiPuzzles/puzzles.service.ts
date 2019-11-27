@@ -8,7 +8,7 @@ import { ApiHelperService } from '../api-helper.service';
 export class ApiPuzzlesService {
 
   constructor(
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient,
     private linkBuilder: ApiHelperService
   ) { }
 
@@ -21,7 +21,7 @@ export class ApiPuzzlesService {
     return  this.httpClient.get(url);
   }
 
-  public deleteById(id: string) { 
+  public deleteById(id: string) {
     const url = this.buildApiLink('/puzzles/') + id;
     return this.httpClient.delete(url);
   }
@@ -31,7 +31,7 @@ export class ApiPuzzlesService {
     return this.httpClient.get(url);
   }
 
-  public getPuzzles(limit: number, offset: number, filters) { 
+  public getPuzzles(limit: number, offset: number, filters) {
     filters.limit = limit;
     filters.offset = offset;
     return this.httpClient.post(this.buildApiLink('/puzzles'), filters);
@@ -40,6 +40,12 @@ export class ApiPuzzlesService {
   public insertPuzzleMultipart(puzzle: FormData) {
     const url = this.buildApiLink('/puzzles/new/mp');
     return this.httpClient.post(url, puzzle);
+  }
+
+  public updatePuzzleMultipart(puzzle: FormData, id: string) {
+    const url = this.buildApiLink('/puzzles/' + id);
+    console.log(url);
+    return this.httpClient.patch(url, puzzle);
   }
 
 }

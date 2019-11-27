@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Puzzle } from '../../models/puzzle.model';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth/auth.service';
 import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
@@ -20,50 +20,59 @@ export class PuzzleComponent implements OnInit {
 
   puzzle: Puzzle;
 
-  errorOrNotFound: boolean = false;
+  editing = false;
+
+  errorOrNotFound = false;
 
   constructor(
     public auth: AuthService,
     private route: ActivatedRoute,
     private puzzlesService: ApiPuzzlesService,
     private modalService: NgbModal,
-    private router: Router, 
-    private alerts: AlertService, 
+    private router: Router,
+    private alerts: AlertService,
     private cartService: CartService
   ) { }
 
   ngOnInit() {
-    const puzzleId = this.route.snapshot.paramMap.get("id");
+    const puzzleId = this.route.snapshot.paramMap.get('id');
     this.puzzlesService.getById(puzzleId).subscribe((puzzle: Puzzle) => {
       this.puzzle = puzzle;
     }, (err) => {
       console.log(err);
       this.errorOrNotFound = true;
-    })
+    });
   }
 
   confirm() {
     const modalRef = this.modalService.open(ConfirmComponent);
-    // modalRef.componentInstance.header = 'Подтвердите действие'; 
     modalRef.result.then(res => {
-      if (res)
+      if (res) {
         this.onDelete();
+      }
     }, (reason) => {
-      console.log('Нельзя удалять')
-    })
+      console.log(reason);
+    });
   }
 
   onDelete() {
     this.puzzlesService.deleteById(this.puzzle._id).subscribe(res => {
-      this.alerts.info('Головоломка удалена')
+      this.alerts.info('Головоломка удалена');
       this.router.navigate(['/puzzles']);
-    })
+    });
   }
 
   onBuyClicked() {
     this.cartService.insertPuzzle(this.puzzle._id).subscribe((res) => {
       this.alerts.success('Головоломка добвлена в корзину!');
-    }, console.error)
+    }, console.error);
+  }
+
+  onEditClicked() {
+    console.log('editing');
+    this.editing = true;
+    this.router.navigate(['puzzles', 'update', this.puzzle._id],
+      {state: this.puzzle});
   }
 
 }

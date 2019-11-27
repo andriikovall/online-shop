@@ -17,7 +17,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { AdminGuard } from './guards/admin/admin.guard';
 import { ManagerGuard } from './guards/manager/manager.guard';
 
-const newRoutes: Routes = [
+const routes: Routes = [
   {
     path: '', component: ShellComponent,
     children: [
@@ -27,18 +27,19 @@ const newRoutes: Routes = [
       { path: 'puzzles', component: PuzzlesComponent },
       { path: 'puzzles/new', component: PuzzlesNewComponent, canActivate: [ManagerGuard]},
       { path: 'puzzles/:id', component: PuzzleComponent },
-      { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }, 
+      { path: 'puzzles/update/:id', component: PuzzlesNewComponent },
+      { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] },
       { path: 'forbidden', component: ForbiddenComponent },
       { path: 'developer/v1',  component: DeveloperComponent },
       { path: '**', redirectTo: '404'},
       { path: '404',        component: NotFoundComponent },
     ]
-  }, 
-]
+  },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(newRoutes, {
-    onSameUrlNavigation: 'reload'
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: `reload`
   })],
   exports: [RouterModule]
 })

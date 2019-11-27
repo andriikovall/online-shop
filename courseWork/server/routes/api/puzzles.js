@@ -59,7 +59,11 @@ router.patch('/:id([\\da-z]{1,24})', checkAuth, checkManager, checkPuzzle, async
     const puzzleId = req.params.id;
     puzzle._id = puzzleId;
     try {
-        await Puzzle.update(puzzle);
+        const response = await Puzzle.update(puzzle);
+        console.log(response);
+        res.json({
+            puzzle: response
+        });
     } catch (err) {
         next(err);
     }
@@ -94,7 +98,7 @@ async function checkPuzzle(req, res, next) {
         next(err);
         return;
     }
-    req.puzzle = foundPuzzle
+    req.puzzle = foundPuzzle;
     next();
 }
 

@@ -43,7 +43,16 @@
         </div>
       </div>
     </div>
-    <button *ngIf="this.auth.userIsManager()" class="btn btn-danger mt-5" (click)="confirm()">Удалить</button>
+    <div class="container mt-lg-3 mt-sm-5 mt-md-4 mt-5">
+      <div class="row">
+        <div class="col text-center mt-2">
+          <button *ngIf="this.auth.userIsManager()" class="btn btn-danger " (click)="confirm()">Удалить</button>
+        </div>
+        <div class="col text-center mt-2">
+            <button *ngIf="this.auth.userIsManager()" class="btn btn-info" (click)="onEditClicked()">Изменить</button>
+        </div>
+      </div>
+    </div>
     <hr>
     <div class="puzzle_bio">
       <p>{{puzzle.description_md}}</p>

@@ -27,8 +27,8 @@ class Puzzle {
 
     static getById(id) {
         return puzzleModel.findById(id).
-            populate({ path: 'manufacturerId', model: manufacturerModel }).
-            populate({ path: 'typeId', model: typeModel })
+        populate({ path: 'manufacturerId', model: manufacturerModel }).
+        populate({ path: 'typeId', model: typeModel })
     }
 
     static getAll() {
@@ -76,16 +76,16 @@ class Puzzle {
         ];
 
         return Promise.all(promises).
-            then(([count, puzzles]) => {
-                return {
-                    count,
-                    puzzles
-                };
-            })
+        then(([count, puzzles]) => {
+            return {
+                count,
+                puzzles
+            };
+        })
     }
 
     static update(puzzle) {
-        return puzzleModel.findByIdAndUpdate(puzzle.id, puzzle, { new: true });
+        return puzzleModel.updateOne({_id: puzzle._id}, { $set: puzzle });
     }
 
 
@@ -112,30 +112,31 @@ class Puzzle {
         ];
 
         return Promise.all(promises).
-            then(([types, manufs]) => {
-                types = types.map((type, index) => ({ index, value: type.name, _id: type._id }));
-                manufs = manufs.map((man, index) => ({ index, value: man.name, _id: man._id }));
-                return {
-                    types: types,
-                    manufacturers: manufs
-                };
-            });
+        then(([types, manufs]) => {
+            types = types.map((type, index) => ({ index, value: type.name, _id: type._id }));
+            manufs = manufs.map((man, index) => ({ index, value: man.name, _id: man._id }));
+            return {
+                types: types,
+                manufacturers: manufs
+            };
+        });
     }
 
     static getPuzzleFromFormRequest(req) {
-        if (!req.body.name || !req.body.typeId || !req.body.manufacturerId) 
+        console.log(req.body);
+        if (!req.body.name || !req.body.typeId || !req.body.manufacturerId)
             return null;
         const name = req.body.name;
         const price = trimPrice(parseInt(req.body.price));
         const typeId = req.body.typeId;
         const manufacturerId = req.body.manufacturerId;
-        const isWCA = !!(req.body.isWCA);
-        const isAvailable = !!(req.body.isAvailable);
+        const isWCA = req.body.isWCA;
+        const isAvailable = req.body.isAvailable;
         const bio = req.body.description_md || '';
-        let photoUrl;
-        let puzzle = new Puzzle(name, photoUrl, typeId, isWCA, price, isAvailable, manufacturerId, bio)
+        const photoUrl = req.body.photoUrl;
+        console.log(photoUrl);
+        const puzzle = new Puzzle(name, photoUrl, typeId, isWCA, price, isAvailable, manufacturerId, bio);
         if (!req.file) {
-            puzzle.photoUrl = defaultPhotoUrl;
             return Promise.resolve(puzzle);
         }
         else {
@@ -143,12 +144,12 @@ class Puzzle {
             datauri.format(`.${getFileExt(req.file)}`, req.file.buffer);
 
             return imageUploader(datauri.content).
-                then((res) => { puzzle.photoUrl = res.secure_url }).
-                catch(err => {
-                    console.error(err);
-                    puzzle.photoUrl = defaultPhotoUrl;
-                }).
-                then(() => puzzle);
+            then((res) => { puzzle.photoUrl = res.secure_url }).
+            catch(err => {
+                console.error(err);
+                puzzle.photoUrl = defaultPhotoUrl;
+            }).
+            then(() => puzzle);
         }
     }
 };
