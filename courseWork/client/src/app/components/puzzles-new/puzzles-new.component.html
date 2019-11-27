@@ -5,16 +5,16 @@
       <h1>Добавление головоломки</h1>
       <hr>
       <div class="row">
-        <div class="col">
+        <div class="col-lg-8">
           <div class="form-row">
-            <div class="form-group col-6">
+            <div class="form-group col-lg-8">
               <label for="inputName">Название</label>
               <input type="text" [class.is-invalid]="!nameIsValid()" class="form-control form-control-lg"
                      id="inputName" formControlName="name" placeholder="Gan, Moyu..." required>
               <div class="invalid-feedback">
                 Длина имени должна быть 4 и больше символов</div>
             </div>
-            <div class="form-group col-5">
+            <div class="form-group col-lg-4">
               <label for="inputPrice">Цена</label>
               <input id="inputPrice" [class.is-invalid]="!priceIsValid()"
                      class="form-control form-control-lg" type="number" formControlName="price" min="0"
@@ -23,7 +23,7 @@
           </div>
           <div class="form-row">
 
-            <div class="form-group col-4">
+            <div class="form-group col-lg-5 col-10">
               <label for="inputType">Выбор типа</label>
               <select class="form-control form-control-lg" [class.is-invalid]="!typeIdIsValid()"
                       formControlName="typeId" id="inputType">
@@ -35,11 +35,11 @@
               </select>
             </div>
 
-            <div class="form-group col-1">
+            <div class="form-group col-lg-1 col-2">
               <button class="btn btn-outline-primary mt-5" disabled>+</button>
             </div>
 
-            <div class="form-group col-6">
+            <div class="form-group col-lg-5 col-10">
 
               <label for="inputManufacturer">Выбор производителя</label>
               <select [class.is-invalid]="!manufacturerIdIsValid()" class="form-control form-control-lg"
@@ -50,20 +50,20 @@
               </select>
 
             </div>
-            <div class="form-group col-1">
+            <div class="form-group col-lg-1 col-2">
               <button class="btn btn-outline-primary mt-5" disabled>+</button>
             </div>
           </div>
 
           <div class="form-row">
-            <div class="form-group col-3">
+            <div class="form-group col-lg-6 col-md-6 col-sm-6">
               <label for="inputWCA">WCA</label>
               <select class="form-control form-control-lg" name="isWCA" formControlName="isWCA">
                 <option [ngValue]="true" [selected]="puzzle.isWCA == true">Да</option>
                 <option [ngValue]="false" [selected]="puzzle.isWCA == false">Нет</option>
               </select>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-lg-6 col-md-6 col-sm-6">
               <label for="inputAvailable">В наличии</label>
               <select class="form-control form-control-lg" id="inputAvailable" name="isAvailable"
                       formControlName="isAvailable">
@@ -82,8 +82,8 @@
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="form-group col-6">
+        <div class="col-lg-4">
+          <div class="form-group">
             <label>Картинка</label>
             <div class="custom-file">
               <label for="customFile">Выберите файл</label>
@@ -93,11 +93,11 @@
           </div>
           <img id="bufferImage"
                src="{{puzzle.photoUrl || 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081'}}"
-               alt="Placeholder image" width="80%" class="ml-3">
+               alt="Placeholder image" width="90%" class="mx-auto">
         </div>
       </div>
     </fieldset>
-    <p>{{puzzleForm.value | json}}</p>
+<!--    <p>{{puzzleForm.value | json}}</p>-->
   </form>
   <span *ngIf="puzzleForm && typesAndManufacturers">
         <button *ngIf="puzzleForm.valid" class="btn btn-outline-primary btn-lg"
