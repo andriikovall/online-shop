@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const apiRoutes = require('./routes/api/api');
 const { storage } = require('./config/multerStorage');
+const path = require('path');
 
 const PORT = parseInt(process.argv[2]) || process.env.PORT || 12010;
 
@@ -19,3 +20,13 @@ app.use(storage.single("file"));
 app.use(require('morgan')('dev')); 
 
 app.use('/api/v1', apiRoutes);
+
+// deploy
+
+const distDir = path.join(__dirname, '../client/', 'dist', 'course-work');
+
+app.use(express.static(distDir));
+
+app.get('/*', function(req,res) {
+    res.sendFile(path.join(distDir, 'index.html'));
+});
