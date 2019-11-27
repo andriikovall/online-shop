@@ -19,7 +19,6 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 })
 export class PuzzlesNewComponent implements OnInit {
 
-  @Input()
   puzzle: Puzzle;
 
   file: File;
@@ -30,10 +29,6 @@ export class PuzzlesNewComponent implements OnInit {
 
   typesAndManufacturers: any;
 
-  selectedType: any;
-  selectedManufacturer: any;
-
-
   constructor(
     private puzzlesService: ApiPuzzlesService,
     private router: Router,
@@ -43,20 +38,25 @@ export class PuzzlesNewComponent implements OnInit {
     private alert: AlertService
   ) { }
 
+
   setPuzzle() {
-    if ( window.history.state.manufacturerId ) {
+    const puzzleId = this.route.snapshot.paramMap.get('id');
+    if ( window.history.state.manufacturerId && puzzleId) {
       this.puzzle = window.history.state;
       this.isEditing = true;
-      this.puzzle._id = this.route.snapshot.paramMap.get('id');
+      this.puzzle._id = puzzleId;
+    } else if (puzzleId) {
+      this.puzzlesService.getById(puzzleId).subscribe((response : any) => {
+        this.puzzle = response;
+        this.isEditing = true;
+      }, console.error);
     } else {
       this.puzzle = new Puzzle();
     }
   }
 
   ngOnInit() {
-    if (!this.puzzle) {
-      this.setPuzzle();
-    }
+    this.setPuzzle();
     this.puzzlesService.getFilters().subscribe((filters: any) => {
       this.typesAndManufacturers = filters;
       this.puzzleForm = new FormGroup({

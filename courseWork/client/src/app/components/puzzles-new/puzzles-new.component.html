@@ -1,5 +1,5 @@
 <div class="content">
-  <form [formGroup]="puzzleForm" *ngIf="puzzleForm && typesAndManufacturers"
+  <form [formGroup]="puzzleForm" *ngIf="puzzleForm && typesAndManufacturers && this.puzzle"
         (ngSubmit)="onPuzzleSubmit(this.puzzleForm.value)">
     <fieldset>
       <h1>Добавление головоломки</h1>
