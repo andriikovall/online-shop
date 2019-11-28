@@ -1,7 +1,7 @@
-caption {
-    caption-side: top;
-    font-size: 40px;
-}
+/*caption {*/
+/*    caption-side: top;*/
+/*    font-size: 40px;*/
+/*}*/
 
 .data {
     display: block;
@@ -15,22 +15,16 @@ footer {
     width: 100%;
 }
 
-table {
-    overflow: scroll;
-    font-size: 25px;
-}
-
 #content {
     box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.6);
     margin-top: 10px;
 }
 
-.content p {
-    font-size: 20px !important;
-}
+/*.content p {*/
+/*    font-size: 20px !important;*/
+/*}*/
 
 #puzzles .card {
     height: 100%;
 }
-  
-  
+
