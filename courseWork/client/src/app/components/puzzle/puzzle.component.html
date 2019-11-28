@@ -37,7 +37,9 @@
               </table>
             </div>
             <div class="row">
-              <button class="btn btn-success btn-lg" (click)="onBuyClicked()">В корзину</button>
+              <button class="btn btn-success btn-lg" (click)="onBuyClicked()" [disabled]="!this.puzzle.isAvailable">
+                {{this.puzzle.isAvailable ? 'В корзину' : 'Нет в наличии'}}
+              </button>
             </div>
           </div>
         </div>
@@ -49,13 +51,14 @@
           <button *ngIf="this.auth.userIsManager()" class="btn btn-danger " (click)="confirm()">Удалить</button>
         </div>
         <div class="col text-center mt-2">
-            <button *ngIf="this.auth.userIsManager()" class="btn btn-info" (click)="onEditClicked()">Изменить</button>
+          <button *ngIf="this.auth.userIsManager()" class="btn btn-info" (click)="onEditClicked()">Изменить</button>
         </div>
       </div>
     </div>
     <hr>
-    <div class="puzzle_bio">
-      <p>{{puzzle.description_md}}</p>
+    <div class="puzzle_bio mt-3">
+      <p>{{puzzle.description_md}}
+      </p>
     </div>
   </div>
 </div>

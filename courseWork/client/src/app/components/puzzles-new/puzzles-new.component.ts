@@ -39,32 +39,33 @@ export class PuzzlesNewComponent implements OnInit {
   ) { }
 
 
-  setPuzzle() {
+  async setPuzzle() {
     const puzzleId = this.route.snapshot.paramMap.get('id');
-    if ( window.history.state.manufacturerId && puzzleId) {
-      this.puzzle = window.history.state;
+    if ( window.history.state.puzzle) {
+      this.puzzle = window.history.state.puzzle;
       this.isEditing = true;
       this.puzzle._id = puzzleId;
     } else if (puzzleId) {
-      this.puzzlesService.getById(puzzleId).subscribe((response : any) => {
+      await this.puzzlesService.getById(puzzleId).subscribe((response: any) => {
         this.puzzle = response;
         this.isEditing = true;
       }, console.error);
     } else {
       this.puzzle = new Puzzle();
     }
+    console.log(this.puzzle, 'buffer puzzle');
   }
 
-  ngOnInit() {
-    this.setPuzzle();
+  async ngOnInit() {
+    await this.setPuzzle();
     this.puzzlesService.getFilters().subscribe((filters: any) => {
       this.typesAndManufacturers = filters;
       this.puzzleForm = new FormGroup({
         name: new FormControl(this.puzzle.name,
           [Validators.required, Validators.minLength(4)]),
-        isAvailable: new FormControl(this.puzzle.isAvailable || true,
+        isAvailable: new FormControl(this.puzzle.isAvailable,
           [Validators.required]),
-        isWCA: new FormControl(this.puzzle.isWCA || true,
+        isWCA: new FormControl(this.puzzle.isWCA,
           [Validators.required]),
         description_md: new FormControl(this.puzzle.description_md,
           [Validators.required]),
@@ -91,7 +92,7 @@ export class PuzzlesNewComponent implements OnInit {
   manufacturerIdIsValid() { return !(this.manufacturerId.invalid && (this.manufacturerId.dirty || this.manufacturerId.touched)); }
 
 
-  public onFileSeleceted(event: any) {
+  public onFileSelected(event: any) {
     this.file = event.target.files[0];
   }
 

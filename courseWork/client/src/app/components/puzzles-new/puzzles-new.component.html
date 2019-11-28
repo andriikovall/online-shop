@@ -1,10 +1,11 @@
 <div class="content">
-  <form [formGroup]="puzzleForm" *ngIf="puzzleForm && typesAndManufacturers && this.puzzle"
-        (ngSubmit)="onPuzzleSubmit(this.puzzleForm.value)">
+  <h1>{{this.isEditing ? 'Изменение головоломки': 'Добавление головоломки'}}</h1>
+  <hr>
+  <form [formGroup]="puzzleForm" *ngIf="puzzleForm && typesAndManufacturers"
+  (ngSubmit)="onPuzzleSubmit(this.puzzleForm.value)">
     <fieldset>
-      <h1>Добавление головоломки</h1>
-      <hr>
-      <div class="row">
+      <app-loading *ngIf="!this.puzzle"></app-loading>
+      <div class="row" *ngIf="this.puzzle">
         <div class="col-lg-8">
           <div class="form-row">
             <div class="form-group col-lg-8">
@@ -87,8 +88,7 @@
             <label>Картинка</label>
             <div class="custom-file">
               <label for="customFile">Выберите файл</label>
-              <!-- <input type="file" accept=".jpg, .jpeg, .png" (change)="onFileChanged($event)"> -->
-              <input #imageInput type="file" accept="image/*" (change)="onFileSeleceted($event)">
+              <input #imageInput type="file" accept="image/*" (change)="onFileSelected($event)">
             </div>
           </div>
           <img id="bufferImage"
@@ -100,13 +100,9 @@
 <!--    <p>{{puzzleForm.value | json}}</p>-->
   </form>
   <span *ngIf="puzzleForm && typesAndManufacturers">
-        <button *ngIf="puzzleForm.valid" class="btn btn-outline-primary btn-lg"
-                (click)="confirmCreation(puzzleForm.value)">
-          {{ this.isEditing ? 'Изменить' : 'Добавить'}}
-        </button>
-        <button *ngIf="!puzzleForm.valid" class="btn btn-outline-primary btn-lg" disabled>
-          {{ this.isEditing ? 'Изменить' : 'Добавить'}}
-        </button>
+    <button class="btn btn-outline-primary btn-lg"
+            (click)="confirmCreation(puzzleForm.value)"
+      [disabled]="!this.puzzleForm.valid">{{ this.isEditing ? 'Изменить' : 'Добавить'}}</button>
         <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button>
     </span>
 </div>

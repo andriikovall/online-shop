@@ -1,55 +1,58 @@
 <div class="content">
+  <div class="col">
     <div class="row">
-        <div class="col">
-            <caption>
-                <h2>Пользователи</h2>
-            </caption>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="id, логин или имя"
-                            [(ngModel)]="searchedName" />
-                    </div>
-                    <div class="col-2">
-                        <button type="submit" class="form-row btn btn-primary mb-1" (click)="onSearch()">
-                            Поиск
-                        </button>
-                    </div>
-                </div>
+      <div class="col-lg-8 col-sm-auto col-md">
+        <caption>
+          <h2>Пользователи</h2>
+        </caption>
+      </div>
+      <div class="col-lg-4 col-sm-auto col-md">
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col-8">
+              <input type="text" class="form-control" placeholder="id, логин или имя"
+                     [(ngModel)]="searchedName" />
             </div>
+            <div class="col-4">
+              <button type="submit" class="form-row btn btn-primary mb-1" (click)="onSearch()">
+                Поиск
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <table class="table">
-        <!-- {{! <th scope="row">1</th> для жирного шрифта номерации}} -->
-        <thead>
-            <tr>
-                <th scope="col">Логин</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Фамилия</th>
-                <th scope="col">Дата регистрации</th>
-            </tr>
-        </thead>
-        <app-loading *ngIf="!this.users"></app-loading>
-        <div class="card" *ngIf="this.users && this.users.length == 0">
-            <div class="card-body">Пользователей не найдено</div>
-        </div>
-        <tbody *ngIf="users">
-            <tr
-                *ngFor="let user of users | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalUsers }">
-                <td scope="col"><a [routerLink]="['/users', user._id]">{{user.login}}</a></td>
-                <td scope="col">{{user.first_name}}</td>
-                <td scope="col">{{user.last_name}}</td>
-                <td scope="col">{{user.registeredAt}}</td>
-            </tr>
-        </tbody>
+    <div class="card" *ngIf="this.users && this.users.length == 0">
+      <div class="card-body">Пользователей не найдено</div>
+    </div>
+    <app-loading *ngIf="!this.users"></app-loading>
+    <table class="table table-responsive-md table-responsive-sm">
+      <!-- {{! <th scope="row">1</th> для жирного шрифта номерации}} -->
+      <thead>
+        <tr>
+          <th >Логин</th>
+          <th >Имя</th>
+          <th >Фамилия</th>
+          <th >Дата регистрации</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="users">
+      <tr
+        *ngFor="let user of users | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalUsers }">
+        <td ><a [routerLink]="['/users', user._id]">{{user.login}}</a></td>
+        <td >{{user.first_name}}</td>
+        <td >{{user.last_name}}</td>
+        <td >{{user.registeredAt}}</td>
+      </tr>
+      </tbody>
     </table>
+
     <div class="mx-10">
-        <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
-        </pagination-controls>
+      <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
+      </pagination-controls>
     </div>
 
     <pre>{{searchedName}}</pre>
+  </div>
 
 </div>

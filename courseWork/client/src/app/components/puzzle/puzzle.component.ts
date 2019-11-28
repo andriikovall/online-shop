@@ -72,7 +72,7 @@ export class PuzzleComponent implements OnInit {
     console.log('editing');
     this.editing = true;
     this.router.navigate(['puzzles', 'update', this.puzzle._id],
-      {state: this.puzzle});
+      {state: { puzzle: this.puzzle }});
   }
 
 }
