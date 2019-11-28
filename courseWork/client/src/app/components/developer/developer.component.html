@@ -1,4 +1,4 @@
-<div class="container-fluid mr-4 px-4 py-4">
+<div class="container-fluid mr-4">
     <!-- <markdown [src]="'https://raw.githubusercontent.com/jfcere/ngx-markdown/master/README.md'"></markdown> -->
     <div class="container-fluid my-3">
         <h1>Апи нашего сайта</h1>
@@ -12,7 +12,7 @@
             <button class="nav-link btn btn-link disabled">Результаты сборки</button>
         </li>
     </ul>
-    <div class="container-fluid my-2 mx-1">
+    <div class="container-fluid">
         <markdown [src]="readmes[selectedIndex].src" (error)="onMdError($event)"></markdown>
     </div>
 </div>
