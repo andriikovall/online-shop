@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { apiUrl } from '../../assets/api-url';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -10,7 +10,7 @@ export class ApiHelperService {
   constructor() { }
 
   public buildApiLink(path: string) {
-    return `${apiUrl}${path}`;
+    return `${environment.apiUrl}${path}`;
   }
-  
+
 }
