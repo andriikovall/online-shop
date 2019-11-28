@@ -10,7 +10,7 @@
     "install": "сd server && npm install && cd ../client && npm install",
     "build-client": "cd client && ng build --prod --aot",
     "heroku-postbuild": "npm run build-client",
-    "start": "cd server && npm start"
+    "start": "npm start --prefix server"
   },
   "author": "",
   "license": "ISC",

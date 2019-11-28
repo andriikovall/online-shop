@@ -1,0 +1,19 @@
+{
+  "name": "webprogbase2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "cd courseWork && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm start --prefix courseWork"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ZioVio@bitbucket.org/ZioVio/webprogbase2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/ZioVio/webprogbase2#readme"
+}
