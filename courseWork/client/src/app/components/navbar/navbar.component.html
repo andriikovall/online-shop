@@ -1,45 +1,43 @@
-<nav class="navbar navbar-light navbar-expand-md navigation-clean">
-    <div class="container-fluid">
+<nav class="navbar navbar-light navbar-expand-md navigation-clean fixed-top">
+  <div class="container">
         <span [routerLink]="['/']" style="cursor: pointer;">
-            <img src="https://res.cloudinary.com/webprogbase/image/upload/v1572162882/logo_qqvoc0.jpg" width="100px">
+            <img src="https://res.cloudinary.com/webprogbase/image/upload/v1572162882/logo_qqvoc0.jpg" width="50px">
             <a class="navbar-brand">Кубанутый</a>
         </span>
-        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="nav navbar-nav ml-auto" *ngIf="this.linksAreActive">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/">Домой</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/puzzles">Головоломки</a>
-                </li>
-                <li *roles="['customer', 'manager']" class="nav-item">
-                    <a class="nav-link" routerLink="/users">Пользователи</a>
-                </li>
-                <!-- <li *roles="['manager']" class="nav-item">
-                    <a class="nav-link" routerLink="/orders">Заказы</a>
-                </li> -->
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/about">О нас</a>
-                </li>
-                <li class="nav-item" *ngIf="!this.auth.isAuthenticated()">
-                    <a class="nav-link" (click)="loginClicked()" style="cursor: pointer;">Войти</a>
-                </li>
-                <li class="nav-item dropdown" *ngIf="this.auth.isAuthenticated()">
-                    <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown" style="cursor: pointer;">
-                        Моя страница
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" [routerLink]="['/users', this.auth.userId]">Профиль</a>
-                        <a class="dropdown-item" (click)="cartClicked()" style="cursor: pointer;">Корзина</a>
-                        <hr>
-                        <a class="dropdown-item" (click)="logoutClicked()" style="cursor: pointer;">Выйти</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse in" id="navcol-1">
+      <ul class="nav navbar-nav ml-auto" *ngIf="this.linksAreActive">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Домой</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/puzzles">Головоломки</a>
+        </li>
+        <li *roles="['customer', 'manager']" class="nav-item">
+          <a class="nav-link" routerLink="/users">Пользователи</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about">О нас</a>
+        </li>
+        <li class="nav-item" *ngIf="!this.auth.isAuthenticated()">
+          <a class="nav-link" (click)="loginClicked()" style="cursor: pointer;">Войти</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="this.auth.isAuthenticated()">
+          <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown" style="cursor: pointer;">
+            Моя страница
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" [routerLink]="['/users', this.auth.userId]">Профиль</a>
+            <a class="dropdown-item" (click)="cartClicked()" style="cursor: pointer;">Корзина</a>
+            <hr>
+            <a class="dropdown-item" (click)="logoutClicked()" style="cursor: pointer;">Выйти</a>
+          </div>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
+
