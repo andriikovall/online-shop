@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "cd client && npm start",
     "server": "cd server && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "install": "сd server && npm install && cd ../client && npm install",
-    "build-client": "cd client && ng build --prod --aot",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "build-client": "cd client && ng build --prod",
+    "install": "npm run install-client && npm run install-server",
     "heroku-postbuild": "npm run build-client",
     "start": "npm start --prefix server"
   },
