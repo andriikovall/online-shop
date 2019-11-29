@@ -4,11 +4,12 @@ import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfirmSafetyComponent } from '../../modals/confirm-safety/confirm-safety.component';
+import { ValidatorHelperService, forbiddenRegExpSymbols } from '../../services/validator-helper.service';
 
 import { Puzzle } from '../../models/puzzle.model';
 import { ApiPuzzlesService } from '../../services/apiPuzzles/puzzles.service';
 
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert/alert.service';
 
 
@@ -28,6 +29,8 @@ export class PuzzlesNewComponent implements OnInit {
   isEditing = false;
 
   typesAndManufacturers: any;
+
+  forbiddenSymbols = forbiddenRegExpSymbols;
 
   constructor(
     private puzzlesService: ApiPuzzlesService,
@@ -61,8 +64,8 @@ export class PuzzlesNewComponent implements OnInit {
     this.puzzlesService.getFilters().subscribe((filters: any) => {
       this.typesAndManufacturers = filters;
       this.puzzleForm = new FormGroup({
-        name: new FormControl(this.puzzle.name,
-          [Validators.required, Validators.minLength(4)]),
+        name: new FormControl(this.puzzle.name || '', 
+          [Validators.required, Validators.minLength(4), ValidatorHelperService.stringWithoutRegExpSymbolsValidator]),   
         isAvailable: new FormControl(this.puzzle.isAvailable,
           [Validators.required]),
         isWCA: new FormControl(this.puzzle.isWCA,

@@ -5,6 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormHelperService } from '../../services/form-helper.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { ValidatorHelperService, forbiddenRegExpSymbols } from 'src/app/services/validator-helper.service';
 
 @Component({
   selector: 'app-register',
@@ -18,11 +19,12 @@ export class RegisterComponent implements OnInit {
   passwordsEqual: boolean = false;
   loginAlreadyExists: boolean = false;
 
+  forbiddenSymbols = forbiddenRegExpSymbols;
+
   constructor(
     public modal: NgbActiveModal, 
     public formHelper: FormHelperService, 
-    public auth: AuthService
-
+    public auth: AuthService,
   ) { }
 
   ngOnInit() {
@@ -32,10 +34,14 @@ export class RegisterComponent implements OnInit {
       Validators.maxLength(30), 
     ];
 
+    console.log(this.forbiddenSymbols);
+
+    const loginAndNameValidators = validators.concat(ValidatorHelperService.stringWithoutRegExpSymbolsValidator);
+    console.log(loginAndNameValidators);
     this.registerForm = new FormGroup({
-      first_name: new FormControl('', validators),
-      last_name: new FormControl('', validators),
-      login: new FormControl('', validators),
+      first_name: new FormControl('', loginAndNameValidators),
+      last_name: new FormControl('', loginAndNameValidators),
+      login: new FormControl('', loginAndNameValidators),
       password: new FormControl('', validators), 
       passwordRepeat: new FormControl('', validators)
     });

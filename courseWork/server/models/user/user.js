@@ -96,7 +96,11 @@ function buildSearchPredicate(name) {
 }
 
 function getSubstringSearchPredicate(string) {
-    return new RegExp(string, 'i');
+    try {
+        return new RegExp(string, 'i');
+    } catch {
+        return new RegExp(null, 'i'); 
+    }
 }
 
 User.model = userModel;
