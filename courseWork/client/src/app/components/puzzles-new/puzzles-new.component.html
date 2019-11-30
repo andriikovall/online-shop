@@ -13,7 +13,7 @@
               <input type="text" [class.is-invalid]="!nameIsValid()" class="form-control form-control-lg"
                      id="inputName" formControlName="name" placeholder="Gan, Moyu..." required>
               <div class="invalid-feedback">
-                Длина имени должна быть 4 и больше символов<br>Запрещенные символы <br> {{forbiddenSymbols | json}}</div>
+                Длина имени должна быть 4 и больше символов</div>
             </div>
             <div class="form-group col-lg-4">
               <label for="inputPrice">Цена</label>
@@ -88,11 +88,11 @@
             <label>Картинка</label>
             <div class="custom-file">
               <label for="customFile">Выберите файл</label>
-              <input #imageInput type="file" accept="image/*" (change)="onFileSelected($event)">
+              <input #imageInput type="file" accept="image/*" (change)="onImageSelected($event)">
             </div>
           </div>
           <img id="bufferImage"
-               src="{{puzzle.photoUrl || 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081'}}"
+               src="{{this.imageSrc || puzzle.photoUrl}}"
                alt="Placeholder image" width="90%" class="mx-auto">
         </div>
       </div>

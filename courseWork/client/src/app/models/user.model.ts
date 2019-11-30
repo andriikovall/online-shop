@@ -11,7 +11,8 @@ export class User {
     postNumber: number;
     city: string;
     bio_md?: string;
-    avaUrl: any;
+    avaUrl: string;
+    file?: any; 
     isDisabled: boolean = false;
     friends?: User[] = [];
     puzzles?: Puzzle[] = [];

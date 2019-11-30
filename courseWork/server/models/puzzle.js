@@ -5,6 +5,7 @@ const puzzleSchema = require('../schemas').puzzleSchema;
 const puzzleModel = new mongoose.model('Puzzle', puzzleSchema);
 const manufacturerModel = require('./manufacturer').model;
 const typeModel = require('./puzzle_types').model;
+const { getEscapedRegExp } = require('./utils');
 
 const imageUploader = require('../config/cloudinaryConfig');
 const Datauri = require('datauri');
@@ -42,16 +43,6 @@ class Puzzle {
     static deleteById(puzzle_id) {
         return puzzleModel.findByIdAndDelete(puzzle_id);
     }
-
-    // static getByNameLike(searchedName, pageNum, pageSize) { //@todo refactor with filters
-    //     const findPredicate = { name: { $regex: `.*${searchedName}.*`, $options: "i" } };
-
-    //     return puzzleModel.countDocuments(findPredicate).then(count => {
-    //         pageNum = paginator.trimPageNum(pageNum, count, pageSize);
-    //         const scippedItems = paginator.getScippedItemsCount(pageNum, pageSize);
-    //         return [puzzleModel.find(findPredicate).skip(scippedItems).limit(pageSize), count];
-    //     });
-    // }
 
     static getFilteredSearch(filters) {
         const manufs = filters.manufacturers;
@@ -136,14 +127,11 @@ class Puzzle {
         const photoUrl = req.body.photoUrl;
         console.log(photoUrl);
         const puzzle = new Puzzle(name, photoUrl, typeId, isWCA, price, isAvailable, manufacturerId, bio);
-        if (!req.file) {
+        if (!req.body.file) {
             return Promise.resolve(puzzle);
         }
         else {
-            const datauri = new Datauri();
-            datauri.format(`.${getFileExt(req.file)}`, req.file.buffer);
-
-            return imageUploader(datauri.content).
+            return imageUploader(req.body.file).
             then((res) => { puzzle.photoUrl = res.secure_url }).
             catch(err => {
                 console.error(err);
@@ -167,9 +155,11 @@ function trimPrice(price) {
     return price;
 }
 
+
+
 function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName) {
     let findPredicate = {
-        name: { $regex: `.*${searchedName}.*`, $options: "i" }
+        name: { $regex: getEscapedRegExp(searchedName), $options: "i" }
     };
 
     if (manufs) {

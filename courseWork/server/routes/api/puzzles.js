@@ -54,7 +54,7 @@ router.post('/new/mp',  checkAuth, checkManager ,async (req, res, next) => {
 
 });
 
-router.patch('/:id([\\da-z]{1,24})', checkAuth, checkManager, checkPuzzle, async (req, res, next) => {
+router.patch('/:id([\\da-z]{1,24})/mp', checkAuth, checkManager, checkPuzzle, async (req, res, next) => {
     const puzzle = await Puzzle.getPuzzleFromFormRequest(req);
     const puzzleId = req.params.id;
     puzzle._id = puzzleId;
@@ -62,7 +62,7 @@ router.patch('/:id([\\da-z]{1,24})', checkAuth, checkManager, checkPuzzle, async
         const response = await Puzzle.update(puzzle);
         console.log(response);
         res.json({
-            puzzle: response
+            puzzle: puzzle
         });
     } catch (err) {
         next(err);

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -22,7 +22,7 @@ export class PuzzlesNewComponent implements OnInit {
 
   puzzle: Puzzle;
 
-  file: File;
+  imageSrc;
 
   puzzleForm: FormGroup;
 
@@ -44,7 +44,7 @@ export class PuzzlesNewComponent implements OnInit {
 
   async setPuzzle() {
     const puzzleId = this.route.snapshot.paramMap.get('id');
-    if ( window.history.state.puzzle) {
+    if (window.history.state.puzzle) {
       this.puzzle = window.history.state.puzzle;
       this.isEditing = true;
       this.puzzle._id = puzzleId;
@@ -64,8 +64,8 @@ export class PuzzlesNewComponent implements OnInit {
     this.puzzlesService.getFilters().subscribe((filters: any) => {
       this.typesAndManufacturers = filters;
       this.puzzleForm = new FormGroup({
-        name: new FormControl(this.puzzle.name || '', 
-          [Validators.required, Validators.minLength(4), ValidatorHelperService.stringWithoutRegExpSymbolsValidator]),   
+        name: new FormControl(this.puzzle.name || '',
+          [Validators.required, Validators.minLength(4), ValidatorHelperService.stringWithoutRegExpSymbolsValidator]),
         isAvailable: new FormControl(this.puzzle.isAvailable,
           [Validators.required]),
         isWCA: new FormControl(this.puzzle.isWCA,
@@ -95,43 +95,28 @@ export class PuzzlesNewComponent implements OnInit {
   manufacturerIdIsValid() { return !(this.manufacturerId.invalid && (this.manufacturerId.dirty || this.manufacturerId.touched)); }
 
 
-  public onFileSelected(event: any) {
-    this.file = event.target.files[0];
-  }
-
   public getPuzzleForRequest(puzzle: Puzzle) {
-    const returnPuzzle = { ...this.puzzle, ...puzzle};
+    const returnPuzzle = { ...this.puzzle, ...puzzle };
     returnPuzzle._id = this.route.snapshot.paramMap.get('id');
-    returnPuzzle.file = this.file;
+    if (this.imageSrc)
+        returnPuzzle.file = this.imageSrc;
     return returnPuzzle;
   }
 
   public onPuzzleSubmit(value) {
     this.puzzle = this.getPuzzleForRequest(value);
-    console.log(this.puzzle, 'ТО что отправляется');
-    const uploadFormData = this.getFormDataFromObj(this.puzzle);
     if (this.isEditing) {
-      this.puzzlesService.updatePuzzleMultipart(uploadFormData, this.puzzle._id).subscribe((res: any) => {
+      this.puzzlesService.updatePuzzleMultipart(this.puzzle, this.puzzle._id).subscribe((res: any) => {
         this.navigateToPuzzle(this.puzzle._id);
       });
     } else {
-      this.puzzlesService.insertPuzzleMultipart(uploadFormData).subscribe((res: any) => {
+      this.puzzlesService.insertPuzzleMultipart(this.puzzle).subscribe((res: any) => {
         this.navigateToPuzzle(res.puzzle._id);
       });
     }
   }
 
-  private getFormDataFromObj(obj: object | any) {
-    const uploadFormData = new FormData();
-    for (var key in obj) {
-      if ((typeof obj[key]).toLowerCase() === 'file' && obj.name)
-        uploadFormData.append(key, obj[key], obj.name);
-      else
-        uploadFormData.append(key, obj[key]);
-    }
-    return uploadFormData;
-  }
-
+ 
   public navigateToPuzzle(id: string) {
     this.router.navigate(['/puzzles', id]);
   }
@@ -149,6 +134,17 @@ export class PuzzlesNewComponent implements OnInit {
     }, (reason) => {
       console.log('Отмена добавления', reason);
     });
+  }
+
+  onImageSelected(event) {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => this.imageSrc = reader.result;
+
+      reader.readAsDataURL(file);
+    }
   }
 
 }

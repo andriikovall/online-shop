@@ -31,4 +31,23 @@ export class ApiUsersService {
     return this.httpClient.patch(url, user);
   }
 
+  public updateUserFormData(user: User) {
+    const formData = this.getFormDataFromObj(user);
+    console.log(formData);
+    const url = this.linkBuilder.buildApiLink('/users/') + user._id +'/mp';
+    return this.httpClient.patch(url, formData);
+  }
+
+  private getFormDataFromObj(obj: object | any) {
+    const uploadFormData = new FormData();
+    for (const key in obj) {
+      if ((typeof obj[key]).toLowerCase() === 'file' && obj.name)
+        uploadFormData.append(key, obj[key], obj.name);
+      else
+        uploadFormData.append(key, obj[key]);
+    }
+    return uploadFormData;
+  }
+
+
 } 

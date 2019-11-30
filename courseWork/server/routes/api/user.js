@@ -35,32 +35,27 @@ router.get('/all', checkAuth, async (req, res, next) => {
 
 
 router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, async (req, res, next) => {
-    const userToPatchId = req.params.id;
-    const canUpdate = (req.user.role.toUpperCase() === 'ADMIN' || req.user._id === userToPatchId);
-    if (!req.body) {
-        next({
-            status: 400, 
-            message: 'Requset body is empty'
-        })
+    try {
+        const response = await User.update(req.body);
+        console.log(response);
+        res.json(response);
+    } catch (err) {
+        console.log(err);
+        next(err);
         return;
     }
-    if (canUpdate) {
-        try {
-            const response = await User.update(req.body);
-            res.json(response);
-        } catch (err) {
-            console.log(err);
-            next(err);
-            return;
-        }
-    } else {
-        next({
-            status: 403, 
-            message: 'No rights to update user'
-        });
+});
+
+router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, async (req, res, next) => {
+    try {
+        const response = await User.update(req.body);
+        res.json(response);
+    } catch (err) {
+        console.log(err);
+        next(err);
         return;
     }
-})
+});
 
 router.get('/:id([\\da-z]{1,24})', checkUserById, checkAuth, async (req, res, next) => {
     res.json(req.foundUser);
@@ -68,23 +63,40 @@ router.get('/:id([\\da-z]{1,24})', checkUserById, checkAuth, async (req, res, ne
 
 async function checkUserById(req, res, next) {
     const userId = req.params.id;
+    const err = {
+        status: 404,
+        message: `User with id ${userId} not found`
+    };
     if (userId.length != 24) {
-        next({
-            status: 404,
-            message: `User with id ${userId} not found`
-        });
+        next(err);
         return;
     }
     const user = await User.getById(userId);
     if (!user) {
-        next({
-            status: 404,
-            message: `User with id ${userId} not found`
-        });
+        next(err);
         return;
     }
     req.foundUser = user;
     next();
+}
+
+async function checkRightsToUpdate(req, res, nest) {
+    const userToPatchId = req.params.id;
+    const canUpdate = (req.user.role.toUpperCase() === 'ADMIN' || req.user._id === userToPatchId);
+    if (!canUpdate) {
+        next({
+            status: 403,
+            message: 'No rights to update user'
+        });
+        return;
+    }
+    if (!req.body) {
+        next({
+            status: 400,
+            message: 'Requset body is empty'
+        })
+        return;
+    }
 }
 
 module.exports = router;

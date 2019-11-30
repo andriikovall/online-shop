@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiHelperService } from '../api-helper.service';
+import { Puzzle } from 'src/app/models/puzzle.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,15 +38,27 @@ export class ApiPuzzlesService {
     return this.httpClient.post(this.buildApiLink('/puzzles'), filters);
   }
 
-  public insertPuzzleMultipart(puzzle: FormData) {
+  public insertPuzzleMultipart(puzzle: Puzzle) {
+    const formData = this.getFormDataFromObj(puzzle);
     const url = this.buildApiLink('/puzzles/new/mp');
-    return this.httpClient.post(url, puzzle);
+    return this.httpClient.post(url, formData);
   }
 
-  public updatePuzzleMultipart(puzzle: FormData, id: string) {
-    const url = this.buildApiLink('/puzzles/' + id);
-    console.log(url);
-    return this.httpClient.patch(url, puzzle);
+  public updatePuzzleMultipart(puzzle: Puzzle, id: string) {
+    const formData = this.getFormDataFromObj(puzzle);
+    const url = this.buildApiLink('/puzzles/' + id + '/mp');
+    return this.httpClient.patch(url, formData);
+  }
+
+  private getFormDataFromObj(obj: object | any) {
+    const uploadFormData = new FormData();
+    for (const key in obj) {
+      if ((typeof obj[key]).toLowerCase() === 'file' && obj.name)
+        uploadFormData.append(key, obj[key], obj.name);
+      else
+        uploadFormData.append(key, obj[key]);
+    }
+    return uploadFormData;
   }
 
 }

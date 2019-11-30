@@ -2,39 +2,85 @@
     <h1>Изменение личных данных</h1>
     <hr>
     <form [formGroup]="this.mainForm" *ngIf="this.user && this.mainForm">
-      <fieldset>
-        <div class="form-group row"  formGroupName="userForm">
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-lg-6">
+        <fieldset>
+            <div class="form-group row" formGroupName="userForm">
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-lg-6">
                             <label>Имя</label>
-                        <input formControlName="first_name" class="form-control" placeholder="SuperMacho138"
-                        [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.first_name', this.mainForm)">
-                        <div class="invalid-feedback">Длина от 5 до 30 символов</div>
+                            <input formControlName="first_name" class="form-control" placeholder="SuperMacho138"
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.first_name', this.mainForm)">
+                            <div class="invalid-feedback">Длина от 5 до 30 символов</div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Фамилия</label>
+                            <input formControlName="last_name" class="form-control" placeholder="SuperMacho138"
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.last_name', this.mainForm)">
+                            <div class="invalid-feedback">Длина от 5 до 30 символов</div>
+                        </div>
                     </div>
-                    <div class="col-lg-6">
-                        <label>Фамилия</label>
-                        <input formControlName="last_name" class="form-control" placeholder="SuperMacho138"
-                        [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.last_name', this.mainForm)">
-                        <div class="invalid-feedback">Длина от 5 до 30 символов</div>
+                    <div class="row">
+                        <div class="container-fluid">
+                            <label for="inputDescrition">Личная информация</label>
+                            <textarea
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.bio_md', this.mainForm)"
+                                class="form-control" id="inputDescrition" rows="10" cols="70"
+                                formControlName="bio_md"></textarea>
+                            <small class="invalid-feedback">
+                                Этот текст не должен быть пустым</small>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="col-lg-5">
                     <div class="container-fluid">
-                        <label for="inputDescrition">Личная информация</label>
-                        <textarea [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.bio_md', this.mainForm)" class="form-control"
-                        id="inputDescrition" rows="10" cols="70" formControlName="bio_md"></textarea>
-                        <small class="invalid-feedback">
-                            Этот текст не должен быть пустым</small>
+                        <img src="{{this.imageSrc || this.user.avaUrl}}" alt="Фото пользователя" width="100%">
+                        <div class="custom-file">
+                            <label for="imageInput">Выберите файл</label>
+                            <input #imageInput type="file" accept="image/*" (change)="onImageSelected($event)">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4"></div>
-        </div>
-      </fieldset>
-      <button class="btn btn-outline-primary btn-lg" type="submit" (click)="onFormSubmit(this.mainForm)" [disabled]="!this.mainForm.valid">Подтвердить</button>
-      <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button> 
+            <div class="form-group row" formGroupName="shippingForm">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Контакт для связи</label>
+                            <input formControlName="contact" class="form-control"
+                                placeholder="@SomeTelegramNick or link or whatever"
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('shippingForm.contact', this.mainForm)">
+                            <div class="invalid-feedback">Длина от 2 до 50 символов</div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Город</label>
+                            <input formControlName="city" class="form-control" placeholder="Киев, Сумы, Одесса..."
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('shippingForm.city', this.mainForm)">
+                            <div class="invalid-feedback">Длина от 2 до 50 символов</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <label>Адрес</label>
+                            <input formControlName="address" class="form-control"
+                                placeholder="Ул. Пушкина, дома Колотушкина, кв. Вампира, 3"
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('shippingForm.address', this.mainForm)">
+                            <div class="invalid-feedback">Длина от 5 до 100 символов</div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="post">Номер Новой Почты</label>
+                            <input id="post"
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('shippingForm.postNumber', this.mainForm)"
+                                class="form-control form-control" type="number" placeholder="0"
+                                formControlName="postNumber">
+                            <div class="invalid-feedback">Максимальное значение 999</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
     </form>
-    <pre *ngIf="this.mainForm">{{this.mainForm.value | json}}</pre>
+    <button class="btn btn-outline-primary btn-lg" type="submit" (click)="onFormSubmit(this.mainForm)"
+        [disabled]="!this.mainForm || !this.mainForm.valid">Подтвердить</button>
+    <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button>
+    <!-- <pre *ngIf="this.mainForm">{{this.mainForm.value | json}}</pre> -->
 </div>
-  
