@@ -79,7 +79,7 @@
             </div>
         </fieldset>
     </form>
-    <button class="btn btn-outline-primary btn-lg" type="submit" (click)="onFormSubmit(this.mainForm)"
+    <button class="btn btn-outline-primary btn-lg" type="submit" (click)="onFormSubmit()"
         [disabled]="!this.mainForm || !this.mainForm.valid">Подтвердить</button>
     <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button>
     <!-- <pre *ngIf="this.mainForm">{{this.mainForm.value | json}}</pre> -->

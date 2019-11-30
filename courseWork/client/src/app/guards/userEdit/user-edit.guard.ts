@@ -4,9 +4,6 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class UserEditGuard implements CanActivate {
 
   constructor(

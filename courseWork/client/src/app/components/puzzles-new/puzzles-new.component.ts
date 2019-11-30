@@ -99,7 +99,7 @@ export class PuzzlesNewComponent implements OnInit {
     const returnPuzzle = { ...this.puzzle, ...puzzle };
     returnPuzzle._id = this.route.snapshot.paramMap.get('id');
     if (this.imageSrc)
-        returnPuzzle.file = this.imageSrc;
+      returnPuzzle.file = this.imageSrc;
     return returnPuzzle;
   }
 
