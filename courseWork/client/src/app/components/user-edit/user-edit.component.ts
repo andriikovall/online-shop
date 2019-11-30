@@ -8,7 +8,6 @@ import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms'
 
 import { ConfirmSafetyComponent } from '../../modals/confirm-safety/confirm-safety.component';
 
-import { ValidatorHelperService, forbiddenRegExpSymbols } from '../../services/validator-helper.service';
 import { FormHelperService } from 'src/app/services/form-helper.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -37,7 +36,6 @@ export class UserEditComponent implements OnInit {
     const basicValidators = [
       Validators.required,
       Validators.minLength(5),
-      ValidatorHelperService.stringWithoutRegExpSymbolsValidator
     ];
 
     const nameValifators = basicValidators.concat(Validators.maxLength(30));

@@ -65,7 +65,7 @@ export class PuzzlesNewComponent implements OnInit {
       this.typesAndManufacturers = filters;
       this.puzzleForm = new FormGroup({
         name: new FormControl(this.puzzle.name || '',
-          [Validators.required, Validators.minLength(4), ValidatorHelperService.stringWithoutRegExpSymbolsValidator]),
+          [Validators.required, Validators.minLength(4)]),
         isAvailable: new FormControl(this.puzzle.isAvailable,
           [Validators.required]),
         isWCA: new FormControl(this.puzzle.isWCA,

@@ -5,7 +5,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormHelperService } from '../../services/form-helper.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { ValidatorHelperService, forbiddenRegExpSymbols } from 'src/app/services/validator-helper.service';
 import { HttpMouseLoadingService } from '../../services/loading-helper/http-mouse-loading.service';
 
 @Component({
@@ -19,8 +18,6 @@ export class RegisterComponent implements OnInit {
 
   passwordsEqual: boolean = false;
   loginAlreadyExists: boolean = false;
-
-  forbiddenSymbols = forbiddenRegExpSymbols;
 
   constructor(
     public modal: NgbActiveModal, 
@@ -36,24 +33,31 @@ export class RegisterComponent implements OnInit {
       Validators.maxLength(30), 
     ];
 
-    console.log(this.forbiddenSymbols);
-
-    const loginAndNameValidators = validators.concat(ValidatorHelperService.stringWithoutRegExpSymbolsValidator);
-    console.log(loginAndNameValidators);
     this.registerForm = new FormGroup({
-      first_name: new FormControl('', loginAndNameValidators),
-      last_name: new FormControl('', loginAndNameValidators),
-      login: new FormControl('', loginAndNameValidators),
+      first_name: new FormControl('', validators),
+      last_name: new FormControl('', validators),
+      login: new FormControl('', validators),
       password: new FormControl('', validators), 
-      passwordRepeat: new FormControl('', validators)
+      passwordRepeat: new FormControl('', validators.concat(this.passwordsValidator))
     });
   }
 
   comparePasswords() {
+    if (!this.registerForm) 
+      return false;
     const password =       this.registerForm.get('password').value;
     const passwordRepeat = this.registerForm.get('passwordRepeat').value;
 
-    this.passwordsEqual = (password === passwordRepeat);
+    return password === passwordRepeat;
+  }
+
+  passwordsValidator = (control: FormControl) => {
+    const passwordsEqual = this.comparePasswords(); 
+    return passwordsEqual ? null : {
+      stringWithoutRegExpSymbolsValidator: {
+        valid: passwordsEqual
+      }
+    };
   }
 
   registerClicked(event) {
