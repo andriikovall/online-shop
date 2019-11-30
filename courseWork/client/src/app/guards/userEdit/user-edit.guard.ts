@@ -3,6 +3,11 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { Location } from '@angular/common';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 export class UserEditGuard implements CanActivate {
 
@@ -22,10 +27,11 @@ export class UserEditGuard implements CanActivate {
       const userToUpdateId = this.route.snapshot.paramMap.get('id');
       const currentUserId =  this.auth.userId;
       const canEdit = (userToUpdateId == currentUserId);
+      console.log(canEdit);    
       if (!canEdit) {
         this.router.navigate(['/forbidden'], {queryParams: { msg: 'Вы не можете изменить данные другого пользователя'}})
       }
-      return canEdit;
+      return false; 
   }
   
 }

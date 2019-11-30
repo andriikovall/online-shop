@@ -34,7 +34,7 @@ router.get('/all', checkAuth, async (req, res, next) => {
 });
 
 
-router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, async (req, res, next) => {
+router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, checkRightsToUpdate, async (req, res, next) => {
     try {
         const response = await User.update(req.body);
         console.log(response);
@@ -46,7 +46,7 @@ router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, async (req, res, 
     }
 });
 
-router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, async (req, res, next) => {
+router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToUpdate, async (req, res, next) => {
     try {
         const response = await User.update(req.body);
         res.json(response);
@@ -80,9 +80,10 @@ async function checkUserById(req, res, next) {
     next();
 }
 
-async function checkRightsToUpdate(req, res, nest) {
+function checkRightsToUpdate(req, res, next) {
     const userToPatchId = req.params.id;
     const canUpdate = (req.user.role.toUpperCase() === 'ADMIN' || req.user._id === userToPatchId);
+    console.log('HERE', canUpdate);
     if (!canUpdate) {
         next({
             status: 403,

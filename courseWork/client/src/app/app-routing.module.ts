@@ -17,6 +17,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { AdminGuard } from './guards/admin/admin.guard';
 import { ManagerGuard } from './guards/manager/manager.guard';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { UserEditGuard } from './guards/userEdit/user-edit.guard';
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
       { path: 'puzzles/:id', component: PuzzleComponent },
       { path: 'puzzles/update/:id', component: PuzzlesNewComponent, canActivate: [ManagerGuard]},
       { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }, 
-      { path: 'users/update/:id',  component: UserEditComponent, canActivate: [AuthGuard] },
+      { path: 'users/update/:id',  component: UserEditComponent, canActivate: [AuthGuard, UserEditGuard] },
       { path: 'forbidden', component: ForbiddenComponent },
       { path: 'developer/v1',  component: DeveloperComponent },
       { path: '**', redirectTo: '404'},
