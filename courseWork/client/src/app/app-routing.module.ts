@@ -16,6 +16,7 @@ import { DeveloperComponent } from './components/developer/developer.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { AdminGuard } from './guards/admin/admin.guard';
 import { ManagerGuard } from './guards/manager/manager.guard';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
 
 const routes: Routes = [
   {
@@ -27,8 +28,9 @@ const routes: Routes = [
       { path: 'puzzles', component: PuzzlesComponent },
       { path: 'puzzles/new', component: PuzzlesNewComponent, canActivate: [ManagerGuard]},
       { path: 'puzzles/:id', component: PuzzleComponent },
-      { path: 'puzzles/update/:id', component: PuzzlesNewComponent },
-      { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] },
+      { path: 'puzzles/update/:id', component: PuzzlesNewComponent, canActivate: [ManagerGuard]},
+      { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }, 
+      { path: 'users/update/:id',  component: UserEditComponent, canActivate: [AuthGuard] },
       { path: 'forbidden', component: ForbiddenComponent },
       { path: 'developer/v1',  component: DeveloperComponent },
       { path: '**', redirectTo: '404'},

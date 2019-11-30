@@ -33,6 +33,7 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { DeveloperComponent } from './components/developer/developer.component';
 import { CartComponent } from './modals/cart/cart.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     ForbiddenComponent,
     DeveloperComponent,
     CartComponent,
-    LoadingComponent
+    LoadingComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

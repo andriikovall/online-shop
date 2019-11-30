@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormHelperService } from '../../services/form-helper.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { ValidatorHelperService, forbiddenRegExpSymbols } from 'src/app/services/validator-helper.service';
+import { HttpMouseLoadingService } from '../../services/loading-helper/http-mouse-loading.service';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +26,7 @@ export class RegisterComponent implements OnInit {
     public modal: NgbActiveModal, 
     public formHelper: FormHelperService, 
     public auth: AuthService,
+    private loadingService: HttpMouseLoadingService
   ) { }
 
   ngOnInit() {
@@ -54,7 +56,8 @@ export class RegisterComponent implements OnInit {
     this.passwordsEqual = (password === passwordRepeat);
   }
 
-  registerClicked() {
+  registerClicked(event) {
+    this.loadingService.onRequest(event); 
     this.registerForm.markAllAsTouched();
     if (!(this.registerForm.valid && this.passwordsEqual)) 
       return;

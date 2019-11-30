@@ -5,8 +5,11 @@ export class User {
     first_name: string;
     last_name: string;
     login: string;
-    //password?: string;
     role: string;
+    contact?: string = '';
+    address?: string;
+    postNumber: number;
+    city: string;
     bio_md?: string;
     avaUrl: any;
     isDisabled: boolean = false;

@@ -1,0 +1,40 @@
+<div class="content">
+    <h1>Изменение личных данных</h1>
+    <hr>
+    <form [formGroup]="this.mainForm" *ngIf="this.user && this.mainForm">
+      <fieldset>
+        <div class="form-group row"  formGroupName="userForm">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-6">
+                            <label>Имя</label>
+                        <input formControlName="first_name" class="form-control" placeholder="SuperMacho138"
+                        [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.first_name', this.mainForm)">
+                        <div class="invalid-feedback">Длина от 5 до 30 символов</div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Фамилия</label>
+                        <input formControlName="last_name" class="form-control" placeholder="SuperMacho138"
+                        [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.last_name', this.mainForm)">
+                        <div class="invalid-feedback">Длина от 5 до 30 символов</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container-fluid">
+                        <label for="inputDescrition">Личная информация</label>
+                        <textarea [class.is-invalid]="this.formHelper.isInvalidFormControl('userForm.bio_md', this.mainForm)" class="form-control"
+                        id="inputDescrition" rows="10" cols="70" formControlName="bio_md"></textarea>
+                        <small class="invalid-feedback">
+                            Этот текст не должен быть пустым</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+      </fieldset>
+      <button class="btn btn-outline-primary btn-lg" type="submit" (click)="onFormSubmit(this.mainForm)" [disabled]="!this.mainForm.valid">Подтвердить</button>
+      <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button> 
+    </form>
+    <pre *ngIf="this.mainForm">{{this.mainForm.value | json}}</pre>
+</div>
+  

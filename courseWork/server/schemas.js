@@ -25,7 +25,13 @@ const userSchema = new mongoose.Schema({
         puzzle: { type: mongoose.mongo.ObjectId, ref: 'Puzzle', default: undefined },
     }],
     friends: [{ type: mongoose.mongo.ObjectId, ref: 'User', default: undefined }],
+    contact: { type: String, default: '' }, 
+    address: { type: String, default: '' }, 
+    postNumber: { type: Number, default: null }, 
+    city: { type: String, default: '' }
 });
+
+
 
 const DEFAULT_PUZZLE_BIO = 'У данного кубика нету описания';
 

@@ -6,7 +6,7 @@
     <div *ngIf="user" class="container-fluid">
         <div class="col">
             <div class="row">
-                <div class="col-md-4 mx-auto text-center">
+                <div class="col-md-4 col-lg-4 mx-auto text-center">
                     <img src="{{user.avaUrl}}" alt="User avatar" width="100%">
                 </div>
                 <div class="col">
@@ -24,8 +24,8 @@
                         (click)="onRoleChange()">Изменить роль пользователя</button>
                 </div>
             </div>
-            <div class="col">
-
+            <div class="row mt-2 container-fluid">
+                <button *ngIf="this.canEdit" class="btn btn-info" (click)="onEditClicked()" style="float: right;">Изменить</button>
             </div>
             <hr>
             <h3>О себе</h3>

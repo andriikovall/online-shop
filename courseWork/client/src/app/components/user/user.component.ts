@@ -8,6 +8,7 @@ import { User } from '../../models/user.model';
 import { ApiUsersService } from '../../services/apiUsers/api-users.service';
 import { ConfirmSafetyComponent } from '../../modals/confirm-safety/confirm-safety.component';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -28,6 +29,7 @@ export class UserComponent implements OnInit {
     private modalService: NgbModal,
     private alerts: AlertService,
     private router: Router,
+    public auth: AuthService
     ) { 
       this.navigationSubscription = this.router.events.subscribe((e: any) => {
         if (e instanceof NavigationEnd) {
@@ -76,7 +78,10 @@ export class UserComponent implements OnInit {
     }, (reason) => {
       //
     })
+  }
 
+  onEditClicked() {
+    this.router.navigate(['/users', 'update', this.user._id]);
   }
 
   updateUser() {
@@ -89,6 +94,10 @@ export class UserComponent implements OnInit {
     if (this.navigationSubscription) {  
        this.navigationSubscription.unsubscribe();
     }
+  }
+
+  get canEdit() {
+    return this.auth.userId === this.user._id;
   }
   
 }

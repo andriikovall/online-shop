@@ -6,6 +6,7 @@ import { NgbModal, NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormHelperService } from '../../services/form-helper.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { HttpMouseLoadingService } from '../../services/loading-helper/http-mouse-loading.service';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal, 
     public formHelper: FormHelperService, 
-    private auth: AuthService
+    private auth: AuthService, 
+    private loadingService: HttpMouseLoadingService
   ) { }
 
   ngOnInit() {
@@ -37,7 +39,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public login() {
+  public login(event) {
+    this.loadingService.onRequest(event);
     this.loginForm.markAllAsTouched();
     if (!this.loginForm.valid)
       return;
