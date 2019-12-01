@@ -29,7 +29,7 @@ export class UserEditGuard implements CanActivate {
       const canEdit = (userToUpdateId == currentUserId);
       console.log(canEdit);    
       if (!canEdit) {
-        this.router.navigate(['/forbidden'], {queryParams: { msg: 'Вы не можете изменить данные другого пользователя'}})
+        this.router.navigate(['/'], {queryParams: { msg: 'Вы не имеете доступа к данной странице'}})
       }
       return false; 
   }

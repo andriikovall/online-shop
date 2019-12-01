@@ -25,7 +25,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       const isAdmin = this.auth.userIsAdmin();
     if (!isAdmin) {
-      this.router.navigate(['/forbidden'], {queryParams: { msg: 'Только админ имеет доступ к данной странице'}});
+      this.router.navigate(['/'], {queryParams: { msg: 'Вы не имеете доступа к данной странице'}})
     }
     return isAdmin;
   }

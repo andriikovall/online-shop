@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isAuthenticated = this.auth.isAuthenticated();
     if (!isAuthenticated) {
-      this.router.navigate(['/forbidden'], {queryParams: { msg: 'Пожалуйста авторизируйтесь'}});
+      this.router.navigate(['/'], {queryParams: { msg: 'Только зарегестрированные пользователи имеют доступ к данной странице'}})
     }
     return isAuthenticated;
   }

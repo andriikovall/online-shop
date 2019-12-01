@@ -11,15 +11,15 @@ export class AlertService {
   private keepAfterRouteChange = true;
 
   constructor(private router: Router) {
-    // this.router.events.subscribe(event => { 
-    //   // if (event instanceof NavigationEnd) {
-    //   //   if (this.keepAfterRouteChange) {
-    //   //     this.keepAfterRouteChange = false;
-    //   //   } else {
-    //   //     this.clear();
-    //   //   }
-    //   // }
-    // });
+    this.router.events.subscribe(event => { 
+      if (event instanceof NavigationEnd) {
+        if (this.keepAfterRouteChange) {
+          this.keepAfterRouteChange = false;
+        } else {
+          this.clear();
+        }
+      }
+    });
   }
 
   onAlert(alertId?: string): Observable<Alert> {

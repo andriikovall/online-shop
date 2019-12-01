@@ -24,7 +24,7 @@ export class ManagerGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isManager = this.auth.userIsAdmin() || this.auth.userIsManager();
     if (!isManager) {
-      this.router.navigate(['/forbidden'], {queryParams: { msg: 'Вы не имеете доступа к данной странице'}})
+      this.router.navigate(['/'], {queryParams: { msg: 'Вы не имеете доступа к данной странице'}})
     }
     return isManager;
   }
