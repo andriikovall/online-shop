@@ -155,8 +155,6 @@ function trimPrice(price) {
     return price;
 }
 
-
-
 function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName) {
     let findPredicate = {
         name: { $regex: getEscapedRegExp(searchedName), $options: "i" }

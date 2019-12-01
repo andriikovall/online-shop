@@ -3,7 +3,7 @@ const app = express();
 const apiRoutes = require('./routes/api/api');
 const { storage } = require('./config/multerStorage');
 const path = require('path');
-
+const Puzzle = require('./models/puzzle');
 const PORT = parseInt(process.argv[2]) || process.env.PORT || 12010;
 
 const mongoose = require('mongoose'); 
