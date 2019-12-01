@@ -25,7 +25,7 @@ export class AlertComponent implements OnInit, OnDestroy {
                     return;
                 }
                 this.alerts.push(alert);
-                // setInterval(() => this.removeAlert(alert), 10000);
+                setInterval(() => this.removeAlert(alert), 10000);
             });
     }
 
