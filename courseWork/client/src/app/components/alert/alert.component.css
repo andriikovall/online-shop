@@ -1,0 +1,6 @@
+.alerts-container {
+    z-index: 5;
+    /* position: relative;  */
+    position: fixed; 
+    bottom: 0;
+} 

@@ -173,7 +173,9 @@
 }
 
 .card {
-    width: calc(1200px - 25%*1200px);
+    /* width: calc(1200px - 25%*1200px); */
+    z-index: -1;
+    position: relative;
 }
 
 .menu {

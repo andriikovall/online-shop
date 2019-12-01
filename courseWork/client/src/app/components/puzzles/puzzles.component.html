@@ -1,149 +1,141 @@
-<body>
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <app-loading *ngIf="!this.filtersForm"></app-loading>
-                    <div class="card" *ngIf="this.filtersForm">
-                        <div class="card-body" id="filters">
-                            <h4 class="card-title">Фильтры</h4>
-                            <hr>
-                            <button (click)="resetFilters()" class="btn btn-link">Убрать фильтры</button>
-                            <form [formGroup]="filtersForm">
-                                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
-                                        aria-controls="collapse-1" href="#collapse-1" role="button">Цена</a>
-                                    <div class="collapse" id="collapse-1">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="form-row">
-                                                    <div class="col">
-                                                        <div class="form-group"
-                                                            style="margin: -9px;margin-top: 0;padding: 0;padding-right: 23px;">
-                                                            <label>от</label>
-                                                            <input type="number" class="form-control"
-                                                                formControlName="priceFrom" placeholder="0₴" min="0"
-                                                                max="9999999" value="0" step="10"
-                                                                style="margin: 0px;padding: -1px;margin-right: 0px;min-width: 32px;max-width: 100%;width: 100%;" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col"
-                                                        style="width: 40%;margin-top: 0;margin-right: -4px;">
-                                                        <div class="form-group" style="margin: -1px;margin-top: 0px;">
-                                                            <label>до</label>
-                                                            <input type="number" class="form-control"
-                                                                formControlName="priceTo" placeholder="10,000₴" min="0"
-                                                                max="99999999" step="10"
-                                                                style="height: 39px;max-width: 100%;width: 100%;" />
-                                                        </div>
-                                                    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <app-loading *ngIf="!this.filtersForm"></app-loading>
+            <div class="card" *ngIf="this.filtersForm">
+                <div class="card-body" id="filters">
+                    <h4 class="card-title">Фильтры</h4>
+                    <hr>
+                    <button (click)="resetFilters()" class="btn btn-link">Убрать фильтры</button>
+                    <form [formGroup]="filtersForm">
+                        <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
+                                aria-controls="collapse-1" href="#collapse-1" role="button">Цена</a>
+                            <div class="collapse" id="collapse-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group"
+                                                    style="margin: -9px;margin-top: 0;padding: 0;padding-right: 23px;">
+                                                    <label>от</label>
+                                                    <input type="number" class="form-control"
+                                                        formControlName="priceFrom" placeholder="0₴" min="0"
+                                                        max="9999999" value="0" step="10"
+                                                        style="margin: 0px;padding: -1px;margin-right: 0px;min-width: 32px;max-width: 100%;width: 100%;" />
+                                                </div>
+                                            </div>
+                                            <div class="col" style="width: 40%;margin-top: 0;margin-right: -4px;">
+                                                <div class="form-group" style="margin: -1px;margin-top: 0px;">
+                                                    <label>до</label>
+                                                    <input type="number" class="form-control" formControlName="priceTo"
+                                                        placeholder="10,000₴" min="0" max="99999999" step="10"
+                                                        style="height: 39px;max-width: 100%;width: 100%;" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
-                                        aria-controls="collapse-2" href="#collapse-2" role="button">Название</a>
-                                    <div class="collapse" id="collapse-2">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="form-row">
-                                                    <div class="col">
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Gan, MoYu..." formControlName="name">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
-                                        aria-controls="collapse-3" href="#collapse-3" role="button"
-                                        style="max-height: 88px;min-height: 33px;">Производитель</a>
-                                    <div class="collapse" id="collapse-3">
-                                        <div class="card">
-                                            <div [formGroup]="filtersForm.controls.manufacturers">
-                                                <div class="custom-control custom-checkbox"
-                                                    *ngFor="let m of allFilters.manufacturers; let i = index">
-                                                    <!-- {{! <span class="float-right badge badge-light round">52</span> }}
-                                                                    @todo потом сделать посчет всех пазлов производителя-->
-                                                    <input type="checkbox" class="custom-control-input"
-                                                        id="manufacturer_{{i}}" [formControlName]="m._id">
-                                                    <label class="custom-control-label"
-                                                        for="manufacturer_{{i}}">{{m.value}}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
-                                        aria-controls="collapse-4" href="#collapse-4" role="button"
-                                        style="max-height: 88px;min-height: 33px;">Тип</a>
-                                    <div class="collapse" id="collapse-4">
-                                        <div class="card">
-                                            <div [formGroup]="filtersForm.controls.types">
-                                                <div class="custom-control custom-checkbox"
-                                                    *ngFor="let type of allFilters.types; let i=index">
-                                                    <input type="checkbox" class="custom-control-input" id="type_{{i}}"
-                                                        [formControlName]="type._id">
-                                                    <label class="custom-control-label"
-                                                        for="type_{{i}}">{{type.value}}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form><button class="btn btn-info btn-block btn-lg" type="submit"
-                                (click)="onFiltersSubmit(filtersForm.value)">Поиск</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8 offset-lg-0">
-                    <div class="container mb-4" *ngIf="this.auth.userIsManager()">
-                        <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="!this.puzzles">
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Загрузка...
-                        </button>
-                        <a style="text-decoration: none" [routerLink]="['/puzzles/new']" *ngIf="this.puzzles">
-                            <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
-                        </a>
-                    </div>
-                    <div class="card" *ngIf="this.puzzles && this.currentFilters.name && puzzles.length">
-                        <div class="card-body">Результаты поиска по запросу: <b>{{this.currentFilters.name}}</b></div>
-                    </div>
-                    <div class="card" *ngIf="puzzles && !puzzles.length && this.currentFilters.name.length != 0">
-                        <div class="card-body">Головоломок по названию: <b>{{this.currentFilters.name}}</b> не найдено
-                        </div>
-                    </div>
-                    <app-loading *ngIf="!this.puzzles"></app-loading>
-                    <div class="card" *ngIf="this.puzzles && this.currentFilters.name.length == 0 && this.puzzles.length == 0">
-                        <div class="card-body">Головоломок не найдено</div>
-                    </div>
-                    <div class="row" id="puzzles-container-content" *ngIf="this.puzzles">
-                        <div class="col-lg-6 col-sm-12 col-xl-4 col-md-6"
-                            *ngFor="let puzzle of puzzles  | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalItems }">
-                            <div class="card" style="height: 100%">
-                                <div class="card-body">
-                                    <a [routerLink]="['/puzzles', puzzle._id]" class="text-center">
-                                        <h4 class="card-title">{{puzzle.name}}</h4>
-                                        <div class="container-fluid">
-                                            <img src="{{puzzle.photoUrl}}" width="150px" class="text-center mx-auto">
-                                        </div>
-                                    </a>
-                                    <h6 class="mt-2">{{puzzle.price}}</h6>
-                                    <button class="btn btn-primary btn-block" type="button"
-                                        (click)="buyClicked(puzzle._id)" [disabled]="!puzzle.isAvailable">
-                                        {{puzzle.isAvailable ? 'В корзину' : 'Нет в наличии'}}</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-center mt-5">
-                        <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel=""
-                            maxSize="9">
-                        </pagination-controls>
-                    </div>
+                        <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
+                                aria-controls="collapse-2" href="#collapse-2" role="button">Название</a>
+                            <div class="collapse" id="collapse-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Gan, MoYu..."
+                                                    formControlName="name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
+                                aria-controls="collapse-3" href="#collapse-3" role="button"
+                                style="max-height: 88px;min-height: 33px;">Производитель</a>
+                            <div class="collapse" id="collapse-3">
+                                <div class="card">
+                                    <div [formGroup]="filtersForm.controls.manufacturers">
+                                        <div class="custom-control custom-checkbox"
+                                            *ngFor="let m of allFilters.manufacturers; let i = index">
+                                            <!-- {{! <span class="float-right badge badge-light round">52</span> }}
+                                                                    @todo потом сделать посчет всех пазлов производителя-->
+                                            <input type="checkbox" class="custom-control-input" id="manufacturer_{{i}}"
+                                                [formControlName]="m._id">
+                                            <label class="custom-control-label"
+                                                for="manufacturer_{{i}}">{{m.value}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
+                                aria-controls="collapse-4" href="#collapse-4" role="button"
+                                style="max-height: 88px;min-height: 33px;">Тип</a>
+                            <div class="collapse" id="collapse-4">
+                                <div class="card">
+                                    <div [formGroup]="filtersForm.controls.types">
+                                        <div class="custom-control custom-checkbox"
+                                            *ngFor="let type of allFilters.types; let i=index">
+                                            <input type="checkbox" class="custom-control-input" id="type_{{i}}"
+                                                [formControlName]="type._id">
+                                            <label class="custom-control-label" for="type_{{i}}">{{type.value}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form><button class="btn btn-info btn-block btn-lg" type="submit"
+                        (click)="onFiltersSubmit(filtersForm.value)">Поиск</button>
                 </div>
             </div>
         </div>
+        <div class="col-md-8 offset-lg-0">
+            <div class="container mb-4" *ngIf="this.auth.userIsManager()">
+                <button class="btn btn-outline-primary btn-block" type="button" disabled *ngIf="!this.puzzles">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Загрузка...
+                </button>
+                <a style="text-decoration: none" [routerLink]="['/puzzles/new']" *ngIf="this.puzzles">
+                    <button type="button" class="btn btn-outline-primary btn-block">Добавить</button>
+                </a>
+            </div>
+            <div class="card" *ngIf="this.puzzles && this.currentFilters.name && puzzles.length">
+                <div class="card-body">Результаты поиска по запросу: <b>{{this.currentFilters.name}}</b></div>
+            </div>
+            <div class="card" *ngIf="puzzles && !puzzles.length && this.currentFilters.name.length != 0">
+                <div class="card-body">Головоломок по названию: <b>{{this.currentFilters.name}}</b> не найдено
+                </div>
+            </div>
+            <app-loading *ngIf="!this.puzzles"></app-loading>
+            <div class="card" *ngIf="this.puzzles && this.currentFilters.name.length == 0 && this.puzzles.length == 0">
+                <div class="card-body">Головоломок не найдено</div>
+            </div>
+            <div class="row" id="puzzles-container-content" *ngIf="this.puzzles">
+                <div class="col-lg-6 col-sm-12 col-xl-4 col-md-6"
+                    *ngFor="let puzzle of puzzles  | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalItems }">
+                    <div class="card" style="height: 100%">
+                        <div class="card-body">
+                            <a [routerLink]="['/puzzles', puzzle._id]" class="text-center">
+                                <h4 class="card-title">{{puzzle.name}}</h4>
+                                <div class="container-fluid">
+                                    <img src="{{puzzle.photoUrl}}" width="150px" class="text-center mx-auto">
+                                </div>
+                            </a>
+                            <h6 class="mt-2">{{puzzle.price}}</h6>
+                            <button class="btn btn-primary btn-block" type="button" (click)="buyClicked(puzzle._id)"
+                                [disabled]="!puzzle.isAvailable">
+                                {{puzzle.isAvailable ? 'В корзину' : 'Нет в наличии'}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
+                </pagination-controls>
+            </div>
+        </div>
     </div>
-</body>
+</div>
