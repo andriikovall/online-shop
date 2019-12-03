@@ -24,14 +24,17 @@ export class UserEditGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      const userToUpdateId = this.route.snapshot.paramMap.get('id');
+      const urlPathArray = state.url.split('/');
+      const userToUpdateId = urlPathArray[urlPathArray.length - 1] || '';
       const currentUserId =  this.auth.userId;
+      console.log(userToUpdateId, currentUserId);
       const canEdit = (userToUpdateId == currentUserId);
       console.log(canEdit);    
+      console.log(state);
       if (!canEdit) {
         this.router.navigate(['/'], {queryParams: { msg: 'Вы не имеете доступа к данной странице'}})
       }
-      return false; 
+      return canEdit;  
   }
   
 }
