@@ -52,6 +52,7 @@ class Puzzle {
         const limit = parseInt(filters.limit);
         const offset = parseInt(filters.offset);
         const searchedName = filters.name || '';
+        const isWCA = filters.isWCA;
 
         if (isNaN(limit)) {
             limit = 10;
@@ -59,7 +60,7 @@ class Puzzle {
             offset = 0;
         }
 
-        const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName);
+        const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName, isWCA);
 
         const promises = [
             puzzleModel.countDocuments(findPredicate),
@@ -67,12 +68,12 @@ class Puzzle {
         ];
 
         return Promise.all(promises).
-        then(([count, puzzles]) => {
-            return {
-                count,
-                puzzles
-            };
-        })
+            then(([count, puzzles]) => {
+                return {
+                    count,
+                    puzzles
+                };
+            })
     }
 
     static update(puzzle) {
@@ -155,10 +156,14 @@ function trimPrice(price) {
     return price;
 }
 
-function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName) {
+function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName, isWCA) {
     let findPredicate = {
         name: { $regex: getEscapedRegExp(searchedName), $options: "i" }
     };
+
+    if (isWCA !== undefined && isWCA !== null) {
+        findPredicate.isWCA = isWCA;
+    }
 
     if (manufs) {
         findPredicate.manufacturerId = {};

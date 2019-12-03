@@ -17,7 +17,7 @@
                                             <div class="col">
                                                 <div class="form-group"
                                                     style="margin: -9px;margin-top: 0;padding: 0;padding-right: 23px;">
-                                                    <label>от</label>
+                                                    <label>От</label>
                                                     <input type="number" class="form-control"
                                                         formControlName="priceFrom" placeholder="0₴" min="0"
                                                         max="9999999" value="0" step="10"
@@ -26,7 +26,7 @@
                                             </div>
                                             <div class="col" style="width: 40%;margin-top: 0;margin-right: -4px;">
                                                 <div class="form-group" style="margin: -1px;margin-top: 0px;">
-                                                    <label>до</label>
+                                                    <label>До</label>
                                                     <input type="number" class="form-control" formControlName="priceTo"
                                                         placeholder="10,000₴" min="0" max="99999999" step="10"
                                                         style="height: 39px;max-width: 100%;width: 100%;" />
@@ -55,7 +55,7 @@
                         <div><a class="btn btn-primary btn-block" data-toggle="collapse" aria-expanded="false"
                                 aria-controls="collapse-3" href="#collapse-3" role="button"
                                 style="max-height: 88px;min-height: 33px;">Производитель</a>
-                            <div class="collapse" id="collapse-3">
+                            <div class="collapse" id="collapse-3"> 
                                 <div class="card">
                                     <div [formGroup]="filtersForm.controls.manufacturers">
                                         <div class="custom-control custom-checkbox"
@@ -85,11 +85,35 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="isWCA"
+                                                (change)="onWCAClicked($event)"
+                                                [checked]="isWCA"
+                                                [disabled]="this.isWCAIgnored">
+                                                <label class="custom-control-label" for="isWCA">WCA</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="isWCAIngored"
+                                                    [checked]="isWCAIgnored"
+                                                    (change)="onIgnoreWCAClicked($event)">
+                                                <label class="custom-control-label"
+                                                    for="isWCAIngored">Игнорировать</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form><button class="btn btn-info btn-block btn-lg" type="submit"
                         (click)="onFiltersSubmit(filtersForm.value)">Поиск</button>
                 </div>
+                <pre>wca {{this.isWCA}} -- ignore {{this.isWCAIgnored}}</pre>
             </div>
         </div>
         <div class="col-md-8 offset-lg-0">
