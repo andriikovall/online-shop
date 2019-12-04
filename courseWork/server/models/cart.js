@@ -50,7 +50,6 @@ class Cart {
     }
 
     static removePuzzle(cart, puzzleId) {
-        console.log(cart);
         cart.puzzles.forEach((element, index) => {
             if (puzzleId == element.puzzle._id) {
                 element.count--;

@@ -6,12 +6,12 @@ const { checkAdmin, checkAuth, checkManager } = require('../../config/passport')
 
 
 router.post('/', checkAuth, async (req, res, next) => {
-    const limit = req.body.limit;
-    const offset = req.body.offset;
+    let limit = req.body.limit;
+    let offset = req.body.offset;
     const name = req.body.name || '';
-    if (limit === undefined) {
+    if (limit === undefined || limit < 0) {
         limit = 10;
-    } if (offset === undefined) {
+    } if (offset === undefined || offset < 0) {
         offset = 0;
     }
     try {
@@ -37,7 +37,6 @@ router.get('/all', checkAuth, async (req, res, next) => {
 router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, checkRightsToUpdate, async (req, res, next) => {
     try {
         const response = await User.update(req.body);
-        console.log(response);
         res.json(response);
     } catch (err) {
         console.log(err);
@@ -49,6 +48,7 @@ router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, checkRightsToUpda
 router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToUpdate, async (req, res, next) => {
     try {
         const response = await User.update(req.body);
+        console.log(response);
         res.json(response);
     } catch (err) {
         console.log(err);
@@ -83,7 +83,6 @@ async function checkUserById(req, res, next) {
 function checkRightsToUpdate(req, res, next) {
     const userToPatchId = req.params.id;
     const canUpdate = (req.user.role.toUpperCase() === 'ADMIN' || req.user._id === userToPatchId);
-    console.log('HERE', canUpdate);
     if (!canUpdate) {
         next({
             status: 403,
@@ -98,6 +97,7 @@ function checkRightsToUpdate(req, res, next) {
         })
         return;
     }
+    next();
 }
 
 module.exports = router;

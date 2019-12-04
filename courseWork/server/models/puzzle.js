@@ -12,6 +12,7 @@ const Datauri = require('datauri');
 const getFileExt = require('../config/multerStorage').getFileExtension;
 
 const defaultPhotoUrl = 'https://uaprom-static.c2.prom.st/image/new_design/images/no_image-hce614324446b22b42a09b69093e309fce.png';
+const defaultLimitValue = 10;
 
 class Puzzle {
 
@@ -50,14 +51,14 @@ class Puzzle {
         const priceFrom = getValidatedFilterPrice(filters.priceFrom);
         const priceTo = getValidatedFilterPrice(filters.priceTo);
         let limit = parseInt(filters.limit);
-        if (limit < 0) limit = 0;
+        if (limit < 0) limit = defaultLimitValue;
         let offset = parseInt(filters.offset);
         if (offset < 0) offset = 0;
         const searchedName = filters.name || '';
         const isWCA = filters.isWCA;
 
         if (isNaN(limit)) {
-            limit = 10;
+            limit = defaultLimitValue;
         } if (isNaN(offset)) {
             offset = 0;
         }

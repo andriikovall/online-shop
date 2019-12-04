@@ -33,8 +33,8 @@ export class ApiUsersService {
 
   public updateUserFormData(user: User) {
     const formData = this.getFormDataFromObj(user);
-    console.log(formData);
     const url = this.linkBuilder.buildApiLink('/users/') + user._id +'/mp';
+    console.log('updateUserFormData', url);
     return this.httpClient.patch(url, formData);
   }
 

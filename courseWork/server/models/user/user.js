@@ -34,10 +34,8 @@ class User {
     static setNewCart(userId) {
         const cart = new Cart(userId);
         return Cart.insert(cart).
-            then((cart) => {
-                return userModel.findByIdAndUpdate(userId, { $set: { cart: cart._id } })
-            }).
-            then(() => cart._id);
+            then((insertedCart) => Promise.all([userModel.findByIdAndUpdate(userId, { $set: { cart: insertedCart._id } }), insertedCart._id])).
+            then(([, id]) => id);
     }
 
     static getLoginById(id) {
@@ -55,8 +53,8 @@ class User {
     static update(user) {
         if (!user.file)
             return userModel.findOneAndUpdate({ _id: user._id }, user, { new: true });
-        else 
-            return imageUploader(user.file). 
+        else
+            return imageUploader(user.file).
                 then((res) => { user.avaUrl = res.secure_url }).
                 then(() => userModel.findOneAndUpdate({ _id: user._id }, user, { new: true }));
     }

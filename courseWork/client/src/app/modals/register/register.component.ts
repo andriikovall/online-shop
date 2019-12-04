@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormHelperService } from '../../services/form-helper.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { HttpMouseLoadingService } from '../../services/loading-helper/http-mouse-loading.service';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -16,43 +17,48 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  passwordsEqual: boolean = false;
   loginAlreadyExists: boolean = false;
 
   constructor(
-    public modal: NgbActiveModal, 
-    public formHelper: FormHelperService, 
+    public modal: NgbActiveModal,
+    public formHelper: FormHelperService,
     public auth: AuthService,
-    private loadingService: HttpMouseLoadingService
+    private loadingService: HttpMouseLoadingService,
+    private alerts: AlertService
   ) { }
 
   ngOnInit() {
     const validators = [
-      Validators.required, 
+      Validators.required,
       Validators.minLength(5),
-      Validators.maxLength(30), 
+      Validators.maxLength(30),
     ];
 
     this.registerForm = new FormGroup({
       first_name: new FormControl('', validators),
       last_name: new FormControl('', validators),
       login: new FormControl('', validators),
-      password: new FormControl('', validators), 
+      password: new FormControl('', validators),
       passwordRepeat: new FormControl('', validators.concat(this.passwordsValidator))
     });
+    this.registerForm.valueChanges.subscribe(() => {
+      this.loginAlreadyExists = false;
+      (document.getElementById('submit') as HTMLButtonElement).disabled = !this.registerForm.valid;
+    });
   }
-
+ 
   comparePasswords() {
-    if (!this.registerForm) 
+    if (!this.registerForm)
       return false;
-    const password =       this.registerForm.get('password').value;
+    const password = this.registerForm.get('password').value;
     const passwordRepeat = this.registerForm.get('passwordRepeat').value;
+    console.log(password === passwordRepeat);
 
     return password === passwordRepeat;
   }
 
   passwordsValidator = (control: FormControl) => {
-    const passwordsEqual = this.comparePasswords(); 
+    const passwordsEqual = this.comparePasswords();
     return passwordsEqual ? null : {
       stringWithoutRegExpSymbolsValidator: {
         valid: passwordsEqual
@@ -61,20 +67,26 @@ export class RegisterComponent implements OnInit {
   }
 
   registerClicked(event) {
-    this.loadingService.onRequest(event); 
+    this.loadingService.onRequest(event);
     this.registerForm.markAllAsTouched();
-    if (!(this.registerForm.valid && this.passwordsEqual)) 
+    if (!this.registerForm.valid) {
+      this.alerts.warn('Форма не валидная');
       return;
+    }
     this.auth.register(this.registerForm.value).subscribe(response => {
       this.modal.close(true);
       this.loginAlreadyExists = false;
-    }, 
-    err => {
-      console.log(err);
-      if (err.status == 409)
-        this.loginAlreadyExists = true;
-    })
+    },
+      err => {
+        console.log(err);
+        if (err.status == 409)
+          this.loginAlreadyExists = true;
+      });
   }
+
+  // get formIsValid() {
+  //   return this.registerForm.valid;
+  // }
 
 
 }

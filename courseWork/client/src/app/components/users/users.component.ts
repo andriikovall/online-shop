@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiUsersService } from '../../services/apiUsers/api-users.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -28,6 +29,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private usersService: ApiUsersService,
     private alerts: AlertService,
+    private router: Router, 
+    private route: ActivatedRoute
   ) {
   //   this.router.routeReuseStrategy.shouldReuseRoute = function () {
   //     return false;
@@ -42,12 +45,20 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    const currentPage = this.route.snapshot.paramMap.get('page');
+    if (currentPage) {
+      const currentPageNum = parseInt(currentPage);
+      if (currentPageNum) {
+        this.config.currentPage = currentPageNum;
+      }
+    }
     this.updateUsers()
   }
 
 
-  public pageChanged(page) {
-    this.config.currentPage = page;
+  public pageChanged(pageNum) {
+    this.config.currentPage = pageNum;
+    this.router.navigate(['users', 'page', pageNum]);
     this.updateUsers();
   }
 

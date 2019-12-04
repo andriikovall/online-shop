@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
+  loginFormIsValid = false;
+
   isInvalidLoginOrPassword: boolean = false;
 
   constructor(
@@ -36,6 +38,10 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       login: new FormControl('', validators),
       password: new FormControl('', validators)
+    });
+    this.loginForm.valueChanges.subscribe(() => {
+      this.isInvalidLoginOrPassword = false;
+      (document.getElementById('submit') as HTMLButtonElement).disabled = !this.loginForm.valid;
     });
   }
 
