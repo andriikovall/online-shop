@@ -34,7 +34,7 @@ export class PuzzlesComponent implements OnInit {
       priceFrom: 0,
     };
 
-  puzzles;
+  puzzles: Puzzle[];
 
   isWCA = true;
   isWCAIgnored = true;
@@ -91,41 +91,31 @@ export class PuzzlesComponent implements OnInit {
     const manufs = defaultFilters.manufacturers;
     const types = defaultFilters.types;
 
+    if (cachedFilters.isWCA !== undefined) {
+      this.isWCA = cachedFilters.isWCA;
+      this.isWCAIgnored = false; 
+    }
+
     this.initForm();
 
     manufs.forEach(m => {
       this.currentFilters.manufacturers.push(m._id);
       this.filtersForm.controls.manufacturers.addControl(m._id,
         new FormControl(cachedFilters.manufacturers.includes(m._id)));
-    })
+    });
 
     types.forEach(t => {
       this.currentFilters.types.push(t._id);
       this.filtersForm.controls.types.addControl(t._id,
         new FormControl(cachedFilters.types.includes(t._id)));
-    })
+    });
 
-    console.log(this.filtersForm.controls);
   }
 
 
   ngOnInit() {
     this.puzzlesService.getFilters().subscribe((defaultFilters: any) => {
       const cachedFilters = this.getCachedFilters();
-      // if (cachedFilters) {
-      //   cachedFilters.manufacturers = cachedFilters.manufacturers.map(m =>
-      //     ({ _id: m, value: this.getFilterNameById(defaultFilters.manufacturers, m) })
-      //   );
-      //   cachedFilters.types = cachedFilters.types.map(t =>
-      //     ({ _id: t, value: this.getFilterNameById(defaultFilters.types, t) })
-      //   );
-      // }
-      // console.log(cachedFilters);
-      // if (cachedFilters)
-      //   this.allFilters = cachedFilters;
-      // else 
-      //   this.allFilters = defaultFilters;
-      // this.allFilters = cachedFilters ? cachedFilters : defaultFilters;
       this.allFilters = defaultFilters;
       if (cachedFilters)
         this.setCachedFilters(cachedFilters, defaultFilters);
@@ -183,12 +173,18 @@ export class PuzzlesComponent implements OnInit {
     const limit = this.config.itemsPerPage;
     const offset = (this.config.currentPage - 1) * this.config.itemsPerPage;
     this.puzzles = null;
-    sessionStorage.setItem('filters', JSON.stringify(this.currentFilters));
+    this.cacheFilters();
     this.puzzlesService.getPuzzles(limit, offset, puzzleReqFilters).
       subscribe((data: any) => {
         this.puzzles = data.puzzles;
         this.totalItems = data.count;
       });
+  }
+
+  cacheFilters() {
+    if (!this.isWCAIgnored)
+      this.currentFilters.isWCA = this.isWCA;
+    sessionStorage.setItem('filters', JSON.stringify(this.currentFilters));
   }
 
   public pageChanged(pageNum) {

@@ -7,7 +7,8 @@
     "install": "cd courseWork && npm install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm start --prefix courseWork",
-    "heroku-postbuild": "cd courseWork && npm run build-client"
+    "heroku-postbuild": "cd courseWork && npm run build-client", 
+    "dev": "npm run dev --prefix courseWork"
   },
   "repository": {
     "type": "git",
