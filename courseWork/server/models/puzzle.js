@@ -49,8 +49,10 @@ class Puzzle {
         const types = filters.types;
         const priceFrom = getValidatedFilterPrice(filters.priceFrom);
         const priceTo = getValidatedFilterPrice(filters.priceTo);
-        const limit = parseInt(filters.limit);
-        const offset = parseInt(filters.offset);
+        let limit = parseInt(filters.limit);
+        if (limit < 0) limit = 0;
+        let offset = parseInt(filters.offset);
+        if (offset < 0) offset = 0;
         const searchedName = filters.name || '';
         const isWCA = filters.isWCA;
 

@@ -7,6 +7,7 @@ import { Puzzle } from '../../models/puzzle.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { AlertService } from '../../services/alert/alert.service';
 import { CartService } from 'src/app/services/apiCarts/cart.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-puzzles',
@@ -54,7 +55,9 @@ export class PuzzlesComponent implements OnInit {
     public alerts: AlertService,
     private puzzlesService: ApiPuzzlesService,
     private formBuilder: FormBuilder,
-    private cartService: CartService
+    private cartService: CartService,
+    private route: ActivatedRoute, 
+    private router: Router
   ) {
   }
 
@@ -93,7 +96,7 @@ export class PuzzlesComponent implements OnInit {
 
     if (cachedFilters.isWCA !== undefined) {
       this.isWCA = cachedFilters.isWCA;
-      this.isWCAIgnored = false; 
+      this.isWCAIgnored = false;
     }
 
     this.initForm();
@@ -112,6 +115,14 @@ export class PuzzlesComponent implements OnInit {
 
   }
 
+  configurePage() {
+    const page = this.route.snapshot.paramMap.get('page');
+    if (page) {
+      const pageNum = parseInt(page);
+      if (!isNaN(pageNum))
+        this.config.currentPage = pageNum;
+    }
+  }
 
   ngOnInit() {
     this.puzzlesService.getFilters().subscribe((defaultFilters: any) => {
@@ -121,6 +132,7 @@ export class PuzzlesComponent implements OnInit {
         this.setCachedFilters(cachedFilters, defaultFilters);
       else
         this.setDefaultFilters(defaultFilters);
+      this.configurePage();
       this.updatePuzzles();
     });
   }
@@ -189,6 +201,7 @@ export class PuzzlesComponent implements OnInit {
 
   public pageChanged(pageNum) {
     this.config.currentPage = pageNum;
+    this.router.navigate(['puzzles', 'page', pageNum]);
     this.updatePuzzles();
   }
 
