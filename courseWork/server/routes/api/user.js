@@ -82,7 +82,7 @@ async function checkUserById(req, res, next) {
 
 function checkRightsToUpdate(req, res, next) {
     const userToPatchId = req.params.id;
-    const canUpdate = (req.user.role.toUpperCase() === 'ADMIN' || req.user._id === userToPatchId);
+    const canUpdate = (req.user._id == userToPatchId);
     if (!canUpdate) {
         next({
             status: 403,
