@@ -206,6 +206,7 @@ export class PuzzlesComponent implements OnInit {
   }
 
   public resetFilters() {
+    this.isWCAIgnored = true;
     this.setDefaultFilters(this.allFilters);
   }
 
