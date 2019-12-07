@@ -18,14 +18,15 @@
                     <label>Фамилия</label>
                     <input type="text" class="form-control" placeholder="Пупкин" formControlName="last_name"
                         [class.is-invalid]="this.formHelper.isInvalidFormControl('last_name', this.registerForm)">
-                        <div class="invalid-feedback">Длина от 5 до 30 символов</div>
+                    <div class="invalid-feedback">Длина от 5 до 30 символов</div>
                 </div>
             </div>
             <div class="form-group">
                 <label>Логин</label>
                 <input class="form-control" placeholder="yarikBoostrapshchik322" formControlName="login"
                     [class.is-invalid]="this.formHelper.isInvalidFormControl('login', this.registerForm) || loginAlreadyExists">
-                <div class="invalid-feedback"> {{loginAlreadyExists? 'Такой логин уже существует': 'Длина от 5 до 30 символов'}}</div>
+                <div class="invalid-feedback">
+                    {{loginAlreadyExists? 'Такой логин уже существует': 'Длина от 5 до 30 символов'}}</div>
 
                 <!-- <small class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
@@ -44,13 +45,13 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block" id="submit"
-                    [disabled]="!this.registerForm.valid" 
-                    (click)="registerClicked($event)">Зарегестрироватся</button>
+                    [disabled]="!this.registerForm.valid" (click)="registerClicked($event)">Зарегестрироватся</button>
             </div>
             <small class="text-muted">Это маленький текст, который никто никогда не читает. Давайте, если вы прочитали,
                 то напишите мне в телегу это)</small>
         </form>
     </article>
+    <app-telegram-widget></app-telegram-widget>
     <div class="border-top card-body text-center">Уже зарегестрированы?<button (click)="modal.close('log')"
             class="btn btn-link">Войти</button></div>
     <!-- <pre>{{registerForm.valid}}</pre> -->

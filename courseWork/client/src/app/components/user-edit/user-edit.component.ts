@@ -10,6 +10,7 @@ import { ConfirmSafetyComponent } from '../../modals/confirm-safety/confirm-safe
 
 import { FormHelperService } from 'src/app/services/form-helper.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -30,6 +31,7 @@ export class UserEditComponent implements OnInit {
     private location: Location,
     public formHelper: FormHelperService,
     private modalService: NgbModal,
+    private alerts: AlertService
   ) { }
 
   initForm() {
@@ -90,7 +92,10 @@ export class UserEditComponent implements OnInit {
         this.userService.updateUserFormData(user).subscribe((res) => {
           console.log(res);
           this.router.navigate(['/users', this.user._id]);
-        }, console.error);
+        }, (err) => {
+          this.alerts.warn('Ошибка сервера, попробуйте позже');
+          console.log(err);
+        });
       }
     }, console.log)
   }

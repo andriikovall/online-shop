@@ -86,8 +86,11 @@ export class UserComponent implements OnInit {
 
   updateUser() {
     this.usersService.updateUser(this.user).subscribe(res => {
-      console.log(res)
-    }, console.error)
+      this.alerts.success('Пользователь обновлен');
+    }, (err) => {
+      this.alerts.warn('Ошибка обновления, попробуйте позже');
+      console.log(err);
+    });
   }
 
   ngOnDestroy() {

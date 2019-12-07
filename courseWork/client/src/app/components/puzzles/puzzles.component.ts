@@ -137,12 +137,6 @@ export class PuzzlesComponent implements OnInit {
     });
   }
 
-  getFilterNameById(filter, id: string) {
-    return filter.filter(f => f._id === id)[0].value || '';
-  }
-
-
-
   getCachedFilters() {
     const cachedFilters = sessionStorage.getItem('filters');
     console.log(cachedFilters);
@@ -211,9 +205,16 @@ export class PuzzlesComponent implements OnInit {
   }
 
   buyClicked(puzzleId: string) {
+    if (!this.auth.isAuthenticated()) {
+      this.alerts.info('Только зарегестрированные пользователи могут добавить головоломку в корзину');
+      return;
+    }
     this.cartService.insertPuzzle(puzzleId).subscribe((res) => {
       this.alerts.success('Головоломка добвлена в корзину!');
-    }, console.error)
+    }, (err) => {
+      this.alerts.warn('Ошибка сервера, попробуйте позже');
+      console.log(err);
+    })
   }
 
   onIgnoreWCAClicked(event) {

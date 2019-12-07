@@ -38,7 +38,7 @@ export class PuzzlesNewComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private modalService: NgbModal,
-    private alert: AlertService
+    private alerts: AlertService
   ) { }
 
 
@@ -52,7 +52,10 @@ export class PuzzlesNewComponent implements OnInit {
       await this.puzzlesService.getById(puzzleId).subscribe((response: any) => {
         this.puzzle = response;
         this.isEditing = true;
-      }, console.error);
+      }, (err) => {
+        this.alerts.warn('Ошибка сервера, попробуйте позже');
+        console.log(err);
+      });
     } else {
       this.puzzle = new Puzzle();
     }
@@ -108,10 +111,16 @@ export class PuzzlesNewComponent implements OnInit {
     if (this.isEditing) {
       this.puzzlesService.updatePuzzleMultipart(this.puzzle, this.puzzle._id).subscribe((res: any) => {
         this.navigateToPuzzle(this.puzzle._id);
+      }, (err) => {
+        this.alerts.warn('Ошибка сервера, попробуйте позже');
+        console.log(err);
       });
     } else {
       this.puzzlesService.insertPuzzleMultipart(this.puzzle).subscribe((res: any) => {
         this.navigateToPuzzle(res.puzzle._id);
+      }, (err) => {
+        this.alerts.warn('Ошибка сервера, попробуйте позже');
+        console.log(err);
       });
     }
   }

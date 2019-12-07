@@ -59,13 +59,23 @@ export class PuzzleComponent implements OnInit {
     this.puzzlesService.deleteById(this.puzzle._id).subscribe(res => {
       this.alerts.info('Головоломка удалена');
       this.router.navigate(['/puzzles']);
+    }, (err) => {
+      console.log(err);
+      this.alerts.error('Ошибка удаления, попробуйте позже');
     });
   }
 
   onBuyClicked() {
+    if (!this.auth.isAuthenticated()) {
+      this.alerts.info('Только зарегестрированные пользователи могут добавить головоломку в корзину');
+      return;
+    }  
     this.cartService.insertPuzzle(this.puzzle._id).subscribe((res) => {
       this.alerts.success('Головоломка добвлена в корзину!');
-    }, console.error);
+    }, (err) => {
+      console.log(err);
+      this.alerts.error('Ошибка добавления в корзину. Попробуйте позже');
+    });
   }
 
   onEditClicked() {

@@ -32,16 +32,6 @@ export class UsersComponent implements OnInit {
     private router: Router, 
     private route: ActivatedRoute
   ) {
-  //   this.router.routeReuseStrategy.shouldReuseRoute = function () {
-  //     return false;
-  //   };
-  //   this.mySubscription = this.router.events.subscribe((event) => {
-  //     if (event instanceof NavigationEnd) {
-  //       // Trick the Router into believing it's last link wasn't previously loaded
-  //       this.router.navigated = false;
-  //     }
-
-  //   });
   }
 
   ngOnInit() {
@@ -69,6 +59,9 @@ export class UsersComponent implements OnInit {
     this.usersService.get(limit, offset, this.searchedName).subscribe((res: any) => {
       this.users = res.users;
       this.totalUsers = res.count;
+    }, (err) => {
+      console.log(err);
+      this.alerts.error('Серверная ошибка, попробуйте позже');
     })
   }
 

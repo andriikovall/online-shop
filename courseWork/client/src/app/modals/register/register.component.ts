@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser'
 
 import { FormHelperService } from '../../services/form-helper.service';
 import { AuthService } from '../../services/auth/auth.service';
@@ -24,14 +25,15 @@ export class RegisterComponent implements OnInit {
     public formHelper: FormHelperService,
     public auth: AuthService,
     private loadingService: HttpMouseLoadingService,
-    private alerts: AlertService
-  ) { }
-
-  ngOnInit() {
-    const validators = [
-      Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(30),
+    private alerts: AlertService, 
+    private sanitizer: DomSanitizer
+    ) { }
+    
+    ngOnInit() {
+      const validators = [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
     ];
 
     this.registerForm = new FormGroup({
@@ -46,7 +48,12 @@ export class RegisterComponent implements OnInit {
       (document.getElementById('submit') as HTMLButtonElement).disabled = !this.registerForm.valid;
     });
   }
- 
+
+
+  onTelegramAuth(user) {
+    alert(user);
+  }
+
   comparePasswords() {
     if (!this.registerForm)
       return false;

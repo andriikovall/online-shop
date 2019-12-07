@@ -35,6 +35,8 @@ import { CartComponent } from './modals/cart/cart.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { TestComponent } from './components/test/test.component';
+import { SafePipe } from './pipes/safe.pipe';
+import { TelegramWidgetComponent } from './components/telegram-widget/telegram-widget/telegram-widget.component';
 
 
 @NgModule({
@@ -63,7 +65,9 @@ import { TestComponent } from './components/test/test.component';
     CartComponent,
     LoadingComponent,
     UserEditComponent,
-    TestComponent
+    TestComponent,
+    SafePipe,
+    TelegramWidgetComponent
   ],
   imports: [
     BrowserModule,
