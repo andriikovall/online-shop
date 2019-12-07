@@ -26,9 +26,13 @@ export class TelegramWidgetComponent implements OnInit {
     element.parentElement.replaceChild(script, element);
   }
 
+  onTelegramLogin(user) {
+    alert(JSON.stringify(user, null, 2));
+  }
+
   ngAfterViewInit() {
     this.convertToScript();
-    window['loginViaTelegram'] = (user) => alert(user);
+    window['loginViaTelegram'] = this.onTelegramLogin;
   }
 
 }
