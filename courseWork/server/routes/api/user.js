@@ -37,6 +37,7 @@ router.get('/all', checkAuth, async (req, res, next) => {
 router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, checkRightsToUpdate, async (req, res, next) => {
     try {
         const response = await User.update(req.body);
+        response.passwordHash = undefined; // delete doesnt work -_-
         res.json(response);
     } catch (err) {
         console.log(err);
@@ -48,6 +49,7 @@ router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, checkRightsToUpda
 router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToUpdate, async (req, res, next) => {
     try {
         const response = await User.update(req.body);
+        response.passwordHash = undefined; // delete doesnt work -_-
         console.log(response);
         res.json(response);
     } catch (err) {

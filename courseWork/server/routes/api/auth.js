@@ -40,6 +40,22 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// async function checkReqFromTelegram(req, res, next) {
+//     if (!req.body) {
+//         next({
+//             status: 400, 
+//             message: 'Request body must not be empty. See https://core.telegram.org/widgets/login for help'
+//         });
+//         return;
+//     }
+//     const checkString = Object.entries(req.body)
+// }
+
+router.post('/login/telegram', async (req, res, next) => {
+    const telegramId = req.body.id;
+    const foundUser = User.getByTelegramId(telegramId);
+});
+
 router.post('/login', async (req, res, next) => {
     const login = req.body.login || '';
     try {

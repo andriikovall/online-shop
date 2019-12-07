@@ -81,6 +81,10 @@ class User {
             })
     }
 
+    static getByTelegramId(id) {
+        return userModel.findOne({ telegramId: id});
+    }
+
 };
 
 function buildSearchPredicate(name) {

@@ -9,10 +9,11 @@ const DEFAULT_USER_BIO = 'Этот пользователь пока не нап
 
 const userSchema = new mongoose.Schema({
     // //_id: { type:String default: shortid.generate },
-    login: { type: String, required: true },
-    passwordHash: { type: String, required: true },
-    first_name: { type: String, required: true },
-    last_name: { type: String, required: true },
+    login: { type: String, default: null },
+    passwordHash: { type: String, default: null },
+    first_name: { type: String, default: null },
+    last_name: { type: String, default: null },
+    telegramId: { type: Number, default: null, unique: true },
     role: { type: String, default: 'customer' },
     registeredAt: { type: Date, default: Date.now },
     avaUrl: { type: String, default: DEFAULT_USER_AVATAR_URL },
@@ -21,13 +22,13 @@ const userSchema = new mongoose.Schema({
     cart: { type: mongoose.mongo.ObjectId, ref: 'Cart' },
     orders: [{ type: mongoose.mongo.ObjectId, ref: 'Order' }],
     puzzles: [{
-        results: [ Number ],
+        results: [Number],
         puzzle: { type: mongoose.mongo.ObjectId, ref: 'Puzzle', default: undefined },
     }],
     friends: [{ type: mongoose.mongo.ObjectId, ref: 'User', default: undefined }],
-    contact: { type: String, default: '' }, 
-    address: { type: String, default: '' }, 
-    postNumber: { type: Number, default: null }, 
+    contact: { type: String, default: '' },
+    address: { type: String, default: '' },
+    postNumber: { type: Number, default: null },
     city: { type: String, default: '' }
 });
 
