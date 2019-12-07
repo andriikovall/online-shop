@@ -28,6 +28,7 @@ export class TelegramWidgetComponent implements OnInit {
 
   onTelegramLogin(user) {
     alert(JSON.stringify(user, null, 2));
+    console.log(JSON.stringify(user, null, 2));
   }
 
   ngAfterViewInit() {
