@@ -16,6 +16,9 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/puzzles">Головоломки</a>
         </li>
+        <li *roles="['manager']" class="nav-item">
+            <a class="nav-link" routerLink="/orders">Заказы</a>
+          </li>
         <li *roles="['customer', 'manager']" class="nav-item">
           <a class="nav-link" routerLink="/users">Пользователи</a>
         </li>

@@ -19,6 +19,7 @@ import { ManagerGuard } from './guards/manager/manager.guard';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserEditGuard } from './guards/userEdit/user-edit.guard';
 import { TestComponent } from './components/test/test.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
       { path: 'users/page/:page', component: UsersComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
       { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }, 
       { path: 'users/update/:id',  component: UserEditComponent, canActivate: [AuthGuard, UserEditGuard] },
+      { path: 'orders', component: OrdersComponent, canActivate: [ManagerGuard] },
       { path: 'test', component: TestComponent },
       { path: 'forbidden', component: ForbiddenComponent },
       { path: 'developer/v1',  component: DeveloperComponent },

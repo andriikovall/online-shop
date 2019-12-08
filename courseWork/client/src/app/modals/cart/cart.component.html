@@ -43,6 +43,14 @@
                     <td>{{this.cartFullPrice}}</td>
                 </tr>
             </table>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary mr-auto" (click)="onOrder()" [disabled]="this.puzzles.length <= 0">Сделать заказ</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-danger" style="float: right;" (click)="onBack()">Назад</button>
+                </div>
+            </div>
         </div>
     </article>
 </div>

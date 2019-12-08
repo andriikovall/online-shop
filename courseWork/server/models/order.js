@@ -3,6 +3,7 @@ const orderSchema = require('../schemas').orderSchema;
 const orderModel = new mongoose.model('Order', orderSchema);
 const cartModel = require('./cart').model;
 const userModel = require('./user/user').model;
+const puzzleModel = require('./puzzle').model;
 
 class Order {
 
@@ -21,8 +22,9 @@ class Order {
     }
 
     static getAll() {
-        return orderModel.find({}).
-            populate({ path: 'cart', model: cartModel }).populate({ path: 'user', model: userModel });
+        return orderModel.find({})
+            .populate({ path: 'cart', model: cartModel }).populate({ path: 'user', model: userModel }) 
+            .populate({ path: 'cart.puzzles.puzzle', model: puzzleModel });
     }
 
     static insert(order) {
@@ -34,7 +36,7 @@ class Order {
     }
 
     static update(order) {
-        return orderModel.findByIdAndUpdate(order.id, order, { new: true });
+        return orderModel.findByIdAndUpdate(order._id, order, { new: true });
     }
 
     static setState(orderId, state) {
@@ -50,6 +52,7 @@ class Order {
         const promises = [
             orderModel.countDocuments({}),
             orderModel.find({}).limit(limit).skip(offset)
+                .populate({ path: 'cart', model: cartModel })
         ];
 
         return Promise.all(promises).

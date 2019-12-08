@@ -37,6 +37,8 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { TestComponent } from './components/test/test.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { TelegramWidgetComponent } from './components/telegram-widget/telegram-widget/telegram-widget.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { ShippingEditComponent } from './components/modals/shipping-edit/shipping-edit.component';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { TelegramWidgetComponent } from './components/telegram-widget/telegram-w
     UserEditComponent,
     TestComponent,
     SafePipe,
-    TelegramWidgetComponent
+    TelegramWidgetComponent,
+    OrdersComponent,
+    ShippingEditComponent
   ],
   imports: [
     BrowserModule,

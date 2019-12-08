@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../../models/order');
 const Cart  = require('../../models/cart');
+const User = require('../../models/user/user');
 
 const { checkAdmin, checkAuth, checkManager } = require('../../config/passport');
 
@@ -11,15 +12,10 @@ const orderStates = [
 
 router.post('', checkAuth, checkManager, async (req, res) => {
     //@todo поиск по подстроке какой либо
-    const limit = req.body.limit;
-    const offset = req.body.offset;
-    if (limit === undefined || offset === undefined) {
-        next({
-            status: 400, 
-            message: 'Limit and offset are required fields'
-        });
-        return;
-    }
+    let limit = req.body.limit;
+    let offset = req.body.offset;
+    if (!limit || limit < 0) limit = 10;
+    if (offset === undefined || offset === null || offset < 0) offset = 0;
     try {
         const response = await Order.getFilteredSearch('', parseInt(limit), parseInt(offset));
         res.json(response);
@@ -30,15 +26,15 @@ router.post('', checkAuth, checkManager, async (req, res) => {
     }
 });
 
-router.post('/setstate/:id/:state', checkOrder, async (req, res) => {
-    const state = req.params.state;
+router.patch('/setstate/:id/:state', checkOrder, async (req, res) => {
+    const state = parseInt(req.params.state) || -1;
     if (orderStates.find((s) => s === state)) {
         const response = await Order.setState(req.order._id, state);
         res.json(response);
     } else {
         next({
             status: 400, 
-            message: 'Invalid order state'
+            message: `Invalid order state ${state}`
         });
         return;
     }
@@ -46,13 +42,13 @@ router.post('/setstate/:id/:state', checkOrder, async (req, res) => {
 
 
 router.post('/new', checkAuth, checkCart, async (req, res) => {
-    const cartId = req.body.cartId;
     const userId = req.user._id;
     const price = Cart.getFullPrice(req.cart);
-    const newOrder = new Order(cartId, userId, price);
+    const newOrder = new Order(req.cart._id, userId, price);
     try {
         const response = await Order.insert(newOrder);
         res.status(201).json(response);
+        await User.setNewCart(userId);
     } catch (err) {
         console.log(err);
         next(err);

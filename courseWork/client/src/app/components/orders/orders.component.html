@@ -1,0 +1,57 @@
+<div class="content">
+    <div class="col">
+        <div class="row">
+            <div class="col-lg-8 col-sm-auto col-md">
+                <caption>
+                    <h2>Заказы</h2>
+                </caption>
+            </div>
+            <div class="col-lg-4 col-sm-auto col-md">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-8">
+                            <input type="text" class="form-control" placeholder="id, логин или имя"
+                                [(ngModel)]="searchedName" />
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="form-row btn btn-primary mb-1" (click)="onSearch()">
+                                Поиск
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-loading *ngIf="this.orders === null"></app-loading>
+        <div class="card" *ngIf="this.orders && this.orders.length == 0">
+            <div class="card-body">Заказов по id <b>{{this.searchedNameNotFound}}</b> не найдено</div>
+        </div>
+        <table class="table table-responsive-md table-responsive-sm">
+            <thead>
+                <tr>
+                    <th>Корзина</th>
+                    <!-- <th>Статус</th> -->
+                    <th>Пользователь</th>
+                    <th>Дата</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="orders">
+                <tr
+                    *ngFor="let order of orders | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalorders }">
+                    <td>
+                        <pre>{{order.cart | json}}</pre>
+                    </td>
+                    <!-- <td>{{order.status}}</td> @tofo fix -->
+                    <td>{{order.user}}</td>
+                    <td>{{order.lastModified}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mx-10">
+            <pagination-controls (pageChange)="pageChanged($event)" previousLabel="" nextLabel="" maxSize="9">
+            </pagination-controls>
+        </div>
+    </div>
+
+</div>
