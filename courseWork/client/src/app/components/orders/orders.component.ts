@@ -45,6 +45,7 @@ export class OrdersComponent implements OnInit {
     const offset = (this.config.currentPage - 1) * this.config.itemsPerPage;
     this.ordersService.get(limit, offset, this.searchedName).subscribe((res: any) => {
       this.orders = res.orders; 
+      console.log(this.orders);
       if (this.orders.length == 0)
         this.searchedNameNotFound = this.searchedName;
       this.totalOrders = res.count;

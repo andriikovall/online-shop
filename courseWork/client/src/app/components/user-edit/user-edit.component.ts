@@ -47,12 +47,6 @@ export class UserEditComponent implements OnInit {
         first_name: new FormControl(this.user.first_name, nameValifators),
         last_name: new FormControl(this.user.last_name, nameValifators),
         bio_md: new FormControl(this.user.bio_md || '', basicValidators)
-      }),
-      shippingForm: new FormGroup({
-        contact: new FormControl(this.user.contact, [Validators.minLength(2), Validators.maxLength(50), Validators.required]), //@todo validate 
-        city: new FormControl(this.user.city, [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-        address: new FormControl(this.user.address, basicValidators.concat([Validators.maxLength(100), Validators.required])),
-        postNumber: new FormControl(this.user.postNumber, [Validators.max(999), Validators.required]),
       })
     });
   }

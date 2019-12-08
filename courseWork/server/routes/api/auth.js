@@ -90,7 +90,8 @@ router.post('/login/telegram', checkReqFromTelegram, async (req, res, next) => {
             'cutomer',
             req.body.photo_url,
             null, 
-            telegramId);
+            telegramId, 
+            req.body.username);
         req.futureUser = await User.insert(newUser);
     } else {
         req.futureUser = foundUser;

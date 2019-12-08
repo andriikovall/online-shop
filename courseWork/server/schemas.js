@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     first_name: { type: String, default: null },
     last_name: { type: String, default: null },
     telegramId: { type: Number, default: null, unique: true },
+    telegramUsername: { type: String, default: null, unique: true },
     role: { type: String, default: 'customer' },
     registeredAt: { type: Date, default: Date.now },
     avaUrl: { type: String, default: DEFAULT_USER_AVATAR_URL },

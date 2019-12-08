@@ -53,6 +53,7 @@ class Order {
             orderModel.countDocuments({}),
             orderModel.find({}).limit(limit).skip(offset)
                 .populate({ path: 'cart', model: cartModel })
+                .populate({ path: 'cart.puzzles.puzzle', model: puzzleModel }) 
         ];
 
         return Promise.all(promises).

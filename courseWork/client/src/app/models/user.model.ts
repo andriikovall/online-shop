@@ -7,6 +7,7 @@ export class User {
     login: string;
     role: string;
     telegramId?: number;
+    telegramUsername: string;
     contact?: string = '';
     address?: string;
     postNumber: number;

@@ -8,6 +8,7 @@ import { Puzzle } from 'src/app/models/puzzle.model';
 import { ConfirmSafetyComponent } from '../confirm-safety/confirm-safety.component';
 import { ApiOrdersService } from 'src/app/services/apiOrders/api-orders.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { ShippingEditFixComponent } from "../shipping-edit-fix/shipping-edit-fix.component";
 
 @Component({
   selector: 'app-cart',
@@ -72,6 +73,7 @@ export class CartComponent implements OnInit {
 
   createOrder() {
     this.orderService.makeOrder().subscribe((res) => {
+      this.modal.close();
       this.alerts.success('Ваш заказ был принят в обработку!');
     }, (err) => {
       console.log(err);
@@ -86,7 +88,11 @@ export class CartComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmSafetyComponent);
     modalRef.result.then(res => {
       if (res) {
-        this.createOrder();
+        this.modalService.open(ShippingEditFixComponent).result.then(res => {
+          if (res) {
+            this.createOrder();
+          }
+        })
       }
     }, (reason) => {
     });

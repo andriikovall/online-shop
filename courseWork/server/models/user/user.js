@@ -12,7 +12,7 @@ const { getEscapedRegExp } = require('../utils');
 
 class User {
 
-    constructor(login, firstName, lastName, role, avaUrl, bio, telegramId) {
+    constructor(login, firstName, lastName, role, avaUrl, bio, telegramId, telegramUsername) {
         this.login = login;
         this.first_name = firstName;
         this.last_name = lastName;
@@ -21,6 +21,7 @@ class User {
         this.isDisabled = false;
         this.bio = bio;
         this.telegramId = telegramId;
+        this.telegramUsername = telegramUsername;
     }
 
     static getById(id) {

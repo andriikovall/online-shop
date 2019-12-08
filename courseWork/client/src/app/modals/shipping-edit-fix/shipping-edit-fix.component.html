@@ -1,0 +1,54 @@
+<div class="card">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Данные для заказа</h4>
+            <button type="button" class="close" (click)="modal.dismiss(false)">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="form-group row" [formGroup]="shippingForm" *ngIf="this.shippingForm">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Контакт для связи</label>
+                            <input formControlName="contact" class="form-control"
+                                placeholder="@SomeTelegramNick or link or whatever"
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('contact', this.shippingForm)">
+                            <div class="invalid-feedback">Длина от 2 до 50 символов</div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Город</label>
+                            <input formControlName="city" class="form-control" placeholder="Киев, Сумы, Одесса..."
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('city', this.shippingForm)">
+                            <div class="invalid-feedback">Длина от 2 до 50 символов</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <label>Адрес</label>
+                            <input formControlName="address" class="form-control"
+                                placeholder="Ул. Пушкина, дома Колотушкина, кв. Вампира, 3"
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('address', this.shippingForm)">
+                            <div class="invalid-feedback">Длина от 5 до 100 символов</div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="post">Номер Новой Почты</label>
+                            <input id="post"
+                                [class.is-invalid]="this.formHelper.isInvalidFormControl('postNumber', this.shippingForm)"
+                                class="form-control form-control" type="number" placeholder="0"
+                                formControlName="postNumber">
+                            <div class="invalid-feedback">Максимальное значение 999</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" (click)="onConfirm()">Дальше</button>
+                </div>
+                <div class="col">
+                        <button class="btn btn-outline-danger" (click)="onDeny()" style="float: right;">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>

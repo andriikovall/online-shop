@@ -38,7 +38,8 @@ import { TestComponent } from './components/test/test.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { TelegramWidgetComponent } from './components/telegram-widget/telegram-widget/telegram-widget.component';
 import { OrdersComponent } from './components/orders/orders.component';
-import { ShippingEditComponent } from './components/modals/shipping-edit/shipping-edit.component';
+import { ShippingEditComponent } from './modals/shipping-edit/shipping-edit.component';
+import { ShippingEditFixComponent } from './modals/shipping-edit-fix/shipping-edit-fix.component'; 
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { ShippingEditComponent } from './components/modals/shipping-edit/shippin
     SafePipe,
     TelegramWidgetComponent,
     OrdersComponent,
-    ShippingEditComponent
+    ShippingEditComponent,
+    ShippingEditFixComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +95,9 @@ import { ShippingEditComponent } from './components/modals/shipping-edit/shippin
     ConfirmSafetyComponent,
     RegisterComponent,
     LoginComponent, 
-    CartComponent
+    CartComponent, 
+    ShippingEditComponent, 
+    ShippingEditFixComponent
   ]
 })
 export class AppModule { } 
