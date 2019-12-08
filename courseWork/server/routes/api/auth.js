@@ -45,7 +45,6 @@ router.post('/register', async (req, res) => {
 });
 
 function dataIsFromTelegram(body, botToken) {
-    console.log(body);
     const expectedHash = body.hash || '';
     const checkString = Object.entries(body)
         .filter(e => e[0] != 'hash')
