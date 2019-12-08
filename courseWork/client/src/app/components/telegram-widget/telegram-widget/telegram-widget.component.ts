@@ -12,9 +12,10 @@ export class TelegramWidgetComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private alerts: AlertService
-  ) { }
-
-  ngOnInit() {
+    ) { }
+    
+    ngOnInit() {
+      this.convertToScript(); 
   }
 
   @ViewChild('script', { static: true }) script: ElementRef;
@@ -30,19 +31,20 @@ export class TelegramWidgetComponent implements OnInit {
     element.parentElement.replaceChild(script, element);
   }
 
-  onTelegramLogin(user) {
-    this.auth.loginViaTelegram(user).subscribe(res => {
-      document.location.reload(true);
-      this.alerts.success('Вы успешно вошли!');
-    }, err => {
-      console.log(err);
-      this.alerts.info('Ошибка авторизации, попробуйте позже');
-    })
-  }
+  // onTelegramLogin(user) {
+    
+  // }
 
   ngAfterViewInit() {
-    this.convertToScript();
-    window['loginViaTelegram'] = this.onTelegramLogin;
+    window['loginViaTelegram'] = (user) => {
+      this.auth.loginViaTelegram(user).subscribe(res => {
+        document.location.reload(true);
+        this.alerts.success('Вы успешно вошли!');
+      }, err => {
+        console.log(err);
+        this.alerts.info('Ошибка авторизации, попробуйте позже');
+      })
+    };
   }
 
 }
