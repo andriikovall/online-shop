@@ -10,14 +10,14 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 export class TelegramWidgetComponent implements OnInit {
 
   constructor(
-    private auth: AuthService, 
+    private auth: AuthService,
     private alerts: AlertService
   ) { }
 
   ngOnInit() {
   }
 
-  @ViewChild('script', {static: true}) script: ElementRef;
+  @ViewChild('script', { static: true }) script: ElementRef;
 
   convertToScript() {
     const element = this.script.nativeElement;
@@ -30,7 +30,7 @@ export class TelegramWidgetComponent implements OnInit {
     element.parentElement.replaceChild(script, element);
   }
 
-  onTelegramLogin(user) {
+  public onTelegramLogin(user) {
     this.auth.loginViaTelegram(user).subscribe(res => {
       document.location.reload(true);
       this.alerts.success('Вы успешно вошли!');
