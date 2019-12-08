@@ -30,7 +30,7 @@ export class TelegramWidgetComponent implements OnInit {
     element.parentElement.replaceChild(script, element);
   }
 
-  public onTelegramLogin(user) {
+  onTelegramLogin(user) {
     this.auth.loginViaTelegram(user).subscribe(res => {
       document.location.reload(true);
       this.alerts.success('Вы успешно вошли!');
