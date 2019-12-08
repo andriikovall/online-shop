@@ -18,7 +18,7 @@ export class AuthService {
   constructor(
     private linkBuilder: ApiHelperService,
     private httpClient: HttpClient,
-    private router: Router, 
+    private router: Router,
     private alerts: AlertService
   ) {
   }
@@ -26,6 +26,18 @@ export class AuthService {
   public login(user) {
     const url = this.linkBuilder.buildApiLink('/auth/login');
     return this.httpClient.post(url, user)
+      .pipe(
+        tap(
+          (res: any) => {
+            localStorage.setItem('token', res.token);
+          }
+        )
+      )
+  }
+
+  public loginViaTelegram(telegramResponse) {
+    const url = this.linkBuilder.buildApiLink('/auth/login/telegram');
+    return this.httpClient.post(url, telegramResponse)
       .pipe(
         tap(
           (res: any) => {

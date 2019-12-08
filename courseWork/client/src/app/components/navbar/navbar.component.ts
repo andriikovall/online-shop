@@ -54,6 +54,8 @@ export class NavbarComponent implements OnInit {
       this.reloadLinks();
       this.alerts.success('Вы успешно вошли!');
     }, (reason) => {
+      this.alerts.info('Ошибка авторизации, попробуйте позже');
+      console.log(reason);
     })
   }
 
