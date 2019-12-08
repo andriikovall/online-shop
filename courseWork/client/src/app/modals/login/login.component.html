@@ -30,6 +30,7 @@
             <small *ngIf="isInvalidLoginOrPassword" class="text-danger">Неправильный логин или
                 пароль</small>
         </div>
+        <app-telegram-widget></app-telegram-widget>
     </article>
     <div class="border-top card-body text-center">Нет аккаунта?<button (click)="modal.close('reg')"
             class="btn btn-link">Зарегестрироватся</button></div>

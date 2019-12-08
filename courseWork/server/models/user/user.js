@@ -12,12 +12,11 @@ const { getEscapedRegExp } = require('../utils');
 
 class User {
 
-    constructor(id, login, fullname, role, date, avaUrl, bio) {
-        this.id = id;
+    constructor(login, firstName, lastName, role, avaUrl, bio) {
         this.login = login;
-        this.fullname = fullname;
+        this.first_name = firstName;
+        this.last_name = lastName;
         this.role = role;
-        this.registeredAt = date;
         this.avaUrl = avaUrl;
         this.isDisabled = false;
         this.bio = bio;

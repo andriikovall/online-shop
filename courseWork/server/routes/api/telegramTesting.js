@@ -1,8 +1,6 @@
 const sha256 = require('js-sha256').sha256;
 const crypto = require('crypto');
 
-const checker = require('telegram-checking-authorization');
-
 const botToken = '1045750573:AAFyCWKHEqIMIBDCrlV3UrZDIIBHpLO10Q4';
 // const expectedHash = sha256.hmac.update(checkString, secretKey).toString(); 
 
@@ -26,7 +24,7 @@ const botToken = '1045750573:AAFyCWKHEqIMIBDCrlV3UrZDIIBHpLO10Q4';
         equal: expectedHash == hash, // false
     });
 
-    console.log(checker(body, botToken));
+    // console.log(checker(body, botToken));
 })(JSON.parse
     (`{
         "id": 379946182,

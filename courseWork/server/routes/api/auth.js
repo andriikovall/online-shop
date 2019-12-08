@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
+const crypto = require('crypto');
+const { botToken } = require('../../config/config');
+
 const utils = require('../../models/user/utils');
 const User = require('../../models/user/user');
 
@@ -32,6 +35,7 @@ router.post('/register', async (req, res) => {
             const reply = await User.insert(user);
             res.status(201).json(reply);
         } catch (error) {
+            console.log(error);
             res.status(500).json({
                 success: false,
                 message: error.message ? error.message : error
@@ -40,21 +44,70 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// async function checkReqFromTelegram(req, res, next) {
-//     if (!req.body) {
-//         next({
-//             status: 400, 
-//             message: 'Request body must not be empty. See https://core.telegram.org/widgets/login for help'
-//         });
-//         return;
-//     }
-//     const checkString = Object.entries(req.body)
-// }
+function dataIsFromTelegram(body, botToken) {
+    console.log(body);
+    const expectedHash = body.hash || '';
+    const checkString = Object.entries(body)
+        .filter(e => e[0] != 'hash')
+        .sort((e1, e2) => e1[0].localeCompare(e2[0]))
+        .map(([key, val]) => key + '=' + val)
+        .join('\n');
 
-router.post('/login/telegram', async (req, res, next) => {
+    const secretKey = crypto.createHash('sha256')
+        .update(botToken).digest();
+
+    const hash = crypto.createHmac('sha256', secretKey).update(checkString)
+        .digest('hex');
+
+    return expectedHash == hash;
+}
+
+function checkReqFromTelegram(req, res, next) {
+    console.log('checkReqFromTelegram');
+    if (!req.body) {
+        next({
+            status: 400,
+            message: 'Request body must not be empty. See https://core.telegram.org/widgets/login for help'
+        });
+        return;
+    }
+    if (!dataIsFromTelegram(req.body, botToken)) {
+        next({
+            status: 403,
+            message: 'Request is not from telegram. Hash validation failed'
+        });
+        return;
+    }
+    next();
+}
+
+router.post('/login/telegram', checkReqFromTelegram, async (req, res, next) => {
     const telegramId = req.body.id;
-    const foundUser = User.getByTelegramId(telegramId);
-});
+    const foundUser = await User.getByTelegramId(telegramId);
+    if (!foundUser) {
+        const newUser = new User(null,
+            req.body.first_name,
+            req.body.last_name,
+            'cutomer',
+            req.body.photo_url,
+            null);
+        req.futureUser = await User.insert(newUser);
+    } else {
+        req.futureUser = foundUser;
+    }
+    next();
+}, responseOnSuccesLogin);
+
+async function responseOnSuccesLogin(req, res, next) {
+    const token = utils.generateJWT(req.futureUser);
+    const decodedToken = jwt.decode(token);
+
+    const response = {
+        token: `Bearer ${token}`,
+        user: decodedToken
+    };
+    res.json(response)
+}
 
 router.post('/login', async (req, res, next) => {
     const login = req.body.login || '';
@@ -66,7 +119,7 @@ router.post('/login', async (req, res, next) => {
             });
             return;
         }
-        
+
         const passwordValidated = utils.validatePassword(req.body.password, futureUser.passwordHash);
 
         if (!passwordValidated) {
@@ -76,23 +129,17 @@ router.post('/login', async (req, res, next) => {
             });
             return;
         }
-
-        const token = utils.generateJWT(futureUser);
-        const decodedToken = jwt.decode(token);
-
-        const response = {
-            token: `Bearer ${token}`,
-            user: decodedToken
-        };
-        res.status(200).json(response)
+        req.futureUser = futureUser;
+        next();
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             success: false,
             message: error.message ? error.message : error
         })
     }
-});
+}, responseOnSuccesLogin);
 
 
 module.exports = router;
