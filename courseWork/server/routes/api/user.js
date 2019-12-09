@@ -60,6 +60,7 @@ router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToU
 });
 
 router.get('/:id([\\da-z]{1,24})', checkUserById, checkAuth, async (req, res, next) => {
+    req.foundUser.passwordHash = undefined;
     res.json(req.foundUser);
 });
 
@@ -82,7 +83,33 @@ async function checkUserById(req, res, next) {
     next();
 }
 
-function checkRightsToUpdate(req, res, next) {
+async function checkRightsToUpdate(req, res, next) {
+    if (!req.body) {
+        next({
+            status: 400,
+            message: 'Requset body is empty'
+        })
+        return;
+    }
+    const updateRole = req.query.update_role;
+    console.log(req.query);
+    if (updateRole !== undefined ) {
+        if (req.user.role.toUpperCase() !== 'ADMIN') {
+            next({
+                status: 403, 
+                message: 'Only admins can update user roles'
+            });
+            return;
+        }
+        try {
+            await User.updateRole(req.user._id, req.body.role);
+            res.json(req.body);
+            return;
+        } catch (err) {
+            next(err);
+            return;
+        }
+    }
     const userToPatchId = req.params.id;
     const canUpdate = (req.user._id == userToPatchId);
     if (!canUpdate) {
@@ -90,13 +117,6 @@ function checkRightsToUpdate(req, res, next) {
             status: 403,
             message: 'No rights to update user'
         });
-        return;
-    }
-    if (!req.body) {
-        next({
-            status: 400,
-            message: 'Requset body is empty'
-        })
         return;
     }
     next();

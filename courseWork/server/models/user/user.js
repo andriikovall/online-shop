@@ -10,6 +10,13 @@ const imageUploader = require('../../config/cloudinaryConfig');
 
 const { getEscapedRegExp } = require('../utils');
 
+const userRoles = [
+    'guest', 
+    'customer', 
+    'manager', 
+    'admin'
+]
+
 class User {
 
     constructor(login, firstName, lastName, role, avaUrl, bio, telegramId, telegramUsername) {
@@ -58,6 +65,13 @@ class User {
             return imageUploader(user.file).
                 then((res) => { user.avaUrl = res.secure_url }).
                 then(() => userModel.findOneAndUpdate({ _id: user._id }, user, { new: true }));
+    }
+
+    static updateRole(userId, role) {
+        if (userRoles.indexOf(role) > 0)
+            return userModel.findOneAndUpdate({ _id: userId }, { role: role }, { new: true });
+        else 
+            throw new Error('User role is invalid');
     }
 
     static getByLogin(login) {

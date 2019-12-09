@@ -17,7 +17,7 @@ router.post('', checkAuth, checkManager, async (req, res) => {
     if (!limit || limit < 0) limit = 10;
     if (offset === undefined || offset === null || offset < 0) offset = 0;
     try {
-        const response = await Order.getFilteredSearch('', parseInt(limit), parseInt(offset));
+        const response = await Order.getFilteredSearch(req.body, parseInt(limit), parseInt(offset));
         res.json(response);
     } catch (err) {
         console.log(err);

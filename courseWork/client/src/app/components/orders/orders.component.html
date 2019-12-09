@@ -1,22 +1,55 @@
 <div class="content">
     <div class="col">
         <div class="row">
-            <div class="col-lg-8 col-sm-auto col-md">
+            <div class="col-lg-4 col-sm-auto col-md-4">
                 <caption>
                     <h2>Заказы</h2>
                 </caption>
             </div>
-            <div class="col-lg-4 col-sm-auto col-md">
+            <div class="col-lg-8 col-sm-auto col-md-8">
                 <div class="form-group">
                     <div class="form-row">
-                        <div class="col-8">
-                            <input type="text" class="form-control" placeholder="id, логин или имя"
-                                [(ngModel)]="searchedName" />
+                        <div class="col-8" *ngIf="this.statesForm">
+                            <form [formGroup]="this.statesForm">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="d"
+                                                    (change)="onIgnore($event)">
+                                                <label class="custom-control-label" for="d">Игнорировать фильтры</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="custom-control custom-checkbox"
+                                                *ngFor="let item of orderStates; let i=index">
+                                                <input type="checkbox" class="custom-control-input" id="{{i}}"
+                                                    [formControlName]="(i + 1).toString()">
+                                                <label class="custom-control-label"
+                                                    for="{{i}}">{{orderStates[i]}}</label>
+                                            </div>
+                                            <!-- <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="2"
+                                                    [formControlName]="'2'">
+                                                <label class="custom-control-label" for="2">{{orderStates[1]}}</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="3"
+                                                    [formControlName]="'3'">
+                                                <label class="custom-control-label" for="3">{{orderStates[2]}}</label>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="form-row btn btn-primary mb-1" (click)="onSearch()">
-                                Поиск
-                            </button>
+                            <div class="container my-2">
+                                <button type="submit" class="form-row btn btn-primary mb-1" (click)="onSearch()"
+                                    style="float: right;">
+                                    Поиск
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -24,7 +57,7 @@
         </div>
         <app-loading *ngIf="this.orders === null"></app-loading>
         <div class="card" *ngIf="this.orders && this.orders.length == 0">
-            <div class="card-body">Заказов по id <b>{{this.searchedNameNotFound}}</b> не найдено</div>
+            <div class="card-body">Заказов не найдено</div>
         </div>
         <table class="table table-responsive-md table-responsive-sm">
             <thead>
@@ -41,9 +74,38 @@
                     <td>
                         <pre>{{order.cart | json}}</pre>
                     </td>
-                    <td>{{order.state}}</td>
-                    <td>{{order.user}}</td>
-                    <td>{{order.lastModified}}</td>
+                    <td>
+                        <div class="container">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="container">
+                                        <select [(ngModel)]="this.orderStatusesToUpdate[order._id].next">
+                                            <option *ngFor="let state of orderStates; let i=index"
+                                                [selected]="order.state == i + 1"
+                                                [ngValue]="i+1">
+                                                {{orderStates[i]}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row"
+                                    *ngIf="this.orderStatusesToUpdate[order._id].next != this.orderStatusesToUpdate[order._id].cur">
+                                    <div class="container mt-3">
+                                        <button class="btn btn-sm btn-outline-primary" (click)="onChangeState(order._id)">Изменить статус</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container-fluid">
+                            <a [routerLink]="[ '/users', order.user._id ]">
+                                <img [src]="order.user.avaUrl" alt="Аватар пользователя" width="100px">
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{order.lastModified  | date:'dd-MM-yyyy hh-mm'}}</td>
                 </tr>
             </tbody>
         </table>

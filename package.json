@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm start --prefix courseWork",
     "heroku-postbuild": "cd courseWork && npm run build-client", 
-    "dev": "npm run dev --prefix courseWork"
+    "dev": "npm run dev --prefix courseWork", 
+    "dev-client": "npm run client --prefix courseWork", 
+    "dev-server": "npm run server --prefix courseWork"
   },
   "repository": {
     "type": "git",

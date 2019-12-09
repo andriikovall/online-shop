@@ -13,9 +13,9 @@ export class ApiOrdersService {
     private linkBuilder: ApiHelperService, 
   ) { }
 
-  public get(limit: number, offset: number, name: string = '') {
+  public get(limit: number, offset: number, states?: number[]) {
     const url = this.linkBuilder.buildApiLink('/orders');
-    return this.httpClient.post(url, { limit, offset, name });
+    return this.httpClient.post(url, { limit, offset, states });
   }
 
   public getById(id: string) {

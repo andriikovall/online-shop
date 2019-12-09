@@ -43,16 +43,18 @@ class Order {
         return orderModel.findByIdAndUpdate(orderId, { $set: { state: state } }, { new: true });
     }
 
-    static getFilteredSearch(string, limit, offset) {
-        string = string || '';
+    static getFilteredSearch(filters, limit, offset) {
 
         //const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName);
         //@todo
 
+        const predicate = buildSearchPredicate(filters);
+
         const promises = [
-            orderModel.countDocuments({}),
-            orderModel.find({}).limit(limit).skip(offset)
+            orderModel.countDocuments(predicate),
+            orderModel.find(predicate).limit(limit).skip(offset)
                 .populate({ path: 'cart', model: cartModel })
+                .populate({ path: 'user', model: userModel }) 
                 .populate({ path: 'cart.puzzles.puzzle', model: puzzleModel }) 
         ];
 
@@ -66,6 +68,16 @@ class Order {
     }
 
 };
+
+function buildSearchPredicate(filters) {
+    let predicate = {};
+    if (filters.states) {
+        predicate.state = {};
+        predicate.state.$in = filters.states;
+    }
+    //@todo a lot more
+    return predicate;
+}
 
 Order.model = orderModel;
 

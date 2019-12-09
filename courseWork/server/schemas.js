@@ -57,7 +57,8 @@ const orderSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
     state: { type: Number, default: 1 },
     price: { type: Number, required: true },
-    lastModified: { type: Date, default: Date.now }
+    lastModified: { type: Date, default: Date.now }, 
+    date: { type: Date, unique: true, default: Date.now, once: true }
 });
 
 

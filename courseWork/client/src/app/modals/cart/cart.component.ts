@@ -74,11 +74,11 @@ export class CartComponent implements OnInit {
   createOrder() {
     this.orderService.makeOrder().subscribe((res) => {
       this.modal.close();
-      this.alerts.success('Ваш заказ был принят в обработку!');
+      this.alerts.success('Ваш заказ был принят в обработку! Наш менеджер свяжется с вами в ближайшем времени!');
     }, (err) => {
       console.log(err);
       this.alerts.error('Ошибка сервера, попробуйте позже'); 
-    })
+    });
   }
 
   onOrder() {

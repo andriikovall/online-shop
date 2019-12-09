@@ -85,7 +85,7 @@ export class UserComponent implements OnInit {
   }
 
   updateUser() {
-    this.usersService.updateUser(this.user).subscribe(res => {
+    this.usersService.updateUserRole(this.user).subscribe(res => {
       this.alerts.success('Пользователь обновлен');
     }, (err) => {
       this.alerts.warn('Ошибка обновления, попробуйте позже');
@@ -99,7 +99,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  get canEdit() {
+  get canEditHimSelf() {
     return this.auth.userId === this.user._id;
   }
   
