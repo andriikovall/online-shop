@@ -108,7 +108,7 @@ export class OrdersComponent implements OnInit {
     this.ordersService.setState(orderId, newState).subscribe(res => {
       this.alerts.success('Статус заказа успешно изменён!');
       this.orderStatusesToUpdate[orderId].cur = newState;
-      this.updateOrders();
+      // this.updateOrders();
     }, err => {
       console.log(err);
       this.alerts.info('Случилась ошибка, попробуйте позже');
