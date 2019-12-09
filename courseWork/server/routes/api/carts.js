@@ -7,7 +7,7 @@ const Puzzle = require('../../models/puzzle');
 const { checkAdmin, checkAuth, checkManager } = require('../../config/passport');
 
 
-router.get('/:id([\\da-z]{24})', checkAuth, checkCartBelongingToUser, async (req, res, next) => {
+router.get('/:id([\\da-z]{24})', checkAuth, checkManager, async (req, res, next) => {
     const cart_id = req.params.id
     const cart = await Cart.getById(cart_id);
     if (!cart) {
@@ -17,8 +17,9 @@ router.get('/:id([\\da-z]{24})', checkAuth, checkCartBelongingToUser, async (req
         })
         return;
     }
-    else
+    else {
         res.json(cart);
+    }
 });
 
 router.post('/remove/:puzzleId([\\da-z]{24})', checkAuth, checkUserCart, checkPuzzle, async (req, res, next) => {

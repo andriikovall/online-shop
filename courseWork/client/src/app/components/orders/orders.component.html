@@ -72,7 +72,15 @@
                 <tr
                     *ngFor="let order of orders | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalorders }">
                     <td>
-                        <pre>{{order.cart | json}}</pre>
+                        <div class="container" style="cursor: pointer;" (click)="openCart(order.cart._id)">
+                            <div class="row">
+                                <img src="http://pngimg.com/uploads/shopping_cart/shopping_cart_PNG33.png"
+                                    alt="Картинка корзины" width="100px">
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-link">Посмотреть корзину</button>
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <div class="container">
@@ -81,8 +89,7 @@
                                     <div class="container">
                                         <select [(ngModel)]="this.orderStatusesToUpdate[order._id].next">
                                             <option *ngFor="let state of orderStates; let i=index"
-                                                [selected]="order.state == i + 1"
-                                                [ngValue]="i+1">
+                                                [selected]="order.state == i + 1" [ngValue]="i+1">
                                                 {{orderStates[i]}}</option>
                                         </select>
                                     </div>
@@ -90,7 +97,8 @@
                                 <div class="row"
                                     *ngIf="this.orderStatusesToUpdate[order._id].next != this.orderStatusesToUpdate[order._id].cur">
                                     <div class="container mt-3">
-                                        <button class="btn btn-sm btn-outline-primary" (click)="onChangeState(order._id)">Изменить статус</button>
+                                        <button class="btn btn-sm btn-outline-primary"
+                                            (click)="onChangeState(order._id)">Изменить статус</button>
                                     </div>
                                 </div>
                             </div>

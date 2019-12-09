@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { CartItem } from '../../models/cartPuzzlesArray';
 import { ApiUsersService } from 'src/app/services/apiUsers/api-users.service';
@@ -22,6 +22,9 @@ export class CartComponent implements OnInit {
 
   loading: boolean = true;
 
+  @Input() public isOpenedByUser = true;
+  @Input() public cartId: string;
+
   constructor(
     private usersService: ApiUsersService,
     private cartService: CartService, 
@@ -37,18 +40,30 @@ export class CartComponent implements OnInit {
 
   private updatePuzzles() {
     this.puzzles = [];
-    this.cartService.getCartPuzzles().subscribe((res: CartItem[]) => {
-      this.loading = false;
-      this.puzzles = res.filter(item => item.puzzle != null);
-      console.log(this.puzzles);
-    }, console.error);
+    if (this.isOpenedByUser) {
+      this.cartService.getCartPuzzles().subscribe((res: CartItem[]) => {
+        this.loading = false;
+        this.puzzles = res.filter(item => item.puzzle != null);
+        console.log(this.puzzles);
+      }, console.error);
+    } else {
+      this.cartService.getById(this.cartId).subscribe((res: any) => {
+        this.loading = false;
+        this.puzzles = res.puzzles.filter(item => item.puzzle != null);
+        console.log(this.puzzles);
+      }, console.error);
+    }
   }
   
+
+  filterResponse(res: any) {
+    return res.cart.puzzles.filter(item => item.puzzle != null);
+  }
   
   removePuzzle(puzzleId: string) {
     this.loading = true;
     this.cartService.removePuzzle(puzzleId).subscribe((res: any) => {
-      this.puzzles = res.cart.puzzles;
+      this.puzzles = this.filterResponse(res);
       this.loading = false;
     }, console.error);
   }
@@ -56,7 +71,7 @@ export class CartComponent implements OnInit {
   insertPuzzle(puzzleId: string) {
     this.loading = true;
     this.cartService.insertPuzzle(puzzleId).subscribe((res: any) => {
-      this.puzzles = res.cart.puzzles;
+      this.puzzles = this.filterResponse(res);
       this.loading = false;
     }, console.error);
   }

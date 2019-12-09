@@ -37,7 +37,10 @@ class Cart {
 
     static async insertPuzzle(cart, puzzleId) {
         let countAdded = false;
+        console.log(cart);
         cart.puzzles.forEach(element => {
+            if (element.puzzle == null)
+                return;
             if (puzzleId == element.puzzle._id) {
                 element.count++;
                 countAdded = true;
@@ -51,6 +54,8 @@ class Cart {
 
     static removePuzzle(cart, puzzleId) {
         cart.puzzles.forEach((element, index) => {
+            if (element.puzzle == null)
+                return;
             if (puzzleId == element.puzzle._id) {
                 element.count--;
                 if (element.count == 0) {

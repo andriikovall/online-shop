@@ -22,10 +22,10 @@ export class CartService {
     return this.linkBuilder.buildApiLink(path);
   }
 
-  // public getById(id: string) {
-  //   const url = this.buildApiLink('/carts/') + id;
-  //   return this.httpClient.get(url);
-  // }
+  public getById(id: string) {
+    const url = this.buildApiLink('/carts/') + id;
+    return this.httpClient.get(url);
+  }
 
   public insertPuzzle(puzzleId: string) {
     const url = this.buildApiLink('/carts/insert/') + puzzleId;

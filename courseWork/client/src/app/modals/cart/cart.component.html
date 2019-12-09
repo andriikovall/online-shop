@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="modal-header"> 
+    <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Корзина</h4>
         <button type="button" class="close" (click)="modal.dismiss(false)">
             <span aria-hidden="true">&times;</span>
@@ -15,9 +15,9 @@
                     <th>Головоломка</th>
                     <th>Цена</th>
                 </tr>
-                <app-loading *ngIf="this.puzzles == null"></app-loading>
+                <app-loading *ngIf="loading"></app-loading>
                 <tr *ngFor="let cartItem of this.puzzles">
-                    <td>
+                    <td style="width: 60%;">
                         <a [routerLink]="['/puzzles', cartItem.puzzle._id]" (click)="modal.close()">
                             <div class="container-fluid">
                                 <img src="{{cartItem.puzzle.photoUrl}}" alt="фото тут" width="100px">
@@ -26,16 +26,31 @@
                         </a>
                     </td>
                     <td>
-                        <div class="row">
-                            <p>Цена <b>{{cartItem.puzzle.price}}</b></p>
+                        <div class="col">
+                            <div class="row">
+                                <div class="container text-center">
+                                    <p><b>{{cartItem.puzzle.price}}</b></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="container text-center">
+                                    <ng-container *ngIf="isOpenedByUser; else elseTemplate">
+                                        <span class="btn-group mt-5">
+                                            <button type="submit" class="btn btn-outline-primary"
+                                                (click)="removePuzzle(cartItem.puzzle._id)"
+                                                [class.disabled]="this.loading">-</button>
+                                            <span class="mx-3 mt-1">{{cartItem.count}}</span>
+                                            <button type="submit" class="btn btn-outline-primary"
+                                                (click)="insertPuzzle(cartItem.puzzle._id)"
+                                                [class.disabled]="this.loading">+</button>
+                                        </span>
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                                        <p>Кол-во {{cartItem.count}}</p>
+                                    </ng-template>
+                                </div>
+                            </div>
                         </div>
-                        <span class="btn-group mt-5">
-                            <button type="submit" class="btn btn-outline-primary"
-                                (click)="removePuzzle(cartItem.puzzle._id)" [class.disabled]="this.loading">-</button>
-                            <span class="mx-3 mt-1">{{cartItem.count}}</span>
-                            <button type="submit" class="btn btn-outline-primary"
-                                (click)="insertPuzzle(cartItem.puzzle._id)" [class.disabled]="this.loading">+</button>
-                        </span>
                     </td>
                 </tr>
                 <tr class="table-info">
@@ -44,8 +59,9 @@
                 </tr>
             </table>
             <div class="row">
-                <div class="col">
-                    <button class="btn btn-primary mr-auto" (click)="onOrder()" [disabled]="this.puzzles.length <= 0">Сделать заказ</button>
+                <div class="col" *ngIf="this.isOpenedByUser">
+                    <button class="btn btn-primary mr-auto" (click)="onOrder()"
+                        [disabled]="this.puzzles.length <= 0">Сделать заказ</button>
                 </div>
                 <div class="col">
                     <button class="btn btn-outline-danger" style="float: right;" (click)="onBack()">Назад</button>

@@ -7,6 +7,7 @@ import { PaginationInstance } from 'ngx-pagination';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ConfirmSafetyComponent } from 'src/app/modals/confirm-safety/confirm-safety.component';
+import { CartComponent } from 'src/app/modals/cart/cart.component';
 
 @Component({
   selector: 'app-orders',
@@ -122,5 +123,11 @@ export class OrdersComponent implements OnInit {
     }, reason => {
 
     })
+  }
+
+  openCart(cartId: string) {
+    const modalRef = this.modalService.open(CartComponent);
+    modalRef.componentInstance.isOpenedByUser = false;
+    modalRef.componentInstance.cartId = cartId;
   }
 }
