@@ -56,6 +56,7 @@ class Puzzle {
         if (offset < 0) offset = 0;
         const searchedName = filters.name || '';
         const isWCA = filters.isWCA;
+        const isAvailable = filters.isAvailable;
 
         if (isNaN(limit)) {
             limit = defaultLimitValue;
@@ -63,7 +64,11 @@ class Puzzle {
             offset = 0;
         }
 
-        const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName, isWCA);
+        const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName, isWCA, isAvailable);
+        console.log({
+            isAvailable
+        })
+        console.log(findPredicate);
 
         const promises = [
             puzzleModel.countDocuments(findPredicate),
@@ -159,13 +164,17 @@ function trimPrice(price) {
     return price;
 }
 
-function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName, isWCA) {
+function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName, isWCA, isAvailable) {
     let findPredicate = {
         name: { $regex: getEscapedRegExp(searchedName), $options: "i" }
     };
 
     if (isWCA !== undefined && isWCA !== null) {
         findPredicate.isWCA = isWCA;
+    }
+
+    if (isAvailable !== undefined && isAvailable !== null) {
+        findPredicate.isAvailable = isAvailable;
     }
 
     if (manufs) {

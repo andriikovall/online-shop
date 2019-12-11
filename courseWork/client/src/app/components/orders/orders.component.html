@@ -70,7 +70,7 @@
             </thead>
             <tbody *ngIf="orders">
                 <tr
-                    *ngFor="let order of orders | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalorders }">
+                    *ngFor="let order of orders | paginate: { itemsPerPage: config.itemsPerPage, currentPage: config.currentPage, totalItems: totalOrders }">
                     <td>
                         <div class="container" style="cursor: pointer;" (click)="openCart(order.cart._id)">
                             <div class="row">

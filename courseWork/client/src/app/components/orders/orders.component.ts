@@ -108,7 +108,6 @@ export class OrdersComponent implements OnInit {
     this.ordersService.setState(orderId, newState).subscribe(res => {
       this.alerts.success('Статус заказа успешно изменён!');
       this.orderStatusesToUpdate[orderId].cur = newState;
-      // this.updateOrders();
     }, err => {
       console.log(err);
       this.alerts.info('Случилась ошибка, попробуйте позже');
@@ -129,5 +128,10 @@ export class OrdersComponent implements OnInit {
     const modalRef = this.modalService.open(CartComponent);
     modalRef.componentInstance.isOpenedByUser = false;
     modalRef.componentInstance.cartId = cartId;
+  }
+
+  pageChanged(pageNum) {
+    this.config.currentPage = pageNum;
+    this.updateOrders();
   }
 }

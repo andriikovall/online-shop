@@ -28,6 +28,7 @@ export class PuzzlesComponent implements OnInit {
     priceFrom: number;
     priceTo?: number;
     isWCA?: boolean;
+    isAvailable?: boolean;
   } = {
       manufacturers: [],
       types: [],
@@ -39,6 +40,9 @@ export class PuzzlesComponent implements OnInit {
 
   isWCA = true;
   isWCAIgnored = true;
+
+  isAvailable = true;
+  isAvailableIgnored = true;
 
   public directionLinks: boolean = true;
   public totalItems: number;
@@ -98,6 +102,12 @@ export class PuzzlesComponent implements OnInit {
       this.isWCA = cachedFilters.isWCA;
       this.isWCAIgnored = false;
     }
+    if (cachedFilters.isAvailable !== undefined) {
+      this.isAvailable = cachedFilters.isAvailable; 
+      this.isAvailableIgnored = false;
+    }
+
+    console.log(this.isWCA, this.isWCAIgnored, this.isAvailable, this.isAvailableIgnored);
 
     this.initForm();
 
@@ -139,7 +149,6 @@ export class PuzzlesComponent implements OnInit {
 
   getCachedFilters() {
     const cachedFilters = sessionStorage.getItem('filters');
-    console.log(cachedFilters);
     let parsedFilters;
     try {
       parsedFilters = JSON.parse(cachedFilters);
@@ -170,11 +179,16 @@ export class PuzzlesComponent implements OnInit {
       priceFrom: this.currentFilters.priceFrom,
       priceTo: this.currentFilters.priceTo,
       name: this.currentFilters.name,
-      isWCA: null
+      isWCA: null, 
+      isAvailable: null
     };
 
-    if (!this.isWCAIgnored)
+    if (!this.isWCAIgnored) {
       puzzleReqFilters.isWCA = this.isWCA;
+    }
+    if (!this.isAvailableIgnored) {
+      puzzleReqFilters.isAvailable = this.isAvailable;
+    }
 
     const limit = this.config.itemsPerPage;
     const offset = (this.config.currentPage - 1) * this.config.itemsPerPage;
@@ -190,6 +204,13 @@ export class PuzzlesComponent implements OnInit {
   cacheFilters() {
     if (!this.isWCAIgnored)
       this.currentFilters.isWCA = this.isWCA;
+    else 
+      this.currentFilters.isWCA = undefined;
+    if (!this.isAvailableIgnored)
+      this.currentFilters.isAvailable = this.isAvailable;
+    else 
+      this.currentFilters.isAvailable = undefined; 
+    
     sessionStorage.setItem('filters', JSON.stringify(this.currentFilters));
   }
 
@@ -201,6 +222,7 @@ export class PuzzlesComponent implements OnInit {
 
   public resetFilters() {
     this.isWCAIgnored = true;
+    this.isAvailableIgnored = true;
     this.setDefaultFilters(this.allFilters);
   }
 
@@ -223,6 +245,14 @@ export class PuzzlesComponent implements OnInit {
 
   onWCAClicked(event) {
     this.isWCA = !this.isWCA;
+  }
+
+  onAvailableIgnored(event) {
+    this.isAvailableIgnored = !this.isAvailableIgnored;
+  }
+
+  onAvailableClicked(event) {
+    this.isAvailable = !this.isAvailable;
   }
 
 }
