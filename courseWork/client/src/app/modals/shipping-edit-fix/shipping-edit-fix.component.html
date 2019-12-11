@@ -48,7 +48,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-primary" (click)="onConfirm()">Дальше</button>
+                    <button class="btn btn-primary" (click)="onConfirm()" [disabled]="!this.shippingForm.valid">Дальше</button>
                 </div>
                 <div class="col">
                         <button class="btn btn-outline-danger" (click)="onDeny()" style="float: right;">Отмена</button>

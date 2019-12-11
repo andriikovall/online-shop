@@ -92,7 +92,7 @@ async function checkRightsToUpdate(req, res, next) {
         return;
     }
     const updateRole = req.query.update_role;
-    console.log(req.query);
+    const userToPatchId = req.params.id;
     if (updateRole !== undefined ) {
         if (req.user.role.toUpperCase() !== 'ADMIN') {
             next({
@@ -102,7 +102,7 @@ async function checkRightsToUpdate(req, res, next) {
             return;
         }
         try {
-            await User.updateRole(req.user._id, req.body.role);
+            await User.updateRole(userToPatchId, req.body.role);
             res.json(req.body);
             return;
         } catch (err) {
@@ -110,7 +110,6 @@ async function checkRightsToUpdate(req, res, next) {
             return;
         }
     }
-    const userToPatchId = req.params.id;
     const canUpdate = (req.user._id == userToPatchId);
     if (!canUpdate) {
         next({

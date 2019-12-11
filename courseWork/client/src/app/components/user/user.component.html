@@ -14,8 +14,9 @@
                     <p id="username">{{user.login}}</p>
                     <p>Дата регистрации {{user.registeredAt | date:'dd-MM-yyyy hh-mm'}}</p>
                     <p>Роль {{user.role}}</p>
+
                     <div *roles="['admin']">
-                        <select class="form-control form-control-lg" *ngIf="user._id != this.auth.userId" 
+                        <select class="form-control form-control-lg" *ngIf="user._id != this.auth.userId && user.role != 'admin'" 
                             [value]="selectedRole" (change)="onRoleSeleted($event.target.value)">
                             <option *ngFor="let role of roles">{{role}}</option>
                         </select>
