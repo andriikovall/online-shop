@@ -11,7 +11,7 @@ export class Order {
     date: Date | string;
     price: number;
     lastModified: Date | string; 
-    shippng?: {
+    shipping?: {
         contact: string,
         address: string,
         postNumber?: number,
