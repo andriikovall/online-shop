@@ -1,4 +1,5 @@
 import { CartItem } from "./cartPuzzlesArray";
+import { User } from './user.model';
 
 export class Order {
     _id: string;
@@ -7,7 +8,7 @@ export class Order {
         _id: string;
         puzzles: CartItem[];
     };
-    user: string;
+    user: any;
     date: Date | string;
     price: number;
     lastModified: Date | string; 
@@ -15,6 +16,7 @@ export class Order {
         contact: string,
         address: string,
         postNumber?: number,
-        city: string
+        city: string, 
+        comment?: string
     };
 }
