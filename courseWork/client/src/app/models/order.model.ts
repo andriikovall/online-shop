@@ -11,4 +11,10 @@ export class Order {
     date: Date | string;
     price: number;
     lastModified: Date | string; 
+    shippng?: {
+        contact: string,
+        address: string,
+        postNumber?: number,
+        city: string
+    };
 }

@@ -6,10 +6,10 @@
                     <h2>Заказы</h2>
                 </caption>
             </div>
-            <div class="col-lg-8 col-sm-auto col-md-8">
+            <div class="col-lg-8 col-sm col-md-8">
                 <div class="form-group">
                     <div class="form-row">
-                        <div class="col-8" *ngIf="this.statesForm">
+                        <div class="col-6 col-md-8" *ngIf="this.statesForm">
                             <form [formGroup]="this.statesForm">
                                 <div class="form-group">
                                     <div class="row">
@@ -28,22 +28,18 @@
                                                 <label class="custom-control-label"
                                                     for="{{i}}">{{orderStates[i]}}</label>
                                             </div>
-                                            <!-- <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="2"
-                                                    [formControlName]="'2'">
-                                                <label class="custom-control-label" for="2">{{orderStates[1]}}</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="3"
-                                                    [formControlName]="'3'">
-                                                <label class="custom-control-label" for="3">{{orderStates[2]}}</label>
-                                            </div> -->
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="ID"
+                                            formControlName="_id" />
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-sm">
                             <div class="container my-2">
                                 <button type="submit" class="form-row btn btn-primary mb-1" (click)="onSearch()"
                                     style="float: right;">
@@ -62,7 +58,7 @@
         <table class="table table-responsive-md table-responsive-sm">
             <thead>
                 <tr>
-                    <th>Корзина</th>
+                    <th colspan="2">Подробная информация</th>
                     <th>Статус</th>
                     <th>Пользователь</th>
                     <th>Дата</th>
@@ -74,11 +70,22 @@
                     <td>
                         <div class="container" style="cursor: pointer;" (click)="openCart(order.cart._id)">
                             <div class="row">
-                                <img src="http://pngimg.com/uploads/shopping_cart/shopping_cart_PNG33.png"
+                                <img src="http://pngimg.com/uploads/shopping_cart/shopping_cart_PNG41.png"
+                                    alt="Картинка корзины" width="100px">
+                            </div>
+                            <div class="row ml">
+                                <button class="btn btn-link">Корзина</button>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container" style="cursor: pointer;">
+                            <div class="row text-center ml-1">
+                                <img src="http://lunsvet.com.opt-images.1c-bitrix-cdn.ru/upload/medialibrary/9cf/9cfd09e184c7c7dfa50be55c9589ccbf.png?149612425612682"
                                     alt="Картинка корзины" width="100px">
                             </div>
                             <div class="row">
-                                <button class="btn btn-link">Посмотреть корзину</button>
+                                <button class="btn btn-link">Детали заказа</button>
                             </div>
                         </div>
                     </td>

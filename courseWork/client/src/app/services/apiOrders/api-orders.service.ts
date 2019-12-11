@@ -13,9 +13,9 @@ export class ApiOrdersService {
     private linkBuilder: ApiHelperService, 
   ) { }
 
-  public get(limit: number, offset: number, states?: number[]) {
+  public get(limit: number, offset: number, filters) {
     const url = this.linkBuilder.buildApiLink('/orders');
-    return this.httpClient.post(url, { limit, offset, states });
+    return this.httpClient.post(url, { limit, offset, filters });
   }
 
   public getById(id: string) {
@@ -31,6 +31,11 @@ export class ApiOrdersService {
   public makeOrder() {
     const url = this.linkBuilder.buildApiLink('/orders/new');
     return this.httpClient.post(url, {});
+  }
+
+  public updateOrder(order: Order) {
+    const url = this.linkBuilder.buildApiLink('/orders/') + order._id;
+    return this.httpClient.patch(url, order);
   }
 
 }

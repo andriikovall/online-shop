@@ -50,6 +50,7 @@ export class OrdersComponent implements OnInit {
       '1': new FormControl({ value: true, disabled: false }),  
       '2': new FormControl({ value: true, disabled: false }), 
       '3': new FormControl({ value: true, disabled: false }), 
+      _id: new FormControl('')
     });
     this.onSearch();
   }
@@ -58,7 +59,7 @@ export class OrdersComponent implements OnInit {
     this.updateOrders();
   }
   
-  getFilters(): number[] {
+  getFilters() {
     let states = [];
     if (this.statesForm.disabled) {
       return null;
@@ -68,7 +69,10 @@ export class OrdersComponent implements OnInit {
         states.push(parseInt(key));
       }
     }
-    return states;
+    return {
+      states, 
+      _id: this.statesForm.value._id
+    };
   }
 
   initOrderStatuses() {

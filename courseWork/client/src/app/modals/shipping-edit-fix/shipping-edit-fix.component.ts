@@ -40,10 +40,11 @@ export class ShippingEditFixComponent implements OnInit {
     ];
 
     this.shippingForm = new FormGroup({
-      contact: new FormControl(this.user.contact || this.user.telegramId, [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
+      contact: new FormControl(`Telegram @${this.user.telegramUsername}` || this.user.contact, [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
       city: new FormControl(this.user.city, [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
       address: new FormControl(this.user.address, basicValidators.concat([Validators.maxLength(100), Validators.required])),
       postNumber: new FormControl(this.user.postNumber, [Validators.max(999), Validators.required]),
+      comment: new FormControl('', [Validators.maxLength(500)])
     })
   }
 

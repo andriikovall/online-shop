@@ -17,7 +17,7 @@ router.post('', checkAuth, checkManager, async (req, res) => {
     if (!limit || limit < 0) limit = 10;
     if (offset === undefined || offset === null || offset < 0) offset = 0;
     try {
-        const response = await Order.getFilteredSearch(req.body, parseInt(limit), parseInt(offset));
+        const response = await Order.getFilteredSearch(req.body.filters, parseInt(limit), parseInt(offset));
         res.json(response);
     } catch (err) {
         console.log(err);
@@ -37,6 +37,15 @@ router.patch('/setstate/:id/:state', checkOrder, async (req, res) => {
             message: `Invalid order state ${state}`
         });
         return;
+    }
+});
+
+router.patch(':id', checkOrder, async (req, res, next) => {
+    try {
+        await Order.update(req.order);
+        res.json(req.order);
+    } catch(err) {
+        next(err);
     }
 });
 

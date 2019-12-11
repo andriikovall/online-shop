@@ -4,6 +4,7 @@ const orderModel = new mongoose.model('Order', orderSchema);
 const cartModel = require('./cart').model;
 const userModel = require('./user/user').model;
 const puzzleModel = require('./puzzle').model;
+const { getEscapedRegExp } = require('./utils');
 
 class Order {
 
@@ -49,6 +50,7 @@ class Order {
         //@todo
 
         const predicate = buildSearchPredicate(filters);
+        console.log(predicate);
 
         const promises = [
             orderModel.countDocuments(predicate),
@@ -75,7 +77,9 @@ function buildSearchPredicate(filters) {
         predicate.state = {};
         predicate.state.$in = filters.states;
     }
-    //@todo a lot more
+    if (filters._id && filters._id.length == 24) {
+        predicate._id = new mongoose.Types.ObjectId(filters._id);
+    }
     return predicate;
 }
 

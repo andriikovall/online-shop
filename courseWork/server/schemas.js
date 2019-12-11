@@ -57,8 +57,14 @@ const orderSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
     state: { type: Number, default: 1 },
     price: { type: Number, required: true },
-    lastModified: { type: Date, default: Date.now }, 
-    date: { type: Date, unique: true, default: Date.now, once: true }
+    lastModified: { type: Date, default: Date.now },
+    date: { type: Date, unique: true, default: Date.now, once: true },
+    shipping: {
+        contact: { type: String, default: '' },
+        address: { type: String, default: '' },
+        postNumber: { type: Number, default: null },
+        city: { type: String, default: '' }
+    }
 });
 
 

@@ -65,10 +65,6 @@ class Puzzle {
         }
 
         const findPredicate = buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName, isWCA, isAvailable);
-        console.log({
-            isAvailable
-        })
-        console.log(findPredicate);
 
         const promises = [
             puzzleModel.countDocuments(findPredicate),

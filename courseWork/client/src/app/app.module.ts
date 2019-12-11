@@ -39,7 +39,8 @@ import { SafePipe } from './pipes/safe.pipe';
 import { TelegramWidgetComponent } from './components/telegram-widget/telegram-widget/telegram-widget.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ShippingEditComponent } from './modals/shipping-edit/shipping-edit.component';
-import { ShippingEditFixComponent } from './modals/shipping-edit-fix/shipping-edit-fix.component'; 
+import { ShippingEditFixComponent } from './modals/shipping-edit-fix/shipping-edit-fix.component';
+import { OrderDetailsComponent } from './modals/order-details/order-details.component'; 
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { ShippingEditFixComponent } from './modals/shipping-edit-fix/shipping-ed
     TelegramWidgetComponent,
     OrdersComponent,
     ShippingEditComponent,
-    ShippingEditFixComponent
+    ShippingEditFixComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,
