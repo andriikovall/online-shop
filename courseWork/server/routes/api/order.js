@@ -53,7 +53,8 @@ router.patch(':id', checkOrder, async (req, res, next) => {
 router.post('/new', checkAuth, checkCart, async (req, res) => {
     const userId = req.user._id;
     const price = Cart.getFullPrice(req.cart);
-    const newOrder = new Order(req.cart._id, userId, price);
+    let newOrder = new Order(req.cart._id, userId, price);
+    newOrder.shipping = req.body;
     try {
         const response = await Order.insert(newOrder);
         res.status(201).json(response);

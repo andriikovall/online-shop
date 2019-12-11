@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ConfirmSafetyComponent } from 'src/app/modals/confirm-safety/confirm-safety.component';
 import { CartComponent } from 'src/app/modals/cart/cart.component';
+import { OrderDetailsComponent } from 'src/app/modals/order-details/order-details.component';
 
 @Component({
   selector: 'app-orders',
@@ -126,6 +127,11 @@ export class OrdersComponent implements OnInit {
     }, reason => {
 
     })
+  }
+
+  onOrderDetails(order: Order) {
+    const modalRef = this.modalService.open(OrderDetailsComponent);
+    modalRef.componentInstance.order = order; 
   }
 
   openCart(cartId: string) {

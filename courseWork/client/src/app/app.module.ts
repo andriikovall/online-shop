@@ -99,7 +99,8 @@ import { OrderDetailsComponent } from './modals/order-details/order-details.comp
     LoginComponent, 
     CartComponent, 
     ShippingEditComponent, 
-    ShippingEditFixComponent
+    ShippingEditFixComponent, 
+    OrderDetailsComponent
   ]
 })
 export class AppModule { } 

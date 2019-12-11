@@ -40,7 +40,9 @@
                             <div class="invalid-feedback">Максимальное значение 999</div>
                         </div>
                     </div>
-                    <textarea rows="5" formControlName="comment" class="form-control"></textarea>
+                    <label for="comment">Комментарий к заказу</label>
+                    <textarea rows="5" id="comment" formControlName="comment" class="form-control mt-3"
+                    [class.is-invalid]="this.formHelper.isInvalidFormControl('comment', this.shippingForm)"></textarea>
                     <div class="invalid-feedback">Длина до 500 символов</div>
                 </div>
             </div>

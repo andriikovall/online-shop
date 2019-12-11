@@ -63,7 +63,8 @@ const orderSchema = new mongoose.Schema({
         contact: { type: String, default: '' },
         address: { type: String, default: '' },
         postNumber: { type: Number, default: null },
-        city: { type: String, default: '' }
+        city: { type: String, default: '' }, 
+        comment: { type: String, default: ''}
     }
 });
 

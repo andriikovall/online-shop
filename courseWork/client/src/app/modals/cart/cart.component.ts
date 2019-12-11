@@ -44,13 +44,11 @@ export class CartComponent implements OnInit {
       this.cartService.getCartPuzzles().subscribe((res: CartItem[]) => {
         this.loading = false;
         this.puzzles = res.filter(item => item.puzzle != null);
-        console.log(this.puzzles);
       }, console.error);
     } else {
       this.cartService.getById(this.cartId).subscribe((res: any) => {
         this.loading = false;
         this.puzzles = res.puzzles.filter(item => item.puzzle != null);
-        console.log(this.puzzles);
       }, console.error);
     }
   }
@@ -86,8 +84,8 @@ export class CartComponent implements OnInit {
     }
   }
 
-  createOrder() {
-    this.orderService.makeOrder().subscribe((res) => {
+  createOrder(shippingData) {
+    this.orderService.makeOrder(shippingData).subscribe((res) => {
       this.modal.close();
       this.alerts.success('Ваш заказ был принят в обработку! Наш менеджер свяжется с вами в ближайшем времени!');
     }, (err) => {
@@ -100,12 +98,12 @@ export class CartComponent implements OnInit {
     if (this.puzzles.length == 0) {
       return;
     }
-    const modalRef = this.modalService.open(ConfirmSafetyComponent);
-    modalRef.result.then(res => {
-      if (res) {
-        this.modalService.open(ShippingEditFixComponent).result.then(res => {
+    const modalRef = this.modalService.open(ShippingEditFixComponent);
+    modalRef.result.then(shippingDataResponse => {
+      if (shippingDataResponse) {
+        this.modalService.open(ConfirmSafetyComponent).result.then(res => {
           if (res) {
-            this.createOrder();
+            this.createOrder(shippingDataResponse);
           }
         })
       }

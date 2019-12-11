@@ -23,9 +23,9 @@ export class ShippingEditFixComponent implements OnInit {
     public modal: NgbActiveModal,
     public formHelper: FormHelperService,
     private alerts: AlertService, 
-    private auth: AuthService
+    private auth: AuthService, 
   ) { }
-
+ 
   shippingForm: FormGroup;
   user: User;
 
@@ -39,11 +39,13 @@ export class ShippingEditFixComponent implements OnInit {
       Validators.minLength(5),
     ];
 
+    const contact = this.user.telegramUsername ? `Telegram @${this.user.telegramUsername}` : this.user.contact;
+
     this.shippingForm = new FormGroup({
-      contact: new FormControl(`Telegram @${this.user.telegramUsername}` || this.user.contact, [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
+      contact: new FormControl(contact, [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
       city: new FormControl(this.user.city, [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-      address: new FormControl(this.user.address, basicValidators.concat([Validators.maxLength(100), Validators.required])),
-      postNumber: new FormControl(this.user.postNumber, [Validators.max(999), Validators.required]),
+      address: new FormControl(this.user.address),
+      postNumber: new FormControl(this.user.postNumber, [Validators.max(999)]),
       comment: new FormControl('', [Validators.maxLength(500)])
     })
   }
@@ -68,7 +70,7 @@ export class ShippingEditFixComponent implements OnInit {
     }
     
     this.userService.updateUser(this.user).subscribe(res => {
-      this.modal.close(true);
+      this.modal.close(this.shippingForm.value);
     }, err => {
       console.error(err);
       this.alerts.error('Ошибка сервера, попробуйте позже');

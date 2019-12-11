@@ -1,1 +1,46 @@
-<p>order-details works!</p>
+<div class="card">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Детали заказа</h4>
+        <button type="button" class="close" (click)="modal.dismiss(false)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <article class="modal-body">
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <td>{{order._id}}</td>
+            </tr>
+            <tr>
+                <th>Состояние</th>
+                <td>{{orderStates[order.state]}}</td>
+            </tr>
+            <tr>
+                <th>Контакт</th>
+                <td>{{order.shipping.contact || '--'}}</td>
+            </tr>
+            <tr>
+                <th>Адрес</th>
+                <td>{{order.shipping.address || '--'}}</td>
+            </tr>
+            <tr>
+                <th>Город</th>
+                <td>{{order.shipping.city || '--'}}</td>
+            </tr>
+            <tr>
+                <th>Новая почта</th>
+                <td>{{order.shipping.postNumber || '--'}}</td>
+            </tr>
+            <tr>
+                <th>Комментарий</th>
+                <td>{{order.shipping.comment || '--'}}</td>
+            </tr>
+            <tr>
+                <th>Покупатель</th>
+                <td><button class="btn btn-link" [routerLink]="['users', order.user._id]" (click)="this.modal.close(false)">
+                    {{order.user.first_name + ' ' + order.user.last_name || '--'}}
+                </button></td>
+            </tr>
+        </table>
+    </article>
+</div>

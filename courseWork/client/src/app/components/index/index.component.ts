@@ -16,7 +16,6 @@ export class IndexComponent implements OnInit {
 
   ngOnInit() {
     const errMsg = this.route.snapshot.queryParamMap.get('msg');
-    console.log(errMsg);
     if (errMsg) 
       setTimeout(() => this.alerts.error(errMsg), 1);
   }

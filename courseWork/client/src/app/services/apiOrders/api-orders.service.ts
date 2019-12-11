@@ -28,9 +28,9 @@ export class ApiOrdersService {
     return this.httpClient.patch(url, {});
   }
 
-  public makeOrder() {
+  public makeOrder(shippingData) {
     const url = this.linkBuilder.buildApiLink('/orders/new');
-    return this.httpClient.post(url, {});
+    return this.httpClient.post(url, shippingData);
   }
 
   public updateOrder(order: Order) {

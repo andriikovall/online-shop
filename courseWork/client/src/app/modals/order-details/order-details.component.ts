@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-order-details',
@@ -8,12 +9,18 @@ import { Order } from 'src/app/models/order.model';
 })
 export class OrderDetailsComponent implements OnInit {
 
-  order: Order;
+  @Input() order: Order;
 
-  constructor() { }
+  orderStates = [
+    '', 'Новый', 'В работе', 'Выполнен'
+  ];
+
+  constructor(
+    public modal: NgbActiveModal,
+  ) { }
 
   ngOnInit() {
-    
+
   }
 
 }

@@ -20,6 +20,9 @@
                                                 <label class="custom-control-label" for="d">Игнорировать фильтры</label>
                                             </div>
                                         </div>
+                                        <div class="separator d-none d-sm-block d-md-none">
+                                            <hr>
+                                        </div>
                                         <div class="col">
                                             <div class="custom-control custom-checkbox"
                                                 *ngFor="let item of orderStates; let i=index">
@@ -79,7 +82,7 @@
                         </div>
                     </td>
                     <td>
-                        <div class="container" style="cursor: pointer;">
+                        <div class="container" style="cursor: pointer;" (click)="onOrderDetails(order)">
                             <div class="row text-center ml-1">
                                 <img src="http://lunsvet.com.opt-images.1c-bitrix-cdn.ru/upload/medialibrary/9cf/9cfd09e184c7c7dfa50be55c9589ccbf.png?149612425612682"
                                     alt="Картинка корзины" width="100px">

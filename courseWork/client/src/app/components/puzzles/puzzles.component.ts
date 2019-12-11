@@ -107,8 +107,6 @@ export class PuzzlesComponent implements OnInit {
       this.isAvailableIgnored = false;
     }
 
-    console.log(this.isWCA, this.isWCAIgnored, this.isAvailable, this.isAvailableIgnored);
-
     this.initForm();
 
     manufs.forEach(m => {
