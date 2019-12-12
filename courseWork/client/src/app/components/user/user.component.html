@@ -10,7 +10,7 @@
                     <img src="{{user.avaUrl}}" alt="User avatar" width="100%">
                 </div>
                 <div class="col">
-                    <h1>{{user.first_name + ' ' + user.last_name}}</h1>
+                    <h1>{{user.first_name || '' + ' ' + user.last_name || ''}}</h1>
                     <p id="username">{{user.login}}</p>
                     <p>Дата регистрации {{user.registeredAt | date:'dd-MM-yyyy hh-mm'}}</p>
                     <p>Роль {{user.role}}</p>

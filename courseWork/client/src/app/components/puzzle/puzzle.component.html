@@ -40,7 +40,7 @@
               <button class="btn btn-success btn-lg" (click)="onBuyClicked()" [disabled]="!this.puzzle.isAvailable">
                 {{this.puzzle.isAvailable ? 'В корзину' : 'Нет в наличии'}}
               </button>
-              <ng-container *ngIf="auth.telegramUsername">
+              <ng-container *ngIf="auth.telegramId">
                 <button class="btn btn-link" (click)="onNotify()">Сообщить о наличии</button>
               </ng-container>
             </div>

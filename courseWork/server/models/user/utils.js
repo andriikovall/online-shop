@@ -23,7 +23,7 @@ util.generateJWT = (user) => {
     return jwt.sign({
         role: user.role,
         _id: user._id,
-        telegramUsername: user.telegramUsername || ''
+        telegramId: user.telegramId || ''
     }, process.env.JWT_SECRET, { expiresIn: 60 * expMinutes  });
 }
 

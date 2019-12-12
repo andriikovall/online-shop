@@ -95,14 +95,14 @@ export class AuthService {
     return defaultId;
   }
 
-  get telegramUsername() {
-    const defaultUsername= '';
+  get telegramId() {
+    const defaultId= '';
     const token = this.getToken();
-    if (!token) return defaultUsername;
+    if (!token) return defaultId;
 
     const decodedToken = this.getDecodedAccessToken(token);
-    if (decodedToken) return decodedToken.telegramUsername;
-    return defaultUsername;
+    if (decodedToken) return decodedToken.telegramId;
+    return defaultId;
   }
 
   private getDecodedAccessToken(token: string): any {
