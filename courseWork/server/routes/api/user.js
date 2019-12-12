@@ -62,8 +62,17 @@ router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToU
 });
 
 router.patch('add_telegram', checkAuth, checkRightsToUpdate, checkReqFromTelegram, async (req, res, next) => {
+    const possibleConflitctUser = User.getByTelegramId(req.body.id).select('_id');
+    if (possibleConflitctUser) {
+        next({
+            status: 409, 
+            message: "User with such Telegram account already excists"
+        });
+        return;
+    }
     req.user.telegramId = req.body.id;
     req.user.telegramNick = req.body.username;
+    req.user.avaUrl = req.body.photo_url;
     //@ todo ask about acc data update
     try {
         await User.update(req.user);
