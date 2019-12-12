@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiHelperService } from '../api-helper.service';
 
 import { User } from '../../models/user.model';
+import { tap } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ export class ApiUsersService {
 
   constructor(
     private httpClient: HttpClient,
-    private linkBuilder: ApiHelperService
+    private linkBuilder: ApiHelperService, 
+    private auth: AuthService
   ) { }
 
   public get(limit: number, offset: number, name: string = '') {
@@ -33,7 +36,14 @@ export class ApiUsersService {
 
   public addTelegram(telegramResponse) {
     const url = this.linkBuilder.buildApiLink('/users/add_telegram');
-    return this.httpClient.patch(url, telegramResponse);
+    return this.httpClient.patch(url, telegramResponse)
+    .pipe(
+      tap(
+        (res: any) => {
+          this.auth.loginViaTelegram(telegramResponse);
+        }
+      )
+    )
   }
 
   public updateUserRole(user: User) {

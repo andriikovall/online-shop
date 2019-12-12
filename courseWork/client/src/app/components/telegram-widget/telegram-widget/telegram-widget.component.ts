@@ -49,7 +49,7 @@ export class TelegramWidgetComponent implements OnInit {
     this.userService.addTelegram(user).subscribe(res => {
       if (res) {
         document.location.reload(true);
-        this.alerts.success('Вы успешно подключили Telegram');
+        setTimeout(() => this.alerts.success('Вы успешно подключили Telegram'), 1);
       }
     }, err => {
       console.log(err);
