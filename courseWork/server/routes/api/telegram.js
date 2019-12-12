@@ -23,7 +23,6 @@ function dataIsFromTelegram(body, botToken) {
 
 
 function checkReqFromTelegram(req, res, next) {
-    console.log('checkReqFromTelegram');
     if (!req.body) {
         next({
             status: 400,

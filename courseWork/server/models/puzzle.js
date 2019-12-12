@@ -121,7 +121,6 @@ class Puzzle {
     }
 
     static getPuzzleFromFormRequest(req) {
-        console.log(req.body);
         if (!req.body.name || !req.body.typeId || !req.body.manufacturerId)
             return null;
         const name = req.body.name;
@@ -132,7 +131,6 @@ class Puzzle {
         const isAvailable = req.body.isAvailable;
         const bio = req.body.description_md || '';
         const photoUrl = req.body.photoUrl;
-        console.log(photoUrl);
         const puzzle = new Puzzle(name, photoUrl, typeId, isWCA, price, isAvailable, manufacturerId, bio);
         if (!req.body.file) {
             return Promise.resolve(puzzle);
@@ -149,7 +147,8 @@ class Puzzle {
     }
 
     static getPuzzleSubscribers(puzzleId) {
-        return puzzleModel.find({_id: puzzleId }).populate({ path: 'subscribers', model: userModel });
+        return puzzleModel.findOne({_id: puzzleId }).populate({ path: 'subscribers', model: userModel })
+            .then(puzzle => puzzle.subscribers);
     }
 };
 

@@ -74,7 +74,6 @@ router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToU
     try {
         const response = await User.update(req.body);
         response.passwordHash = undefined; // delete doesnt work -_-
-        console.log(response);
         res.json(response);
     } catch (err) {
         console.log(err);
