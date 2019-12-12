@@ -33,11 +33,13 @@
                             (click)="onEditClicked()">Изменить</button>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm my-1">
-                    <div *ngIf="!this.user.telegramId" class="container">
+                <ng-container *ngIf="this.user._id == this.auth.userId">
+                    <div class="col-lg-4 col-sm my-1">
+                        <div *ngIf="!this.user.telegramId" class="container">
                             <app-telegram-widget updateUser="true"></app-telegram-widget>
+                        </div>
                     </div>
-                </div>
+                </ng-container>
             </div>
             <hr>
             <h3>О себе</h3>

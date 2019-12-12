@@ -36,7 +36,7 @@ router.get('/all', checkAuth, async (req, res, next) => {
 });
 
 router.patch('/add_telegram', checkAuth, checkReqFromTelegram, async (req, res, next) => {
-    const possibleConflitctUser = User.getByTelegramId(req.body.id).select('_id');
+    const possibleConflitctUser = await User.getByTelegramId(req.body.id).select('_id');
     if (possibleConflitctUser) {
         next({
             status: 409, 
