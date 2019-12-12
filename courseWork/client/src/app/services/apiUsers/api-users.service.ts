@@ -31,6 +31,11 @@ export class ApiUsersService {
     return this.httpClient.patch(url, user);
   }
 
+  public addTelegram(telegramResponse) {
+    const url = this.linkBuilder.buildApiLink('/users/add_telegram');
+    return this.httpClient.patch(url, telegramResponse);
+  }
+
   public updateUserRole(user: User) {
     const params = new HttpParams().set('update_role', 'true');
     console.log(params, 'here'); 
@@ -41,7 +46,6 @@ export class ApiUsersService {
   public updateUserFormData(user: User) {
     const formData = this.getFormDataFromObj(user);
     const url = this.linkBuilder.buildApiLink('/users/') + user._id +'/mp';
-    console.log('updateUserFormData', url);
     return this.httpClient.patch(url, formData);
   }
 

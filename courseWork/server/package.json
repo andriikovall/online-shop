@@ -35,7 +35,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "shortid": "^2.2.15",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "telegraf": "^3.34.1"
   },
   "nodemonConfig": {
     "ignore": [

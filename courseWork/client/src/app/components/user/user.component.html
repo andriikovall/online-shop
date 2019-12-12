@@ -16,8 +16,9 @@
                     <p>Роль {{user.role}}</p>
 
                     <div *roles="['admin']">
-                        <select class="form-control form-control-lg" *ngIf="user._id != this.auth.userId && user.role != 'admin'" 
-                            [value]="selectedRole" (change)="onRoleSeleted($event.target.value)">
+                        <select class="form-control form-control-lg"
+                            *ngIf="user._id != this.auth.userId && user.role != 'admin'" [value]="selectedRole"
+                            (change)="onRoleSeleted($event.target.value)">
                             <option *ngFor="let role of roles">{{role}}</option>
                         </select>
                     </div>
@@ -26,7 +27,17 @@
                 </div>
             </div>
             <div class="row mt-2 container-fluid">
-                <button *ngIf="this.canEditHimSelf" class="btn btn-info" (click)="onEditClicked()" style="float: right;">Изменить</button>
+                <div class="col-lg-8 col-sm my-1">
+                    <div class="container">
+                        <button *ngIf="this.canEditHimSelf" style="float: left;" class="btn btn-outline-info"
+                            (click)="onEditClicked()">Изменить</button>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm my-1">
+                    <div *ngIf="!this.user.telegramId" class="container">
+                            <app-telegram-widget updateUser="true"></app-telegram-widget>
+                    </div>
+                </div>
             </div>
             <hr>
             <h3>О себе</h3>

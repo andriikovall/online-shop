@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
 
@@ -13,6 +13,8 @@ export class TelegramWidgetComponent implements OnInit {
     private auth: AuthService,
     private alerts: AlertService
     ) { }
+
+    @Input() updateUser = false;
     
     ngOnInit() {
       this.convertToScript(); 
@@ -31,20 +33,26 @@ export class TelegramWidgetComponent implements OnInit {
     element.parentElement.replaceChild(script, element);
   }
 
-  // onTelegramLogin(user) {
-    
-  // }
+  loginViaTelegram(user) {
+    this.auth.loginViaTelegram(user).subscribe(res => {
+      document.location.reload(true);
+      this.alerts.success('Вы успешно вошли!');
+    }, err => {
+      console.log(err);
+      this.alerts.info('Ошибка авторизации, попробуйте позже');
+    })
+  }
+
+  connectToCurrentUser(user) {
+    console.log(user);
+  }
 
   ngAfterViewInit() {
-    window['loginViaTelegram'] = (user) => {
-      this.auth.loginViaTelegram(user).subscribe(res => {
-        document.location.reload(true);
-        this.alerts.success('Вы успешно вошли!');
-      }, err => {
-        console.log(err);
-        this.alerts.info('Ошибка авторизации, попробуйте позже');
-      })
-    };
+    if (this.updateUser) {
+      window['loginViaTelegram'] = this.connectToCurrentUser.bind(this);
+    } else {
+      window['loginViaTelegram'] = this.loginViaTelegram.bind(this);
+    }
   }
 
 }

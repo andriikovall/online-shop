@@ -102,5 +102,9 @@ export class UserComponent implements OnInit {
   get canEditHimSelf() {
     return this.auth.userId === this.user._id;
   }
+
+  connectToTelegram() {
+    
+  }
   
 }

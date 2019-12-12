@@ -4,6 +4,8 @@ const User = require('../../models/user/user');
 
 const { checkAdmin, checkAuth, checkManager } = require('../../config/passport');
 
+const { checkReqFromTelegram } = require('./telegram');
+
 
 router.post('/', checkAuth, async (req, res, next) => {
     let limit = req.body.limit;
@@ -56,6 +58,18 @@ router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToU
         console.log(err);
         next(err);
         return;
+    }
+});
+
+router.patch('add_telegram', checkAuth, checkRightsToUpdate, checkReqFromTelegram, async (req, res, next) => {
+    req.user.telegramId = req.body.id;
+    req.user.telegramNick = req.body.username;
+    //@ todo ask about acc data update
+    try {
+        await User.update(req.user);
+        res.json(req.user);
+    } catch (err) {
+        next(err);
     }
 });
 

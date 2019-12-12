@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-const crypto = require('crypto');
-const { botToken } = require('../../config/config');
-
 const utils = require('../../models/user/utils');
 const User = require('../../models/user/user');
+
+const { checkReqFromTelegram } = require('./telegram');
 
 router.post('/register', async (req, res) => {
     if (!req.body.login || !req.body.password) {
@@ -44,41 +43,41 @@ router.post('/register', async (req, res) => {
     }
 });
 
-function dataIsFromTelegram(body, botToken) {
-    const expectedHash = body.hash || '';
-    const checkString = Object.entries(body)
-        .filter(e => e[0] != 'hash')
-        .sort((e1, e2) => e1[0].localeCompare(e2[0]))
-        .map(([key, val]) => key + '=' + val)
-        .join('\n');
+// function dataIsFromTelegram(body, botToken) {
+//     const expectedHash = body.hash || '';
+//     const checkString = Object.entries(body)
+//         .filter(e => e[0] != 'hash')
+//         .sort((e1, e2) => e1[0].localeCompare(e2[0]))
+//         .map(([key, val]) => key + '=' + val)
+//         .join('\n');
 
-    const secretKey = crypto.createHash('sha256')
-        .update(botToken).digest();
+//     const secretKey = crypto.createHash('sha256')
+//         .update(botToken).digest();
 
-    const hash = crypto.createHmac('sha256', secretKey).update(checkString)
-        .digest('hex');
+//     const hash = crypto.createHmac('sha256', secretKey).update(checkString)
+//         .digest('hex');
 
-    return expectedHash == hash;
-}
+//     return expectedHash == hash;
+// }
 
-function checkReqFromTelegram(req, res, next) {
-    console.log('checkReqFromTelegram');
-    if (!req.body) {
-        next({
-            status: 400,
-            message: 'Request body must not be empty. See https://core.telegram.org/widgets/login for help'
-        });
-        return;
-    }
-    if (!dataIsFromTelegram(req.body, botToken)) {
-        next({
-            status: 403,
-            message: 'Request is not from telegram. Hash validation failed'
-        });
-        return;
-    }
-    next();
-}
+// function checkReqFromTelegram(req, res, next) {
+//     console.log('checkReqFromTelegram');
+//     if (!req.body) {
+//         next({
+//             status: 400,
+//             message: 'Request body must not be empty. See https://core.telegram.org/widgets/login for help'
+//         });
+//         return;
+//     }
+//     if (!dataIsFromTelegram(req.body, botToken)) {
+//         next({
+//             status: 403,
+//             message: 'Request is not from telegram. Hash validation failed'
+//         });
+//         return;
+//     }
+//     next();
+// }
 
 router.post('/login/telegram', checkReqFromTelegram, async (req, res, next) => {
     const telegramId = req.body.id;
