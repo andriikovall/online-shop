@@ -4,6 +4,8 @@ const Puzzle = require('../../models/puzzle');
 
 const {checkAdmin, checkAuth, checkManager} = require('../../config/passport');
 
+const bot = require('../../bot');
+
 router.post('',  async (req, res, next) => {
     try {
         const response = await Puzzle.getFilteredSearch(req.body);
@@ -54,10 +56,27 @@ router.post('/new/mp',  checkAuth, checkManager ,async (req, res, next) => {
 
 });
 
+router.patch('/:id([\\da-z]{1,24})/subscribe', checkAuth, checkPuzzle, async (req, res, next) => {
+    if (!req.puzzle.subscribers) 
+        req.puzzle.subscribers = [];
+    req.puzzle.subscribers.push(req.user._id);
+    try {
+        await Puzzle.update(req.puzzle);
+        res.json(req.puzzle);
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+});
+
 router.patch('/:id([\\da-z]{1,24})/mp', checkAuth, checkManager, checkPuzzle, async (req, res, next) => {
     const puzzle = await Puzzle.getPuzzleFromFormRequest(req);
     const puzzleId = req.params.id;
     puzzle._id = puzzleId;
+    if (req.puzzle.isAvailable != puzzle.isAvailable) {
+        if (req.user.telegramId)
+            bot.onPuzzleAvailable(puzzle, req.user.telegramId)
+    }
     try {
         const response = await Puzzle.update(puzzle);
         console.log(response);

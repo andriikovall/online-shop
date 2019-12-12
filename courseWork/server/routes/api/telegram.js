@@ -4,8 +4,7 @@ const router = express.Router();
 const crypto = require('crypto');
 const { botToken } = require('../../config/config');
 
-
-module.exports.dataIsFromTelegram = (body, botToken) => {
+function dataIsFromTelegram(body, botToken) {
     const expectedHash = body.hash || '';
     const checkString = Object.entries(body)
         .filter(e => e[0] != 'hash')
@@ -22,7 +21,8 @@ module.exports.dataIsFromTelegram = (body, botToken) => {
     return expectedHash == hash;
 }
 
-module.exports.checkReqFromTelegram = (req, res, next) => {
+
+function checkReqFromTelegram(req, res, next) {
     console.log('checkReqFromTelegram');
     if (!req.body) {
         next({
@@ -40,3 +40,5 @@ module.exports.checkReqFromTelegram = (req, res, next) => {
     }
     next();
 }
+
+module.exports = { dataIsFromTelegram, checkReqFromTelegram }

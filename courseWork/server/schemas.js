@@ -47,7 +47,8 @@ const puzzleSchema = new mongoose.Schema({
     isWCA: { type: Boolean, default: false },
     manufacturerId: { type: mongoose.mongo.ObjectId, ref: 'Manufacturer' },
     description_md: { type: String, default: DEFAULT_PUZZLE_BIO },
-    lastModified: { type: Date, default: Date.now }
+    lastModified: { type: Date, default: Date.now }, 
+    subscribers: [{ type: String, default: []}]
 });
 
 const orderSchema = new mongoose.Schema({
