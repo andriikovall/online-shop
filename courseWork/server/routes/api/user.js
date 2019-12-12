@@ -35,6 +35,28 @@ router.get('/all', checkAuth, async (req, res, next) => {
     }
 });
 
+router.patch('/add_telegram', checkAuth, checkReqFromTelegram, async (req, res, next) => {
+    const possibleConflitctUser = User.getByTelegramId(req.body.id).select('_id');
+    if (possibleConflitctUser) {
+        next({
+            status: 409, 
+            message: "User with such Telegram account already excists"
+        });
+        return;
+    }
+    req.user.telegramId = req.body.id;
+    req.user.telegramNick = req.body.username;
+    req.user.avaUrl = req.body.photo_url;
+    //@ todo ask about acc data update
+    try {
+        await User.update(req.user);
+        res.json(req.user);
+    } catch (err) {
+        next(err);
+    }
+});
+
+
 
 router.patch('/:id([\\da-z]{1,24})', checkUserById, checkAuth, checkRightsToUpdate, async (req, res, next) => {
     try {
@@ -58,27 +80,6 @@ router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToU
         console.log(err);
         next(err);
         return;
-    }
-});
-
-router.patch('/add_telegram', checkAuth, checkRightsToUpdate, checkReqFromTelegram, async (req, res, next) => {
-    const possibleConflitctUser = User.getByTelegramId(req.body.id).select('_id');
-    if (possibleConflitctUser) {
-        next({
-            status: 409, 
-            message: "User with such Telegram account already excists"
-        });
-        return;
-    }
-    req.user.telegramId = req.body.id;
-    req.user.telegramNick = req.body.username;
-    req.user.avaUrl = req.body.photo_url;
-    //@ todo ask about acc data update
-    try {
-        await User.update(req.user);
-        res.json(req.user);
-    } catch (err) {
-        next(err);
     }
 });
 
