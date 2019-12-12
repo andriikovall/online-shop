@@ -85,4 +85,15 @@ export class PuzzleComponent implements OnInit {
       {state: { puzzle: this.puzzle }});
   }
 
+  onNotify() {
+    this.puzzlesService.subscribe(this.puzzle._id).subscribe(res => {
+      if (res) {
+        this.alerts.success('Теперь вы получите уведомление в телеграме, когда головоломка появится в начилии');
+      }
+    }, err => {
+      console.log(err);
+      this.alerts.error('Ошибка сервера, попробуйте позже');
+    })
+  }
+
 }

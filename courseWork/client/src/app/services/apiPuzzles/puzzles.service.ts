@@ -61,4 +61,9 @@ export class ApiPuzzlesService {
     return uploadFormData;
   }
 
+  public subscribe(puzzleId: string) {
+    const url = this.linkBuilder.buildApiLink('/puzzles/') + puzzleId + '/subscribe';
+    return this.httpClient.patch(url, {});
+  }
+
 }

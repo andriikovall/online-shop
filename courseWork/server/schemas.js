@@ -48,7 +48,7 @@ const puzzleSchema = new mongoose.Schema({
     manufacturerId: { type: mongoose.mongo.ObjectId, ref: 'Manufacturer' },
     description_md: { type: String, default: DEFAULT_PUZZLE_BIO },
     lastModified: { type: Date, default: Date.now }, 
-    subscribers: [{ type: String, default: []}]
+    subscribers: [{ type: mongoose.mongo.ObjectId, ref: 'User' }]
 });
 
 const orderSchema = new mongoose.Schema({

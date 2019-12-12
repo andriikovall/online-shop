@@ -3,9 +3,11 @@ const Type = require('./puzzle_types');
 const mongoose = require('mongoose');
 const puzzleSchema = require('../schemas').puzzleSchema;
 const puzzleModel = new mongoose.model('Puzzle', puzzleSchema);
+const { getEscapedRegExp } = require('./utils');
+
 const manufacturerModel = require('./manufacturer').model;
 const typeModel = require('./puzzle_types').model;
-const { getEscapedRegExp } = require('./utils');
+const userModel = require('./user/user').model;
 
 const imageUploader = require('../config/cloudinaryConfig');
 const Datauri = require('datauri');
@@ -144,6 +146,10 @@ class Puzzle {
             }).
             then(() => puzzle);
         }
+    }
+
+    static getPuzzleSubscribers(puzzleId) {
+        return puzzleModel.find({_id: puzzleId }).populate({ path: 'subscribers', model: userModel });
     }
 };
 

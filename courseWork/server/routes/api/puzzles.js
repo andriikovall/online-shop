@@ -73,9 +73,12 @@ router.patch('/:id([\\da-z]{1,24})/mp', checkAuth, checkManager, checkPuzzle, as
     const puzzle = await Puzzle.getPuzzleFromFormRequest(req);
     const puzzleId = req.params.id;
     puzzle._id = puzzleId;
-    if (req.puzzle.isAvailable != puzzle.isAvailable) {
-        if (req.user.telegramId)
-            bot.onPuzzleAvailable(puzzle, req.user.telegramId)
+    if (req.puzzle.isAvailable != puzzle.isAvailable && puzzle.isAvailable) {
+        const subscribers = await Puzzle.getPuzzleSubscribers(puzzle._id);
+        for(const user of subscribers) {
+            if (user.telegramId)
+                bot.onPuzzleAvailable(puzzle, user.telegramId);
+        }
     }
     try {
         const response = await Puzzle.update(puzzle);
