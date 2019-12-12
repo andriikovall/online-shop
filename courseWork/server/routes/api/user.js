@@ -61,7 +61,7 @@ router.patch('/:id([\\da-z]{1,24})/mp', checkUserById, checkAuth, checkRightsToU
     }
 });
 
-router.patch('add_telegram', checkAuth, checkRightsToUpdate, checkReqFromTelegram, async (req, res, next) => {
+router.patch('/add_telegram', checkAuth, checkRightsToUpdate, checkReqFromTelegram, async (req, res, next) => {
     const possibleConflitctUser = User.getByTelegramId(req.body.id).select('_id');
     if (possibleConflitctUser) {
         next({
