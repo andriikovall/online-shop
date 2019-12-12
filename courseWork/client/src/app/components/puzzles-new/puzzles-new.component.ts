@@ -49,17 +49,16 @@ export class PuzzlesNewComponent implements OnInit {
       this.isEditing = true;
       this.puzzle._id = puzzleId;
     } else if (puzzleId) {
-      await this.puzzlesService.getById(puzzleId).subscribe((response: any) => {
-        this.puzzle = response;
+      try {
+        this.puzzle = await this.puzzlesService.getById(puzzleId).toPromise() as Puzzle;
         this.isEditing = true;
-      }, (err) => {
+      } catch (err) {
         this.alerts.warn('Ошибка сервера, попробуйте позже');
         console.log(err);
-      });
+      }
     } else {
       this.puzzle = new Puzzle();
     }
-    console.log(this.puzzle, 'buffer puzzle');
   }
 
   async ngOnInit() {

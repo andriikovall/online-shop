@@ -38,7 +38,7 @@
             <tr>
                 <th>Покупатель</th>
                 <td><button class="btn btn-link" [routerLink]="['users', order.user._id]" (click)="this.modal.close(false)">
-                    {{order.user.first_name + ' ' + order.user.last_name || '--'}}
+                    {{order.user.first_name || '--' + ' ' + order.user.last_name || '--'}}
                 </button></td>
             </tr>
         </table>

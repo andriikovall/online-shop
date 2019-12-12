@@ -13,7 +13,7 @@ class Type {
     }
 
     static getAll() {
-        return typeModel.find();
+        return typeModel.find().sort({ name: 1 });
     }
 
     static insert(type) {

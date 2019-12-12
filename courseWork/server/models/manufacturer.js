@@ -13,7 +13,7 @@ class Manufacturer {
     }
 
     static getAll() {
-        return manufacturerModel.find();
+        return manufacturerModel.find().sort({ name: 1 });
     }
 
     static insert(manufacturer) {

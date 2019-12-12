@@ -79,3 +79,8 @@
 .puzzle_bio p {
     font-size: 18px;
 }
+
+
+#puzzle_price::after {
+    content: ' ₴';
+}

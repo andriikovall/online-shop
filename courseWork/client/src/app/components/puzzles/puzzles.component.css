@@ -12,10 +12,23 @@
     font-size: 15px;
 }
 
+#puzzle_price {
+    font-size: 25px;
+    text-align: center;
+}
+
+#puzzle_price::after {
+    content: ' ₴';
+}
+
 .card {
     /* width: calc(1200px - 25%*1200px); */
     z-index: 0;
     position: relative;
+}
+
+.card-body {
+    padding-bottom: 50px;
 }
 
 .menu {
@@ -38,4 +51,10 @@
 
 #filters a[aria-expanded="true"] {
     background:#0c28c7;
+}
+
+#puzzles-container-content .card-body button {
+    position: absolute;
+    bottom: 10px !important;
+    right: 0px; 
 }

@@ -158,15 +158,19 @@
                     <div class="card" style="height: 100%">
                         <div class="card-body">
                             <a [routerLink]="['/puzzles', puzzle._id]" class="text-center">
-                                <h4 class="card-title">{{puzzle.name}}</h4>
+                                <h5 class="card-title">{{puzzle.name}}</h5>
                                 <div class="container-fluid">
                                     <img src="{{puzzle.photoUrl}}" width="150px" class="text-center mx-auto">
                                 </div>
                             </a>
-                            <h6 class="mt-2">{{puzzle.price}}</h6>
-                            <button class="btn btn-primary btn-block" type="button" (click)="buyClicked(puzzle._id)"
-                                [disabled]="!puzzle.isAvailable">
-                                {{puzzle.isAvailable ? 'В корзину' : 'Нет в наличии'}}</button>
+                            <div class="container text-justify">
+                                <h6 class="my-auto" id="puzzle_price">{{puzzle.price}}</h6>
+                            </div>
+                                <div class="container">
+                                <button class="btn btn-primary btn-block" type="button" (click)="buyClicked(puzzle._id)"
+                                    [disabled]="!puzzle.isAvailable">
+                                    {{puzzle.isAvailable ? 'В корзину' : 'Нет в наличии'}}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
