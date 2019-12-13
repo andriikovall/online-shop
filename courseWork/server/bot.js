@@ -59,8 +59,9 @@ const inteface = {
     },
 
     onOrderStateChanged: async (order, telegramId) => {
+        console.log(order, telegramId);
         try {
-            bot.sendPhoto(telegramId, 'Статус заказа изменён!\n\n' + await getMessageForOrder(order), { parse_mode: 'Markdown' });
+            bot.sendMessage(telegramId, 'Статус заказа изменён!\n\n' + await getMessageForOrder(order), { parse_mode: 'Markdown' });
         } catch (err) {
 
         }
