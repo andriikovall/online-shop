@@ -69,6 +69,18 @@ router.patch('/:id([\\da-z]{1,24})/subscribe', checkAuth, checkPuzzle, async (re
     }
 });
 
+async function notifyPuzzleSubs(puzzle) {
+    const subscribers = await Puzzle.getPuzzleSubscribers(puzzle._id);
+    let send = {};
+    for (const user of subscribers) {
+        if (user.telegramId) {
+            if (!send[user._id])
+                bot.onPuzzleAvailable(puzzle, user.telegramId);
+            send[user._id] = true;
+        }
+    }
+}
+
 router.patch('/:id([\\da-z]{1,24})/mp', checkAuth, checkManager, checkPuzzle, async (req, res, next) => {
     const puzzle = await Puzzle.getPuzzleFromFormRequest(req);
     const puzzleId = req.params.id;
@@ -79,11 +91,7 @@ router.patch('/:id([\\da-z]{1,24})/mp', checkAuth, checkManager, checkPuzzle, as
             puzzle: puzzle
         });
         if (req.puzzle.isAvailable != puzzle.isAvailable && puzzle.isAvailable) {
-            const subscribers = await Puzzle.getPuzzleSubscribers(puzzle._id);
-            for (const user of subscribers) {
-                if (user.telegramId)
-                    bot.onPuzzleAvailable(puzzle, user.telegramId);
-            }
+            notifyPuzzleSubs(puzzle);
         }
     } catch (err) {
         next(err);

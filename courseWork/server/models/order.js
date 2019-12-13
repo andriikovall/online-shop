@@ -50,7 +50,6 @@ class Order {
         //@todo
 
         const predicate = buildSearchPredicate(filters);
-        console.log(predicate);
 
         const promises = [
             orderModel.countDocuments(predicate),
