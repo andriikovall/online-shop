@@ -51,7 +51,7 @@ router.post('/login/telegram', checkReqFromTelegram, async (req, res, next) => {
         const newUser = new User(null,
             req.body.first_name,
             req.body.last_name,
-            'cutomer',
+            'customer',
             req.body.photo_url,
             null, 
             telegramId, 
