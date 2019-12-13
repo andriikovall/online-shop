@@ -92,7 +92,7 @@
             </div>
           </div>
           <img id="bufferImage"
-               src="{{this.imageSrc || puzzle.photoUrl}}"
+               src="{{this.imageSrc || puzzle.photoUrl || 'https://gotrening.com/images/total/pic-placeholder.png'}}"
                alt="Placeholder image" width="90%" class="mx-auto">
         </div>
       </div>
@@ -101,8 +101,7 @@
   </form>
   <span *ngIf="puzzleForm && typesAndManufacturers">
     <button class="btn btn-outline-primary btn-lg"
-            (click)="confirmCreation(puzzleForm.value)"
-      [disabled]="!this.puzzleForm.valid">{{ this.isEditing ? 'Изменить' : 'Добавить'}}</button>
+            (click)="confirmCreation(puzzleForm.value)">{{ this.isEditing ? 'Изменить' : 'Добавить'}}</button>
         <button type="button" class="btn btn-oultile-secondary btn-lg" (click)="this.navigateBack()">Отмена</button>
     </span>
 </div>

@@ -48,7 +48,7 @@
           </td>
           <td>{{user.first_name}}</td>
           <td>{{user.last_name}}</td>
-          <td>{{user.registeredAt}}</td>
+          <td><app-local-date-time [rawdate]="user.registeredAt"></app-local-date-time></td>
         </tr>
       </tbody>
     </table>

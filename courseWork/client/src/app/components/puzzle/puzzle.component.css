@@ -25,7 +25,7 @@
     position: relative;
     right: 50px;
     top: -10px;
-    float: right;
+    /* float: right; */
 }
 
 .puzzle_price b {

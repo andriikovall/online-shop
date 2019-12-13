@@ -134,6 +134,10 @@ export class PuzzlesNewComponent implements OnInit {
   }
 
   public confirmCreation(formValue) {
+    if (!this.puzzleForm.valid) {
+      this.puzzleForm.markAllAsTouched();
+      return;
+    }
     const modalRef = this.modalService.open(ConfirmSafetyComponent);
     modalRef.result.then(res => {
       if (res) {

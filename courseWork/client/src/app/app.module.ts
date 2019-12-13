@@ -40,7 +40,8 @@ import { TelegramWidgetComponent } from './components/telegram-widget/telegram-w
 import { OrdersComponent } from './components/orders/orders.component';
 import { ShippingEditComponent } from './modals/shipping-edit/shipping-edit.component';
 import { ShippingEditFixComponent } from './modals/shipping-edit-fix/shipping-edit-fix.component';
-import { OrderDetailsComponent } from './modals/order-details/order-details.component'; 
+import { OrderDetailsComponent } from './modals/order-details/order-details.component';
+import { LocalDateTimeComponent } from './components/local-date-time/local-date-time.component'; 
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { OrderDetailsComponent } from './modals/order-details/order-details.comp
     OrdersComponent,
     ShippingEditComponent,
     ShippingEditFixComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    LocalDateTimeComponent
   ],
   imports: [
     BrowserModule,

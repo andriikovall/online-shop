@@ -73,11 +73,13 @@ class Order {
 
 function buildSearchPredicate(filters) {
     let predicate = {};
+    if (!filters)
+        return predicate;
     if (filters.states) {
         predicate.state = {};
         predicate.state.$in = filters.states;
     }
-    if (filters._id && filters._id.length == 24) {
+    if (filters._id && (filters._id.length == 24 || filters._id.trim().length == 24)) {
         predicate._id = new mongoose.Types.ObjectId(filters._id);
     }
     return predicate;

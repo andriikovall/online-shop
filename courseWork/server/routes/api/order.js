@@ -6,6 +6,8 @@ const User = require('../../models/user/user');
 
 const { checkAdmin, checkAuth, checkManager } = require('../../config/passport');
 
+const bot = require('../../bot');
+
 const orderStates = [
     1, 2, 3
 ]
@@ -30,6 +32,9 @@ router.patch('/setstate/:id/:state', checkOrder, async (req, res) => {
     const state = parseInt(req.params.state) || -1;
     if (orderStates.find((s) => s === state)) {
         const response = await Order.setState(req.order._id, state);
+        if (req.order.user.telegramId) {
+            bot.onOrderStateChanged(response, req.order.user.telegramId);
+        }
         res.json(response);
     } else {
         next({

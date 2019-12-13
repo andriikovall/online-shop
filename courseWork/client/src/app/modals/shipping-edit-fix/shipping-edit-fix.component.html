@@ -6,7 +6,7 @@
             </button>
         </div>
         <div class="card-body">
-            <div class="form-group row" [formGroup]="shippingForm" *ngIf="this.shippingForm">
+            <form class="form-group row" [formGroup]="shippingForm" *ngIf="this.shippingForm">
                 <div class="col">
                     <div class="row">
                         <div class="col-lg-6">
@@ -44,15 +44,15 @@
                     <textarea rows="5" id="comment" formControlName="comment" class="form-control mt-3"
                     [class.is-invalid]="this.formHelper.isInvalidFormControl('comment', this.shippingForm)"></textarea>
                     <div class="invalid-feedback">Длина до 500 символов</div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <button class="btn btn-primary" (click)="onConfirm()" [disabled]="!this.shippingForm.valid">Дальше</button>
+                        </div>
+                        <div class="col">
+                                <button class="btn btn-outline-danger" (click)="onDeny()" style="float: right;">Отмена</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-primary" (click)="onConfirm()" [disabled]="!this.shippingForm.valid">Дальше</button>
-                </div>
-                <div class="col">
-                        <button class="btn btn-outline-danger" (click)="onDeny()" style="float: right;">Отмена</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>

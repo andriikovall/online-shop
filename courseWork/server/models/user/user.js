@@ -103,6 +103,7 @@ class User {
 };
 
 function buildSearchPredicate(name) {
+    name = name.trim() || '';
     let predicate = {
         $or: [
             { first_name: { $in: [getEscapedRegExp(name)] } },

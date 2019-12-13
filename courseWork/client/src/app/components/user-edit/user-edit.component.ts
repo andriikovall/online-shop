@@ -77,14 +77,14 @@ export class UserEditComponent implements OnInit {
   }
 
   onFormSubmit() {
-    console.log('submit', this.mainForm.valid);
-    if (!this.mainForm.valid)
+    if (!this.mainForm.valid) {
+      this.mainForm.markAsDirty();
       return;
+    }
     const user = this.getUserFromForm(this.mainForm.value);
     this.modalService.open(ConfirmSafetyComponent).result.then((res) => {
       if (res) {
         this.userService.updateUserFormData(user).subscribe((res) => {
-          console.log(res);
           this.router.navigate(['/users', this.user._id]);
         }, (err) => {
           this.alerts.warn('Ошибка сервера, попробуйте позже');

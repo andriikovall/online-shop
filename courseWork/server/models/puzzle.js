@@ -166,6 +166,7 @@ function trimPrice(price) {
 }
 
 function buildFindPredicate(manufs, types, priceFrom, priceTo, searchedName, isWCA, isAvailable) {
+    searchedName = searchedName.trim() || '';
     let findPredicate = {
         name: { $regex: getEscapedRegExp(searchedName), $options: "i" }
     };
