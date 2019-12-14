@@ -80,7 +80,7 @@ function buildSearchPredicate(filters) {
     }
     if (filters._id && (filters._id.length == 24 || filters._id.trim().length == 24)) {
         predicate._id = new mongoose.Types.ObjectId(filters._id);
-    } else {
+    } else if (filters._id) {
         predicate._id = null;
     }
     return predicate;
