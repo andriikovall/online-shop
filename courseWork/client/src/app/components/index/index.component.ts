@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-index',
@@ -11,7 +12,8 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, 
-    private alerts: AlertService
+    private alerts: AlertService, 
+    public auth: AuthService
     ) { }
 
   ngOnInit() {

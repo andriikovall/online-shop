@@ -11,11 +11,24 @@
                 </div>
                 <div class="col">
                     <h1>{{user.first_name + ' ' + user.last_name}}</h1>
-                    <p id="username">{{user.login}}</p>
-                    <!-- <p>Дата регистрации {{user.registeredAt | date:'dd-MM-yyyy hh-mm'}}</p> -->
-                    <app-local-date-time [rawdate]="user.registeredAt"></app-local-date-time> 
-                    <p>Роль {{user.role}}</p>
-
+                    <div class="my-auto">
+                        <table class="table">
+                            <tr *ngIf="user.login">
+                                <th>Логин</th>
+                                <td>{{user.login}}</td>
+                            </tr>
+                            <tr>
+                                <th>Дата регистрации</th>
+                                <td>
+                                    <app-local-date-time [rawdate]="user.registeredAt"></app-local-date-time>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Роль</th>
+                                <td>{{user.role}}</td>
+                            </tr>
+                        </table>
+                    </div>
                     <div *roles="['admin']">
                         <select class="form-control form-control-lg"
                             *ngIf="user._id != this.auth.userId && user.role != 'admin'" [value]="selectedRole"
