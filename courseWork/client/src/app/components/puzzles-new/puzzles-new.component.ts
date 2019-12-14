@@ -72,8 +72,7 @@ export class PuzzlesNewComponent implements OnInit {
           [Validators.required]),
         isWCA: new FormControl(this.puzzle.isWCA,
           [Validators.required]),
-        description_md: new FormControl(this.puzzle.description_md,
-          [Validators.required]),
+        description_md: new FormControl(this.puzzle.description_md || 'У этого кубика пока нету описания'),
         manufacturerId: new FormControl(this.puzzle.manufacturerId._id || '',
           [Validators.required]),
         typeId: new FormControl(this.puzzle.typeId._id || '',
@@ -82,6 +81,7 @@ export class PuzzlesNewComponent implements OnInit {
           [Validators.required, Validators.min(0), Validators.max(9999999)])
       });
     });
+
   }
 
   get name() { return this.puzzleForm.get('name'); }
@@ -124,7 +124,7 @@ export class PuzzlesNewComponent implements OnInit {
     }
   }
 
- 
+
   public navigateToPuzzle(id: string) {
     this.router.navigate(['/puzzles', id]);
   }

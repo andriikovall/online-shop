@@ -24,23 +24,23 @@
           </div>
           <div class="form-row">
 
-            <div class="form-group col-lg-5 col-10">
+            <div class="form-group col-lg-6 col-10">
               <label for="inputType">Выбор типа</label>
               <select class="form-control form-control-lg" [class.is-invalid]="!typeIdIsValid()"
                       formControlName="typeId" id="inputType">
                 <option
                   *ngFor="let type of typesAndManufacturers.types"
                   [ngValue]="type._id"
-                  [selected]="this.puzzle.typeId._id == type._id">
+                  [selected]="(this.puzzle.typeId._id || '') == type._id">
                   {{type.value}}</option>
               </select>
             </div>
 
-            <div class="form-group col-lg-1 col-2">
+            <!-- <div class="form-group col-lg-1 col-2">
               <button class="btn btn-outline-primary mt-5" disabled>+</button>
-            </div>
+            </div> -->
 
-            <div class="form-group col-lg-5 col-10">
+            <div class="form-group col-lg-6 col-10">
 
               <label for="inputManufacturer">Выбор производителя</label>
               <select [class.is-invalid]="!manufacturerIdIsValid()" class="form-control form-control-lg"
@@ -51,9 +51,9 @@
               </select>
 
             </div>
-            <div class="form-group col-lg-1 col-2">
+            <!-- <div class="form-group col-lg-1 col-2">
               <button class="btn btn-outline-primary mt-5" disabled>+</button>
-            </div>
+            </div> -->
           </div>
 
           <div class="form-row">
