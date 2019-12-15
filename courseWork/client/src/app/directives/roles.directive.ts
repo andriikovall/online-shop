@@ -8,7 +8,8 @@ import { AuthService } from '../services/auth/auth.service';
 
 export class RolesDirective {
 
-  constructor(private _templateRef: TemplateRef<any>,
+  constructor(
+    private _templateRef: TemplateRef<any>,
     private _viewContainer: ViewContainerRef,
     private userService: AuthService) {
 

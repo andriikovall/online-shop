@@ -4,6 +4,6 @@
         Поспеши забрать свою радость!</p>
     <p>В нашем магазаине закупаютя только самые лучшие, будь одним из нас!</p>
     <p>Так же у нас на сайте доступна авторизация через Telegram!<br>Подлючись и получай важные обновления заказов и первым узнавай, когда головоломка появится в наличии!
-        <button class="btn btn-link" *ngIf="!auth.telegramId" [routerLink]="['users', this.auth.userId]">Подключится</button></p>
-    <p>Не жди, а начни закупатся уже сейчас!<button class="btn btn-link">Начать!</button> </p>
+        <button class="btn btn-link" *ngIf="!auth.telegramId && auth.userRole != 'guest'" [routerLink]="['users', this.auth.userId]">Подключится</button></p>
+    <p>Не жди, а начни закупатся уже сейчас!<button class="btn btn-link" [routerLink]="['puzzles']">Начать!</button> </p>
 </div>

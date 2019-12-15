@@ -129,7 +129,10 @@ async function checkRightsToUpdate(req, res, next) {
             res.json(req.body);
             return;
         } catch (err) {
-            next(err);
+            next({
+                status: 400, 
+                message: err.message 
+            });
             return;
         }
     }

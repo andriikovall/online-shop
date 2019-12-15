@@ -109,15 +109,15 @@ class Puzzle {
             this.getAllManufacturers()
         ];
 
-        return Promise.all(promises).
-        then(([types, manufs]) => {
-            types = types.map((type, index) => ({ index, value: type.name, _id: type._id }));
-            manufs = manufs.map((man, index) => ({ index, value: man.name, _id: man._id }));
-            return {
-                types: types,
-                manufacturers: manufs
-            };
-        });
+        return Promise.all(promises)
+            .then(([types, manufs]) => {
+                types = types.map((type, index) => ({ index, value: type.name, _id: type._id }));
+                manufs = manufs.map((man, index) => ({ index, value: man.name, _id: man._id }));
+                return {
+                    types: types,
+                    manufacturers: manufs
+                };
+            });
     }
 
     static getPuzzleFromFormRequest(req) {

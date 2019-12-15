@@ -76,7 +76,7 @@ const cartSchema = new mongoose.Schema({
         count: { type: Number, default: 1 },
         puzzle: { type: mongoose.mongo.ObjectId, ref: 'Puzzle' }
     }],
-    user: { type: mongoose.mongo.ObjectId, ref: 'User' }
+    // user: { type: mongoose.mongo.ObjectId, ref: 'User' }
 });
 
 const manufacturerSchema = new mongoose.Schema({
